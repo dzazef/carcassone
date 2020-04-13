@@ -1,0 +1,15 @@
+.m-logo-logo {
+  padding: 0;
+  margin: 0;
+  font-family: "MedievalSharp", sans-serif;
+  font-size: 7vw;
+  text-shadow: 2px 4px 2px rgba(0, 0, 0, 0.8);
+  color: #af9072;
+  text-align: center; }
+
+@media (max-width: 600px) {
+  .m-logo-logo {
+    font-size: 14vw;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8); } }
+
+/*# sourceMappingURL=logo.css.map */

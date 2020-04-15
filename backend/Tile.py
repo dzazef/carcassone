@@ -1,7 +1,7 @@
 # ekserymentalna klasa reprezentacji płytek
 class Tile:
     # constants
-    DEFAULT = 0
+    DEFAULT = 0  # default is treated
     MEADOW = 1
     CASTLE = 2
     MONASTERY = 3
@@ -14,8 +14,8 @@ class Tile:
 
     def __init__(self):
         # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
-        self.sides = [([1, 3, 4, 6, 7, 9, 10, 11, 12], Tile.MEADOW, 1, None), ([2, 5, 8], Tile.CASTLE, 2, None)]
-        self.center = [([0], Tile.MONASTERY, 2, None)]
+        self.sides = [([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Tile.DEFAULT, 1, None)]
+        self.center = ([0], Tile.DEFAULT, 2, None)
 
     def turn_clockwise(self):
         for i in self.sides:
@@ -48,7 +48,7 @@ class Tile:
             return True
         return False
 
-    def fit_right(self, other):  # can I place the other tile on top of this one?
+    def fit_right(self, other):  # can I place the other tile right of this one?
         if (
                 self.find_side(4) == other.find_side(12)
                 and self.find_side(5) == other.find_side(11)
@@ -57,7 +57,7 @@ class Tile:
             return True
         return False
 
-    def fit_down(self, other):  # can I place the other tile on top of this one?
+    def fit_down(self, other):  # can I place the other tile below this one?
         if (
                 self.find_side(9) == other.find_side(1)
                 and self.find_side(8) == other.find_side(2)
@@ -66,7 +66,7 @@ class Tile:
             return True
         return False
 
-    def fit_left(self, other):  # can I place the other tile on top of this one?
+    def fit_left(self, other):  # can I place the other tile left of this one?
         if (
                 self.find_side(12) == other.find_side(4)
                 and self.find_side(11) == other.find_side(5)
@@ -74,4 +74,16 @@ class Tile:
         ):
             return True
         return False
+
+    def offer_to_place_a_pawn(self):
+        available = [(i[0][0], i[1]) for i in self.sides if i[1]]  # all different areas to place a pawn
+        if self.center[1]:
+            available.append((self.center[0][0], self.center[1]))
+        return available  # returns list of tuples (position, terrain)
+
+    def place_a_pawn(self, position, player):
+        pass
+
+    def final_score(self, player):
+        pass
 

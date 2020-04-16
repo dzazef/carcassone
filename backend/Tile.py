@@ -1,10 +1,8 @@
 # ekserymentalna klasa reprezentacji płytek
-class Tile:
-    # constants
-    DEFAULT = 0  # default is treated
-    MEADOW = 1
-    CASTLE = 2
-    MONASTERY = 3
+from Enums import Terrains
+
+
+class Tile(Terrains):
 
     #    1 2 3
     # 12       4
@@ -16,16 +14,20 @@ class Tile:
         # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
         self.sides = [([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Tile.DEFAULT, 1, None)]
         self.center = ([0], Tile.DEFAULT, 2, None)
+        self.orientation = 0  # 0- standard, 1- once to the left, 2- twice to the left, 3- thrice to the left
+        self.amount = 0
 
     def turn_clockwise(self):
         for i in self.sides:
             for j in range(len(i[0])):
                 i[0][j] = (i[0][j] + 2) % 12 + 1
+        self.orientation = (self.orientation - 1) % 4
 
     def turn_counterclockwise(self):
         for i in self.sides:
             for j in range(len(i[0])):
                 i[0][j] = (i[0][j] - 4) % 12 + 1
+        self.orientation = (self.orientation + 1) % 4
 
     def find_side(self, terrain):
         for i in self.sides:
@@ -76,6 +78,8 @@ class Tile:
         return False
 
     def offer_to_place_a_pawn(self):
+        # to be expanded, regarding rules about placing a pawn near others
+
         available = [(i[0][0], i[1]) for i in self.sides if i[1]]  # all different areas to place a pawn
         if self.center[1]:
             available.append((self.center[0][0], self.center[1]))

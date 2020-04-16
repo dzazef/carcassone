@@ -9,3 +9,4 @@ class Tile2(TileMeadow, TileMonastery, TileRoad):
         super().__init__()
         self.sides = [([1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12], Tile2.MEADOW, 1, None), ([8], Tile2.ROAD, 2, None)]
         self.center = ([0], Tile2.MONASTERY, 3, None)
+        self.amount = 2

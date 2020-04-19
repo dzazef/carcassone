@@ -1,40 +1,34 @@
 import * as WSActions from '../store/actions/wsActions'
-
+import {wsReceiver} from "./wsReceiver";
 
 const wsMiddleware = () => {
 
     let socket = null
 
     const onOpen = store => (event) => {
-        console.log(`ws opened ${event.target.url}`)
+        console.log(`ws_open: ${event.target.url}`)
         store.dispatch(WSActions.wsConnected(event.target.url))
     }
 
     const onClose = store => () => {
-        console.log('ws closed')
+        console.log('ws_cls')
         store.dispatch(WSActions.wsDisconnected())
     }
 
     const onError = store => (event) => {
-        console.log("ws error")
-        console.log(event)
+        console.log(`ws_err:`, event)
         store.dispatch(WSActions.wsError(event))
     }
 
     const onMessage = store => (event) => {
-        const payload = JSON.parse(event.data)
-        console.log(`ws received message`)
-        console.log(payload)
-
-        //insert logic TODO
-
+        console.log(`ws_msg_in:`, event.data)
+        wsReceiver(store, event.data)
     }
 
 
     const handleError = (store, error) => {
-        console.log('Unexpected error occurred')
-        console.log(error)
-        store.dispatch(WSActions.wsError(error))
+        console.log(`ws_unexpect_err:`, error)
+        store.dispatch(WSActions.wsError(store, error))
     }
 
     const connect = (store, action) => {
@@ -70,8 +64,7 @@ const wsMiddleware = () => {
         }
         if (store.getState().ws.state === 'WS_CONNECTED') {
             try {
-                console.log(`sending message to host: `)
-                console.log(action.data)
+                console.log(`sending message to host: `, action.data)
                 socket.send(JSON.stringify(action.data))
             } catch (error) {
                 handleError(store, error)

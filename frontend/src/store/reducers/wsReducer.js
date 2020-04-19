@@ -1,10 +1,12 @@
 const defaultWSState = {
-    state: 'WS_INITIAL'
+    state: 'WS_DEFAULT'
 }
 
 export const wsReducer = (state = defaultWSState, action) => {
     console.log(`from reducer: ${action.type}`)
     switch (action.type) {
+        case 'WS_DEFAULT':
+            return defaultWSState
         case 'WS_CONNECTING':
             return {...state, state: 'WS_CONNECTING'}
         case 'WS_CONNECTED':

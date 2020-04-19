@@ -1,5 +1,8 @@
 const defaultGameState = {}
 
 export const gameReducer = (state = defaultGameState, action) => {
-    return state
+    switch (action.type) {
+        default:
+            return state
+    }
 }

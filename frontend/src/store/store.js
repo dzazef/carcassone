@@ -1,12 +1,14 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import {gameReducer} from "./reducers/gameReducer";
 import {wsReducer} from "./reducers/wsReducer";
+import {mainReducer} from "./reducers/mainReducer";
 import wsMiddleware from './../ws/middleware';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
-    game: gameReducer,
-    ws: wsReducer
+    type: mainReducer,
+    ws: wsReducer,
+    game: gameReducer
 })
 
 const middleware = [wsMiddleware]

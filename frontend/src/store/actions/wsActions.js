@@ -1,3 +1,5 @@
+export const wsDefault = () => ({type: 'WS_DEFAULT'})
+
 export const wsConnect = host => ({type: 'WS_CONNECT', host})
 export const wsConnecting = host => ({type: 'WS_CONNECTING', host})
 export const wsConnected = host => ({type: 'WS_CONNECTED', host})

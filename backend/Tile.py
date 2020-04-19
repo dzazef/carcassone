@@ -24,8 +24,8 @@ class Tile:
 
     def __init__(self):
         # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
-        self.sides = [([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.DEFAULT, 1, None)]
-        self.center = ([0], Terrains.DEFAULT, 2, None)
+        self.sides = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.DEFAULT, 1, None]]
+        self.center = [[0], Terrains.DEFAULT, 2, None]
         self.orientation = 0  # 0- standard, 1- once to the left, 2- twice to the left, 3- thrice to the left
         self.amount = 0
 
@@ -141,10 +141,10 @@ class Tile:
                     neighbours.append((None, None))
 
     def offer_to_place_a_pawn(self):
-        # to be expanded, regarding rules about placing a pawn near others
-
-        available = [(i[0][0], i[1]) for i in self.sides if i[1]]  # all different areas to place a pawn
-        if self.center[1]:
+        available = [(i[0][0], i[1]) for i in self.sides
+                     if i[1] != Terrains.DEFAULT  # all sides where terrain is not DEFAULT (0)
+                     and not ["Pawn detected" for j in self.dfs_start(i) if j[1] is not None and j[1][3] is not None]]  # and have no pawns
+        if self.center[1] != Terrains.DEFAULT and self.center[3] is None:
             available.append((self.center[0][0], self.center[1]))
         return available  # returns list of tuples (position, terrain)
 

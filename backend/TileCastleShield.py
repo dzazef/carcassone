@@ -1,7 +1,8 @@
-from Tile import Tile
+from TileCastle import TileCastle
 
 
-class TileCastleShield(Tile):
+class TileCastleShield(TileCastle):
 
-    def check_for_points_after_move(self):
-        pass  # returns list of tuples (player, points)
+    def __init__(self):
+        super().__init__()
+        self.points = 4

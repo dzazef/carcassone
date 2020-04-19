@@ -34,6 +34,8 @@ class Tile:
         self.downTile = None
         self.leftTile = None
 
+        self.points = 0
+
     def turn_clockwise(self):
         for i in self.sides:
             for j in range(len(i[0])):

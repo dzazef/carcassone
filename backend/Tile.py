@@ -35,6 +35,7 @@ class Tile:
         self.leftTile = None
 
         self.points = 0
+        self.penalty_points = 0
 
     def turn_clockwise(self):
         for i in self.sides:

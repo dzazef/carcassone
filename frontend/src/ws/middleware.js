@@ -1,4 +1,5 @@
 import * as WSActions from '../store/actions/wsActions'
+import * as MainActions from '../store/actions/mainActions'
 import {wsReceiver} from "./wsReceiver";
 
 const wsMiddleware = () => {
@@ -8,6 +9,9 @@ const wsMiddleware = () => {
     const onOpen = store => (event) => {
         console.log(`ws_open: ${event.target.url}`)
         store.dispatch(WSActions.wsConnected(event.target.url))
+        if (store.getState().state === 'MAIN_INITIAL') {
+            store.dispatch(MainActions.mainGame())
+        }
     }
 
     const onClose = store => () => {

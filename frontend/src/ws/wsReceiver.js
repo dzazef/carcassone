@@ -1,40 +1,20 @@
 import * as GameActions from '../store/actions/gameActions'
 
+const handleError = (store, data) => {
+    store.dispatch(GameActions.gameReceiveError({
+        message: 'Data have incorrect format',
+        data
+    }))
+}
+
 const parseMessage = (store, data) => {
     let payload = null
     try {
         payload = JSON.parse(data)
     } catch (error) {
-        store.dispatch(GameActions.gameReceiveError({
-            message: 'Data have incorrect format',
-            data
-        }))
+        handleError(store, data)
     }
     return payload
-}
-
-const handlePlayerCount = (store, data) => {
-
-}
-
-const handleStart = (store, data) => {
-
-}
-
-const handleBoard = (store, data) => {
-
-}
-
-const handleTurnInfo = (store, data) => {
-
-}
-
-const handlePawnInfo = (store, data) => {
-
-}
-
-const handleEndGame = (store, data) => {
-
 }
 
 export const wsReceiver = (store, data) => {
@@ -46,22 +26,22 @@ export const wsReceiver = (store, data) => {
 
     switch (payload.type) {
         case("player_count"):
-            handlePlayerCount(store, payload.data)
+            store.dispatch(GameActions.gamePlayerCount(data))
             break
         case("start"):
-            handleStart(store, payload.data)
+            store.dispatch(GameActions.gameStart())
             break
         case("board"):
-            handleBoard(store, payload.data)
+            store.dispatch(GameActions.gameUpdateBoard(data))
             break
         case("turn_info"):
-            handleTurnInfo(store, payload.data)
+            store.dispatch(GameActions.gameTurnInfo(data))
             break
         case("pawn_info"):
-            handlePawnInfo(store, payload.data)
+            store.dispatch(GameActions.gamePawnInfo(data))
             break
         case("end_game"):
-            handleEndGame(store, payload.data)
+            store.dispatch(GameActions.gameEnd(data))
             break
         default:
             store.dispatch(GameActions.gameReceiveError({

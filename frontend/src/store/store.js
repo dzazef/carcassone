@@ -6,7 +6,7 @@ import wsMiddleware from './../ws/middleware';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
-    type: mainReducer,
+    state: mainReducer,
     ws: wsReducer,
     game: gameReducer
 })

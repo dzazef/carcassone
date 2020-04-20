@@ -1,9 +1,11 @@
-from Enums import Terrains
+from Enums import Terrains, TileIDs
 from TileCastle import TileCastle
 from TileMeadow import TileMeadow
 
 
 class Tile15(TileCastle, TileMeadow):
+
+    id = TileIDs.TILE15
 
     def __init__(self):
         super().__init__()

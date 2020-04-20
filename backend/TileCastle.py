@@ -64,7 +64,8 @@ class TileCastle(Tile):  # tutaj cała logika zamków, czyli jak naliczają punk
 
                 players = [j[1][3] for j in whole_castle]  # extract players from that list
                 counter = Counter(players)  # count pawns of each player in a structure
-                del counter[None]  # delete None as it is not a player
+                if None in counter:
+                    del counter[None]  # delete None as it is not a player
                 counter2 = counter.most_common()
                 while len(counter2) > 1:  # all with highest number of pawns get points
                     if counter2[0][1] != counter2[-1][1]:

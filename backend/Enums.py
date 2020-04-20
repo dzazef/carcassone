@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum, IntEnum, auto
 
 
 class Terrains(Enum):
@@ -10,7 +10,7 @@ class Terrains(Enum):
     MONASTERY = 4
 
 
-class TileIDs(Enum):
+class TileIDs(IntEnum):
     TILE1 = auto()  # 1
     TILE2 = auto()  # 2
     TILE3 = auto()

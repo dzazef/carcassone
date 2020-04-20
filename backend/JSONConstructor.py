@@ -4,7 +4,7 @@ class JSONConstructor:
     def players_info_json(your_id, your_color, ready, players_list):
         # players_list = [(id1, color1, ready1), (id2, color2, ready2), ...]
         json1 = {
-            "type": "player_count",
+            "type": "player_lobby",
             "data": {
                 "me": {
                     "id": your_id,
@@ -33,7 +33,7 @@ class JSONConstructor:
 
     @staticmethod
     def board_state(tiles_left, players_list, board_list):
-        # players_list = [(id1, points1, pawns_left1), (id2, points2, pawns_left2), ...]
+        # players_list = [(id1, color1, points1, pawns_left1), (id2, color2, points2, pawns_left2), ...]
         # board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]
         # pawn = (id, x, y)
         json3 = {
@@ -47,7 +47,7 @@ class JSONConstructor:
 
         player_json = []
         for i in range(0, len(players_list)):
-            player = {"id": players_list[i][0], "points": players_list[i][1], "pawns_left": players_list[i][2]}
+            player = {"id": players_list[i][0], "color": players_list[i][1], "points": players_list[i][2], "pawns_left": players_list[i][3]}
             player_json.append(player)
 
         json3["data"]["players"] = player_json

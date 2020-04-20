@@ -1,8 +1,8 @@
 import * as GameActions from '../store/actions/gameActions'
 
-const handleError = (store, data) => {
+const handleError = (store, message, data) => {
     store.dispatch(GameActions.gameReceiveError({
-        message: 'Data have incorrect format',
+        message,
         data
     }))
 }
@@ -12,7 +12,7 @@ const parseMessage = (store, data) => {
     try {
         payload = JSON.parse(data)
     } catch (error) {
-        handleError(store, data)
+        handleError(store, 'Data have incorrect format', data)
     }
     return payload
 }
@@ -26,28 +26,25 @@ export const wsReceiver = (store, data) => {
 
     switch (payload.type) {
         case("player_count"):
-            store.dispatch(GameActions.gamePlayerCount(data))
+            store.dispatch(GameActions.gamePlayerLobby(payload.data))
             break
         case("start"):
             store.dispatch(GameActions.gameStart())
             break
         case("board"):
-            store.dispatch(GameActions.gameUpdateBoard(data))
+            store.dispatch(GameActions.gameUpdateBoard(payload.data))
             break
         case("turn_info"):
-            store.dispatch(GameActions.gameTurnInfo(data))
+            store.dispatch(GameActions.gameTurnInfo(payload.data))
             break
         case("pawn_info"):
-            store.dispatch(GameActions.gamePawnInfo(data))
+            store.dispatch(GameActions.gamePawnInfo(payload.data))
             break
         case("end_game"):
-            store.dispatch(GameActions.gameEnd(data))
+            store.dispatch(GameActions.gameEnd(payload.data))
             break
         default:
-            store.dispatch(GameActions.gameReceiveError({
-                message: 'Incorrect type of message',
-                data: payload.type
-            }))
+            handleError(store, 'Incorrect type of message', payload.type)
     }
 
 }

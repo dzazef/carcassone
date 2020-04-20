@@ -9,7 +9,7 @@ const wsMiddleware = () => {
     const onOpen = store => (event) => {
         console.log(`ws_open: ${event.target.url}`)
         store.dispatch(WSActions.wsConnected(event.target.url))
-        if (store.getState().state === 'MAIN_INITIAL') {
+        if (store.getState().state === 'S_MAIN_INITIAL') {
             store.dispatch(MainActions.mainGame())
         }
     }

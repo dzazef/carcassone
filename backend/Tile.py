@@ -151,8 +151,15 @@ class Tile:
             available.append((self.center[0][0], self.center[1]))
         return available  # returns list of tuples (position, terrain)
 
-    def place_a_pawn(self, position, player):
-        pass
+    def place_a_pawn(self, terrain, player):  # terrain: number from 0 to 12 returned as first element in tuple returned from offer_to_place_a_pawn
+        if terrain == 0:
+            self.center[3] = player
+            return
+        side = self.find_side_whole(terrain)
+        if side is not None:
+            side[3] = player
+        else:
+            print("Couldn't place a pawn here due to an error!")
 
     def final_score(self, player):
         pass

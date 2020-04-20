@@ -22,9 +22,11 @@ def test():  # test capabilities of offer_to_place_a_pawn function
     t3.downTile = t4
     t4.upTile = t3
 
+    print(t1.offer_to_place_a_pawn())  # returns [(1, <Terrains.CASTLE: 2>), (4, <Terrains.MEADOW: 1>)]
+
     t2.sides[0][3] = 1  # a pawn is placed
 
-    print(t1.offer_to_place_a_pawn())
+    print(t1.offer_to_place_a_pawn()) # returns [(4, <Terrains.MEADOW: 1>)]
 
 
 if __name__ == '__main__':

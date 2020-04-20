@@ -51,7 +51,7 @@ class TileCastle(Tile):  # tutaj cała logika zamków, czyli jak naliczają punk
     def check_for_points_after_game(self):  # awards points and then removes pawns
         result = {}  # dictionary- player: points
         for i in self.sides:  # check all areas
-            if i[1] == Terrains.CASTLE:  # if it's the area we want
+            if i[1] == Terrains.CASTLE and i[3] is not None:  # if it's the area we want
                 whole_castle = self.dfs_start(i)  # search adjecent tiles to get the whole structure
                 whole_castle = [value for value in whole_castle if value != (None, None)]  # delete all (None, None)
 

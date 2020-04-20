@@ -37,12 +37,14 @@ class TileRoad(Tile):
                         score[counter2[c][0]] = [points, counter2[c][1]]
                     else:
                         score[counter2[c][0]] = [0, counter2[c][1]]
+                for j in dfs:  # clear pawns
+                    j[1][3] = None
         return score
 
     def count_points_after_game(self):
         score = {}
         for i in self.sides:
-            if i[1] == Terrains.ROAD:
+            if i[1] == Terrains.ROAD and i[3] is not None:
                 dfs = self.dfs_start(i)
                 dfs = [road for road in dfs if road != (None, None)]
                 how_many_tiles = [j[0] for j in dfs]
@@ -64,4 +66,6 @@ class TileRoad(Tile):
                         score[counter2[c][0]] = points
                     else:
                         score[counter2[c][0]] = 0
+                for j in dfs:  # clear pawns
+                    j[1][3] = None
         return score

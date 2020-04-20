@@ -19,9 +19,11 @@ def test():  # test capabilities of check_for_points_after_game
     t3.rightTile = t2
 
     t2.sides[0][3] = 1  # a pawn is placed (player 1)
-    print(t1.check_for_points_after_move())  # scenario 1 after finishing a move
+    print(t1.check_for_points_after_move())  # scenario 1 after finishing a move, returns {}
 
-    print(t1.check_for_points_after_game())  # scenario 2 after finishing a game
+    print(t1.check_for_points_after_game())  # scenario 2 after finishing a game, returns {}
+
+    print(t2.check_for_points_after_game())  # scenario 3 after finishing a game, returns {1: 4}
 
 
 if __name__ == '__main__':

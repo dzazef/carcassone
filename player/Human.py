@@ -2,4 +2,5 @@ from player import Player
 
 
 class Human(Player):
-    pass
+    def __init__(self, id, websocket, color):
+        super(Human, self).__init__(id, websocket, color)

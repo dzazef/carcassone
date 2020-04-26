@@ -1,6 +1,6 @@
-from .Enums import Terrains, TileIDs
-from .TileCastleShield import TileCastleShield
-from .TileMeadow import TileMeadow
+from backend.tile.Enums import Terrains, TileIDs
+from backend.tile.TileCastleShield import TileCastleShield
+from backend.tile.TileMeadow import TileMeadow
 
 
 class Tile5(TileCastleShield, TileMeadow):

@@ -1,6 +1,6 @@
-from .Enums import Terrains, TileIDs
-from .TileMeadow import TileMeadow
-from .TileRoad import TileRoad
+from backend.tile.Enums import Terrains, TileIDs
+from backend.tile.TileMeadow import TileMeadow
+from backend.tile.TileRoad import TileRoad
 
 
 class Tile24(TileMeadow, TileRoad):

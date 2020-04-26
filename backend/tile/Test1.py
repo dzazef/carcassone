@@ -1,6 +1,6 @@
-from Tile8MeadowCastle import Tile8
-from Tile9MeadowCastleShield import Tile9
-from Tile10MeadowRoadCastle import Tile10
+from backend.tile.Tile8MeadowCastle import Tile8
+from backend.tile.Tile9MeadowCastleShield import Tile9
+from backend.tile.Tile10MeadowRoadCastle import Tile10
 
 
 def test():  # tests workings of a dfs algorithm in a cofiguration of 4 connected tiles

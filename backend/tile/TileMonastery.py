@@ -1,4 +1,4 @@
-from Tile import Tile
+from backend.tile.Tile import Tile
 
 
 class TileMonastery(Tile):

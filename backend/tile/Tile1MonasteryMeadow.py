@@ -1,6 +1,6 @@
-from Enums import Terrains, TileIDs
-from TileMeadow import TileMeadow
-from TileMonastery import TileMonastery
+from backend.tile.Enums import Terrains, TileIDs  # dziala
+from backend.tile.TileMeadow import TileMeadow
+from backend.tile.TileMonastery import TileMonastery
 
 
 class Tile1(TileMeadow, TileMonastery):

@@ -1,8 +1,8 @@
-from Tile21MeadowRoad import Tile21
-from Tile17MeadowRoadCastle import Tile17
-from Tile18MeadowRoadCastle import Tile18
-from Tile20MeadowRoadCastle import Tile20
-from Tile22MeadowRoad import Tile22
+from backend.tile.Tile21MeadowRoad import Tile21
+from backend.tile.Tile17MeadowRoadCastle import Tile17
+from backend.tile.Tile18MeadowRoadCastle import Tile18
+from backend.tile.Tile20MeadowRoadCastle import Tile20
+from backend.tile.Tile22MeadowRoad import Tile22
 
 
 def test():

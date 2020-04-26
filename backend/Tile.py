@@ -2,7 +2,19 @@
 from Enums import Terrains
 
 
-class Tile(Terrains):
+def reciprocal(num):
+    rec1 = [1, 2, 3, 4, 5, 6]
+    rec2 = [9, 8, 7, 12, 11, 10]
+    for i, j in enumerate(rec1):
+        if j == num:
+            return rec2[i]
+    for i, j in enumerate(rec2):
+        if j == num:
+            return rec1[i]
+    return None
+
+
+class Tile:
 
     #    1 2 3
     # 12       4
@@ -12,10 +24,18 @@ class Tile(Terrains):
 
     def __init__(self):
         # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
-        self.sides = [([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Tile.DEFAULT, 1, None)]
-        self.center = ([0], Tile.DEFAULT, 2, None)
+        self.sides = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.DEFAULT, 1, None]]
+        self.center = [[0], Terrains.DEFAULT, 2, None]
         self.orientation = 0  # 0- standard, 1- once to the left, 2- twice to the left, 3- thrice to the left
         self.amount = 0
+
+        self.upTile = None
+        self.rightTile = None
+        self.downTile = None
+        self.leftTile = None
+
+        self.points = 0
+        self.penalty_points = 0
 
     def turn_clockwise(self):
         for i in self.sides:
@@ -33,6 +53,12 @@ class Tile(Terrains):
         for i in self.sides:
             if terrain in i[0]:
                 return i[1]
+        return None
+
+    def find_side_whole(self, terrain):
+        for i in self.sides:
+            if terrain in i[0]:
+                return i
         return None
 
     def find_side_internal(self, terrain):
@@ -77,17 +103,63 @@ class Tile(Terrains):
             return True
         return False
 
-    def offer_to_place_a_pawn(self):
-        # to be expanded, regarding rules about placing a pawn near others
+    def dfs_start(self, side):  # depth-first search
+        neighbours = [(self, side)]  # (Tile, one of the sides)
+        self.dfs(side, neighbours)
+        return neighbours
 
-        available = [(i[0][0], i[1]) for i in self.sides if i[1]]  # all different areas to place a pawn
-        if self.center[1]:
+    def dfs(self, side, neighbours):
+        for i in side[0]:
+            if i in range(1, 4):
+                if self.upTile is not None:
+                    newelem = (self.upTile, self.upTile.find_side_whole(reciprocal(i)))
+                    if newelem not in neighbours:
+                        neighbours.append(newelem)
+                        self.upTile.dfs(newelem[1], neighbours)
+                else:
+                    neighbours.append((None, None))
+            if i in range(4, 7):
+                if self.rightTile is not None:
+                    newelem = (self.rightTile, self.rightTile.find_side_whole(reciprocal(i)))
+                    if newelem not in neighbours:
+                        neighbours.append(newelem)
+                        self.rightTile.dfs(newelem[1], neighbours)
+                else:
+                    neighbours.append((None, None))
+            if i in range(7, 10):
+                if self.downTile is not None:
+                    newelem = (self.downTile, self.downTile.find_side_whole(reciprocal(i)))
+                    if newelem not in neighbours:
+                        neighbours.append(newelem)
+                        self.downTile.dfs(newelem[1], neighbours)
+                else:
+                    neighbours.append((None, None))
+            if i in range(10, 13):
+                if self.leftTile is not None:
+                    newelem = (self.leftTile, self.leftTile.find_side_whole(reciprocal(i)))
+                    if newelem not in neighbours:
+                        neighbours.append(newelem)
+                        self.leftTile.dfs(newelem[1], neighbours)
+                else:
+                    neighbours.append((None, None))
+
+    def offer_to_place_a_pawn(self):
+        available = [(i[0][0], i[1]) for i in self.sides
+                     if i[1] != Terrains.DEFAULT  # all sides where terrain is not DEFAULT (0)
+                     and not ["Pawn detected" for j in self.dfs_start(i) if j[1] is not None and j[1][3] is not None]]  # and have no pawns
+        if self.center[1] != Terrains.DEFAULT and self.center[3] is None:
             available.append((self.center[0][0], self.center[1]))
         return available  # returns list of tuples (position, terrain)
 
-    def place_a_pawn(self, position, player):
-        pass
+    def place_a_pawn(self, terrain, player):  # terrain: number from 0 to 12 returned as first element in tuple returned from offer_to_place_a_pawn
+        if terrain == 0:
+            self.center[3] = player
+            return
+        side = self.find_side_whole(terrain)
+        if side is not None:
+            side[3] = player
+        else:
+            print("Couldn't place a pawn here due to an error!")
 
     def final_score(self, player):
         pass
-

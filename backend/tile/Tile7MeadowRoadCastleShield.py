@@ -1,7 +1,7 @@
-from Enums import Terrains, TileIDs
-from TileCastleShield import TileCastleShield
-from TileMeadow import TileMeadow
-from TileRoad import TileRoad
+from backend.tile.Enums import Terrains, TileIDs
+from backend.tile.TileCastleShield import TileCastleShield
+from backend.tile.TileMeadow import TileMeadow
+from backend.tile.TileRoad import TileRoad
 
 
 class Tile7(TileCastleShield, TileMeadow, TileRoad):

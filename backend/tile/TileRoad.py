@@ -1,5 +1,5 @@
-from Tile import Tile
-from Enums import Terrains
+from backend.tile.Tile import Tile
+from backend.tile.Enums import Terrains
 import operator
 
 

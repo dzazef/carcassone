@@ -1,6 +1,6 @@
-from Enums import Terrains, TileIDs
-from TileCastle import TileCastle
-from TileMeadow import TileMeadow
+from backend.tile.Enums import Terrains, TileIDs
+from backend.tile.TileCastle import TileCastle
+from backend.tile.TileMeadow import TileMeadow
 
 
 class Tile8(TileCastle, TileMeadow):

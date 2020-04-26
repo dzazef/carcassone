@@ -1,6 +1,6 @@
 from random import shuffle
 from backend.game.Board import Board
-from backend.tile import *
+import backend.tile as tiles
 
 
 class Game:
@@ -45,30 +45,30 @@ class Game:
 
         return False
 
-    def __setTileStack(self):
-        self.__tileStack.extend([Tile1MonasteryMeadow.py for _ in range(4)])
-        self.__tileStack.extend([Tile2MonasteryMeadowRoad.py for _ in range(2)])
-        self.__tileStack.extend([Tile3Castle.py for _ in range(1)])
-        self.__tileStack.extend([Tile4MeadowCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile5MeadowCastleShield.py for _ in range(1)])
-        self.__tileStack.extend([Tile6MeadowRoadCastle.py for _ in range(1)])
-        self.__tileStack.extend([Tile7MeadowRoadCastleShield.py for _ in range(2)])
-        self.__tileStack.extend([Tile8MeadowCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile9MeadowCastleShield.py for _ in range(2)])
-        self.__tileStack.extend([Tile10MeadowRoadCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile11MeadowRoadCastleShield.py for _ in range(2)])
-        self.__tileStack.extend([Tile12MeadowCastle.py for _ in range(1)])
-        self.__tileStack.extend([Tile13MeadowCastleShield.py for _ in range(2)])
-        self.__tileStack.extend([Tile14MeadowCastle.py for _ in range(2)])
-        self.__tileStack.extend([Tile15MeadowCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile16MeadowCastle.py for _ in range(5)])
-        self.__tileStack.extend([Tile17MeadowRoadCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile18MeadowRoadCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile19MeadowRoadCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile20MeadowRoadCastle.py for _ in range(3)])
-        self.__tileStack.extend([Tile21MeadowRoad.py for _ in range(8)])
-        self.__tileStack.extend([Tile22MeadowRoad.py for _ in range(9)])
-        self.__tileStack.extend([Tile23MeadowRoad.py for _ in range(4)])
-        self.__tileStack.extend([Tile24MeadowRoad.py for _ in range(1)])
+    def __setTileStack(self):  # to change, tile's number will be in tile class as static value
+        self.__tileStack.extend([tiles.Tile1() for _ in range(4)])
+        self.__tileStack.extend([tiles.Tile2() for _ in range(2)])
+        self.__tileStack.extend([tiles.Tile3() for _ in range(1)])
+        self.__tileStack.extend([tiles.Tile4() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile5() for _ in range(1)])
+        self.__tileStack.extend([tiles.Tile6() for _ in range(1)])
+        self.__tileStack.extend([tiles.Tile7() for _ in range(2)])
+        self.__tileStack.extend([tiles.Tile8() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile9() for _ in range(2)])
+        self.__tileStack.extend([tiles.Tile10() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile11() for _ in range(2)])
+        self.__tileStack.extend([tiles.Tile12() for _ in range(1)])
+        self.__tileStack.extend([tiles.Tile13() for _ in range(2)])
+        self.__tileStack.extend([tiles.Tile14() for _ in range(2)])
+        self.__tileStack.extend([tiles.Tile15() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile16() for _ in range(5)])
+        self.__tileStack.extend([tiles.Tile17() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile18() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile19() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile20() for _ in range(3)])
+        self.__tileStack.extend([tiles.Tile21() for _ in range(8)])
+        self.__tileStack.extend([tiles.Tile22() for _ in range(9)])
+        self.__tileStack.extend([tiles.Tile23() for _ in range(4)])
+        self.__tileStack.extend([tiles.Tile24() for _ in range(1)])
 
         shuffle(self.__tileStack)

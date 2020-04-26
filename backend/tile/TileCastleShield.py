@@ -1,4 +1,4 @@
-from TileCastle import TileCastle
+from .TileCastle import TileCastle
 
 
 class TileCastleShield(TileCastle):

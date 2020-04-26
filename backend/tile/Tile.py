@@ -1,5 +1,5 @@
 # ekserymentalna klasa reprezentacji płytek
-from Enums import Terrains
+from .Enums import Terrains
 
 
 def reciprocal(num):

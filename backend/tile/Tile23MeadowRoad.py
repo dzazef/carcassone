@@ -1,9 +1,9 @@
-from Enums import Terrains, TileIDs
-from TileMeadow import TileMeadow
-from TileRoad import TileRoad
+from .Enums import Terrains, TileIDs
+from .TileMeadow import TileMeadow
+from .TileRoad import TileRoad
 
 
-class Tile19(TileMeadow, TileRoad):
+class Tile23(TileMeadow, TileRoad):
 
     id = TileIDs.TILE23
 

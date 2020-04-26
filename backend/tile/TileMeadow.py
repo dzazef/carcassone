@@ -1,6 +1,6 @@
 from collections import Counter
-from Enums import Terrains
-from Tile import Tile
+from .Enums import Terrains
+from .Tile import Tile
 from itertools import groupby
 
 

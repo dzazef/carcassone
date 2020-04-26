@@ -1,5 +1,5 @@
-from Tile import Tile
-from Enums import Terrains
+from .Tile import Tile
+from .Enums import Terrains
 from collections import Counter
 
 

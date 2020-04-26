@@ -1,6 +1,6 @@
-from Enums import Terrains, TileIDs
-from TileMeadow import TileMeadow
-from TileMonastery import TileMonastery
+from .Enums import Terrains, TileIDs  # dziala
+from .TileMeadow import TileMeadow
+from .TileMonastery import TileMonastery
 
 
 class Tile1(TileMeadow, TileMonastery):

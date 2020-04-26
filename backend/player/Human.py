@@ -1,4 +1,4 @@
-from player import Player
+from backend.player.Player import Player
 
 
 class Human(Player):

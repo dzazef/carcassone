@@ -1,6 +1,6 @@
 from random import shuffle
-from game.Board import Board
-from backend import *
+from backend.game.Board import Board
+from backend.tile import *
 
 
 class Game:

@@ -1,16 +1,38 @@
 import React, {Component} from 'react';
-import BoardClass from "../../../board/BoardClass";
+import BoardCanvas from "../../../board/BoardCanvas";
 
 class Board extends Component {
 
+    tileChosenDummy = () => {
+        //TODO: Implement
+        console.log("tile chosen")
+    }
+
+    pawnChosenDummy = () => {
+        //TODO: Implement
+        console.log("pawn chosen")
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.boardCanvas.render(
+            this.props?.game?.board,
+            this.props?.game?.turn?.state,
+            this.props?.game?.turn?.possible_places,
+        )
+    }
+
     componentDidMount() {
-        this.boardClass = new BoardClass()
-        this.boardClass.print_something(this.context)
+        this.boardCanvas = new BoardCanvas(
+            this.canvas,
+            this.tileChosenDummy,
+            this.pawnChosenDummy
+        )
+        this.boardCanvas.render()
     }
 
     render() {
         return (
-            <canvas id={"m-game-canvas"} ref={(c) => this.context = c}>
+            <canvas id={"m-game-canvas"} ref={(c) => this.canvas = c}>
             </canvas>
         );
     }

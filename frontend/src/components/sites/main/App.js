@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
-import Carcassone from "../../sites/carcassone/Carcassone";
+import Board from "../../common/board/Board";
 
 function App() {
   return (
-    <Carcassone/>
+      // <Carcassone/>
+      <Board/>
   );
 }
 

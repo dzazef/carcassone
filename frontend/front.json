@@ -1,0 +1,59 @@
+{
+  "state": "S_MAIN_INITIAL / S_MAIN_GAME",
+  "ws": {
+    "state": "S_WS_DEFAULT / S_WS_CONNECTING / S_WS_CONNECTED / S_WS_DISCONNECTING / S_WS_DISCONNECTED / S_WS_ERROR"
+  },
+  "game": {
+    "state": "S_GAME_INITIAL / S_GAME_IN_LOBBY / S_GAME_STARTED / S_GAME_ENDED",
+    "my_id": "<number>",
+    "error": {
+      "message": "<message>",
+      "data": "<data>",
+      "action": "GAME_RCV_ERROR / GAME_PLAYER_LOBBY / GAME_START / GAME_BOARD / GAME_TURN_INFO / GAME_PAWN_INFO / GAME_END"
+    },
+    "tiles_left": "<number>",
+    "players": [
+      {
+        "id": "<number>",
+        "color": "<color>",
+        "points": "<number>",
+        "pawns_left": "<number>"
+      }
+    ],
+    "board": [
+      {
+        "x": "<number>",
+        "y": "<number>",
+        "id": "MMMTTTTTTKKKKKKKK",
+        "rotate": "<number>",
+        "pawn": {
+          "id": "<number>",
+          "x": "<number>",
+          "y": "<number>"
+        }
+      }
+    ],
+    "my_turn": "<true/false>",
+    "player_turn": "<number>",
+    "turn": {
+      "state": "S_SHOW_POSSIBLE_TILES / S_SHOW_POSSIBLE_PAWNS / S_EMPTY",
+      "tile": {
+        "id": "MMMTKMTKTMKTMKTMTKMTKMTKMTMTKMTKTMT",
+        "rotate": "<number>"
+      },
+      "possible_places": [
+        {
+          "x": "<number>",
+          "y": "<number>"
+        }
+      ]
+    },
+    "winners": [
+      {
+        "place": "<number>",
+        "id": "<number>",
+        "points": "<number>"
+      }
+    ]
+  }
+}

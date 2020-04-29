@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
-import Board from "../../common/board/Board";
+import GameF from '../../sites/game/GameF'
+import CarcassoneF from "../carcassone/CarcassoneF";
 
-function App() {
-  return (
-      // <Carcassone/>
-      <Board/>
-  );
+class App extends Component {
+    render() {
+        return (
+            this?.props?.appState === "S_MAIN_INITIAL"
+                ?
+                <CarcassoneF/>
+                :
+                <GameF/>
+        );
+    }
 }
 
 export default App;

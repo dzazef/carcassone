@@ -10,7 +10,7 @@ class TileCastle(Tile):  # tutaj cała logika zamków, czyli jak naliczają punk
         self.points = 2
         self.penalty_points = 1
 
-    def check_for_points_after_move(self):
+    def check_for_points_after_move_castle(self):
         result = {}  # dictionary- player: [points, freed pawns]
         for i in self.sides:  # check all areas
             if i[1] == Terrains.CASTLE:  # if it's the area we want
@@ -48,7 +48,7 @@ class TileCastle(Tile):  # tutaj cała logika zamków, czyli jak naliczają punk
                         j[1][3] = None
         return result
 
-    def check_for_points_after_game(self):  # awards points and then removes pawns
+    def check_for_points_after_game_castle(self):  # awards points and then removes pawns
         result = {}  # dictionary- player: points
         for i in self.sides:  # check all areas
             if i[1] == Terrains.CASTLE and i[3] is not None:  # if it's the area we want

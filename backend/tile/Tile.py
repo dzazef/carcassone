@@ -161,5 +161,61 @@ class Tile:
         else:
             print("Couldn't place a pawn here due to an error!")
 
-    def final_score(self, player):
-        pass
+    def count_neighbours(self):
+        neighbours = 0
+        j = self.upTile
+        if j is not None:
+            neighbours += 1
+            if j.leftTile is not None:
+                neighbours += 1
+            if j.rightTile is not None:
+                neighbours += 1
+        j = self.downTile
+        if j is not None:
+            neighbours += 1
+            if j.leftTile is not None:
+                neighbours += 1
+            if j.rightTile is not None:
+                neighbours += 1
+        j = self.leftTile
+        if j is not None:
+            neighbours += 1
+        j = self.rightTile
+        if j is not None:
+            neighbours += 1
+        return neighbours
+
+    def neighbours(self):
+        neighbours = []
+        j = self.upTile
+        if j is not None:
+            neighbours.append(j)
+            if j.leftTile is not None:
+                neighbours.append(j)
+            if j.rightTile is not None:
+                neighbours.append(j)
+        j = self.downTile
+        if j is not None:
+            neighbours.append(j)
+            if j.leftTile is not None:
+                neighbours.append(j)
+            if j.rightTile is not None:
+                neighbours.append(j)
+        j = self.leftTile
+        if j is not None:
+            neighbours.append(j)
+        j = self.rightTile
+        if j is not None:
+            neighbours.append(j)
+        return neighbours
+
+    def check_for_points_after_move_monastery(self):  # ad hoc solution, may be refractored
+        result = {}
+        n = self.neighbours()
+        for i in n:
+            if i.center[3] is not None and i.count_neighbours() == 8:  # and is instance of TileMonastery ?
+                result[i.center[3]] = [9, 1]
+                i.center[3] = None  # clear pawn
+        return result
+
+

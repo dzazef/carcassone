@@ -16,10 +16,11 @@ class Tile8(TileCastle, TileMeadow):
         self.center = [[0], Terrains.DEFAULT, 3, None]
 
     def after_move(self):
+        monastery = self.check_for_points_after_move_monastery()
         castle = self.check_for_points_after_move_castle()
-        return castle
+        return merge_dicts_during_game(monastery, castle)
 
     def after_game(self):
         castle = self.check_for_points_after_game_castle()
         meadow = self.check_for_points_after_game_meadow()
-        return merge_dicts_during_game(castle, meadow)
+        return merge_dicts_after_game(castle, meadow)

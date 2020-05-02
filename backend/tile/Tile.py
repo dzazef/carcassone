@@ -210,10 +210,12 @@ class Tile:
         return neighbours
 
     def check_for_points_after_move_monastery(self):  # ad hoc solution, may be refractored
+        from backend.tile.TileMonastery import TileMonastery
         result = {}
         n = self.neighbours()
+        n.append(self)  # can also be already finished
         for i in n:
-            if i.center[3] is not None and i.count_neighbours() == 8:  # and is instance of TileMonastery ?
+            if isinstance(i, TileMonastery) and i.center[3] is not None and i.count_neighbours() == 8:  # and is instance of TileMonastery ?
                 result[i.center[3]] = [9, 1]
                 i.center[3] = None  # clear pawn
         return result

@@ -6,6 +6,7 @@ from backend.tile.TileMeadow import TileMeadow
 class Tile13(TileCastleShield, TileMeadow):
 
     id = TileIDs.TILE13
+    amount = 2
 
     def __init__(self):
         super().__init__()
@@ -13,4 +14,3 @@ class Tile13(TileCastleShield, TileMeadow):
                       [[1, 2, 3], Terrains.MEADOW, 2, None],
                       [[7, 8, 9], Terrains.MEADOW, 3, None]]
         self.center = [[0], Terrains.DEFAULT, 4, None]
-        self.amount = 2

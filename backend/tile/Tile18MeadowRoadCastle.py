@@ -7,6 +7,7 @@ from backend.tile.TileRoad import TileRoad
 class Tile18(TileCastle, TileMeadow, TileRoad):
 
     id = TileIDs.TILE18
+    amount = 3
 
     def __init__(self):
         super().__init__()
@@ -15,4 +16,3 @@ class Tile18(TileCastle, TileMeadow, TileRoad):
                       [[4, 9, 10, 11, 12], Terrains.MEADOW, 2, None],
                       [[6, 7], Terrains.MEADOW, 4, None]]
         self.center = [[0], Terrains.DEFAULT, 5, None]
-        self.amount = 3

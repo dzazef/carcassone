@@ -21,13 +21,13 @@ class Tile:
     # 11   0   5
     # 10       6
     #    9 8 7
+    amount = 0
 
     def __init__(self):
         # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
         self.sides = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.DEFAULT, 1, None]]
         self.center = [[0], Terrains.DEFAULT, 2, None]
         self.orientation = 0  # 0- standard, 1- once to the left, 2- twice to the left, 3- thrice to the left
-        self.amount = 0
 
         self.upTile = None
         self.rightTile = None

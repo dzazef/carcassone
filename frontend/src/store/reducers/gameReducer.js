@@ -15,25 +15,11 @@ const defaultGameState = {
 //     return true
 // }
 
-const handlePlayerCount = (state, action) => {
-    const data = action.data
-    return {
-        ...state,
-        state: "S_GAME_IN_LOBBY",
-        my_id: ((state.my_id) ? state.my_id : data.me.id),
-        players: data.players
-    }
-}
-
-const handleGameStart = (state) => ({
-    ...state,
-    state: "S_GAME_STARTED"
-})
-
 const handleGameBoard = (state, action) => {
     const data = action.data
     return {
         ...state,
+        state: "S_GAME_ACTIVE",
         tiles_left: data.tiles_left,
         players: data.players,
         board: data.board
@@ -94,12 +80,8 @@ const handleResetError = (state) => ({
 export const gameReducer = (state = defaultGameState, action) => {
     try {
         const newState = handleResetError(state)
-        console.log(action.data)
+        console.log(action.data) //TODO
         switch (action.type) {
-            case 'GAME_PLAYER_LOBBY':
-                return handlePlayerCount(newState, action)
-            case 'GAME_START':
-                return handleGameStart(newState)
             case 'GAME_BOARD':
                 return handleGameBoard(newState, action)
             case 'GAME_TURN_INFO':

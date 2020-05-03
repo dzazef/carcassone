@@ -9,5 +9,5 @@ const mapDispatchToProps = (dispatch) => {
     //TODO: Implement
 }
 
-const BoardFunctional = connect(mapStateToProps, mapDispatchToProps)(Board)
-export default BoardFunctional
+const BoardF = connect(mapStateToProps, mapDispatchToProps)(Board)
+export default BoardF

@@ -1,6 +1,7 @@
 import Game from './Game'
 import {connect} from "react-redux";
-import * as PlayerActions from '../../../store/actions/playerActions'
+// import * as PlayerActions from '../../../store/actions/playerActions'
+import * as WsActions from '../../../store/actions/wsActions'
 
 const mapStateToProps = (state) => {
     return {
@@ -16,11 +17,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        playerJoin: data => dispatch(PlayerActions.playerJoin(data)),
-        playerReady: data => dispatch(PlayerActions.playerReady(data)),
-        playerRotateTile: data => dispatch(PlayerActions.playerRotateTile(data)),
-        playerPutTile: data => dispatch(PlayerActions.playerPutTile(data)),
-        playerEndTurn: data => dispatch(PlayerActions.playerEndTurn(data)),
+        wsSend: data => dispatch(WsActions.wsSend(data))
+        // playerJoin: data => dispatch(PlayerActions.playerJoin(data)),
+        // playerReady: data => dispatch(PlayerActions.playerReady(data)),
+        // playerRotateTile: data => dispatch(PlayerActions.playerRotateTile(data)),
+        // playerPutTile: data => dispatch(PlayerActions.playerPutTile(data)),
+        // playerEndTurn: data => dispatch(PlayerActions.playerEndTurn(data)),
     }
 }
 

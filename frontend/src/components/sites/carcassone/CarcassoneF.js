@@ -12,5 +12,5 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-const CarcassoneF = connect(() => {}, mapDispatchToProps)(Carcassone)
+const CarcassoneF = connect(() => ({}), mapDispatchToProps)(Carcassone)
 export default CarcassoneF

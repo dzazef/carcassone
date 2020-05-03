@@ -1,7 +1,17 @@
 {
-  "state": "S_MAIN_INITIAL / S_MAIN_GAME",
+  "state": "S_MAIN_INITIAL / S_MAIN_LOBBY / S_MAIN_GAME",
   "ws": {
     "state": "S_WS_DEFAULT / S_WS_CONNECTING / S_WS_CONNECTED / S_WS_DISCONNECTING / S_WS_DISCONNECTED / S_WS_ERROR"
+  },
+  "lobby": {
+    "my_id": "<number>",
+    "players": [
+      {
+        "id": "<number>",
+        "color": "<color>",
+        "ready": "<number>"
+      }
+    ]
   },
   "game": {
     "state": "S_GAME_INITIAL / S_GAME_IN_LOBBY / S_GAME_STARTED / S_GAME_ENDED",

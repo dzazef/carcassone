@@ -7,6 +7,7 @@ class Command:
         self._game = game
         self._data = data
 
+    # returns dictionary {websocket: json}
     @abstractmethod
     def execute(self):
         pass

@@ -21,6 +21,16 @@ class Tile24(TileMeadow, TileRoad):
                       [[11], Terrains.ROAD, 8, None]]
         self.center = [[0], Terrains.DEFAULT, 9, None]
 
+        self.code7x7 = [
+            [0, 2, 2, 3, 2, 2, 0],
+            [2, 2, 2, 3, 2, 2, 2],
+            [2, 2, 2, 3, 2, 2, 2],
+            [3, 3, 3, 5, 3, 3, 3],
+            [2, 2, 2, 3, 2, 2, 2],
+            [2, 2, 2, 3, 2, 2, 2],
+            [0, 2, 2, 3, 2, 2, 0]
+        ]
+
     def after_move(self):
         monastery = self.check_for_points_after_move_monastery()
         road = self.check_for_points_after_move_road()

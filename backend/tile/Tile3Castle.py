@@ -13,6 +13,16 @@ class Tile3(TileCastleShield):
         self.sides = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.CASTLESHIELD, 1, None]]
         self.center = [[0], Terrains.DEFAULT, 2, None]
 
+        self.code7x7 = [
+            [6, 1, 1, 1, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [0, 1, 1, 1, 1, 1, 0]
+        ]
+
     def after_move(self):  # returns dictionary {player: [points, pawns]}
         monastery = self.check_for_points_after_move_monastery()
         castle = self.check_for_points_after_move_castle()

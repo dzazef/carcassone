@@ -15,6 +15,16 @@ class Tile16(TileCastle, TileMeadow):
                       [[4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.MEADOW, 2, None]]
         self.center = [[0], Terrains.DEFAULT, 3, None]
 
+        self.code7x7 = [
+            [0, 1, 1, 1, 1, 1, 0],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2],
+            [0, 2, 2, 2, 2, 2, 0]
+        ]
+
     def after_move(self):
         monastery = self.check_for_points_after_move_monastery()
         castle = self.check_for_points_after_move_castle()

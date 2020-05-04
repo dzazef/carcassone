@@ -16,6 +16,16 @@ class Tile2(TileMeadow, TileMonastery, TileRoad):
                       [[8], Terrains.ROAD, 2, None]]
         self.center = [[0], Terrains.MONASTERY, 3, None]
 
+        self.code7x7 = [
+            [0, 2, 2, 2, 2, 2, 0],
+            [2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 4, 4, 4, 2, 2],
+            [2, 2, 4, 4, 4, 2, 2],
+            [2, 2, 4, 4, 4, 2, 2],
+            [2, 2, 2, 3, 2, 2, 2],
+            [0, 2, 2, 3, 2, 2, 0]
+        ]
+
     def after_move(self):  # returns dictionary {player: [points, pawns]}
         monastery = self.check_for_points_after_move_monastery()
         road = self.check_for_points_after_move_road()

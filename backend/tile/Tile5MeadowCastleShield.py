@@ -15,6 +15,16 @@ class Tile5(TileCastleShield, TileMeadow):
                       [[7, 8, 9], Terrains.MEADOW, 2, None]]
         self.center = [[0], Terrains.DEFAULT, 3, None]
 
+        self.code7x7 = [
+            [6, 1, 1, 1, 1, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1],
+            [0, 2, 2, 2, 2, 2, 0]
+        ]
+
     def after_move(self):  # returns dictionary {player: [points, pawns]}
         monastery = self.check_for_points_after_move_monastery()
         castle = self.check_for_points_after_move_castle()

@@ -13,8 +13,9 @@ class Server (Connection):
     async def analyze(self,data,websocket):
         command = self.factory.createCommand(self.game,data,websocket)
         sendBackJsonTab = (await command).execute()
-        for ws, message in data.items():
-            ws.send(message)
+        for ws, messages in sendBackJsonTab.items():
+            for message in messages:
+                await ws.send(message)
 
 
 myServer = Server()

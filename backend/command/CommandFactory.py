@@ -11,15 +11,16 @@ class CommandFactory:
         pass
 
     async def createCommand(self, game, data, websocket):
-        if data['type'] == "join":
+        print(data)
+        if data["type"] == "join":
             return JoinCommand(game, data, websocket)
-        elif data['type'] == "ready":
+        elif data["type"] == "ready":
             return ReadyCommand(game, data)
-        elif data['type'] == "rotate_tile":
+        elif data["type"] == "rotate_tile":
             return RotateTileCommand(game, data)
-        elif data['type'] == "put_tile":
+        elif data["type"] == "put_tile":
             return PutTileCommand(game, data)
-        elif data['type'] == "end_turn":
+        elif data["type"] == "end_turn":
             return EndTurnCommand(game, data)
-        elif data['type'] == "disconnect":
+        elif data["type"] == "disconnect":
             pass

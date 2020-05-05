@@ -27,8 +27,10 @@ const handleLobbyPlayer = (state, action) => {
 export const lobbyReducer = (state = defaultLobbyState, action) => {
     try {
         const newState = handleResetError(state)
-        console.log(action.data) //TODO
+        console.log('lr: ', action.data) //TODO
         switch (action.type) {
+            case 'LOBBY_INITIAL':
+                return defaultLobbyState
             case 'LOBBY_PLAYER':
                 return handleLobbyPlayer(newState, action)
             case 'LOBBY_RCV_ERROR': //TODO: separate reducer

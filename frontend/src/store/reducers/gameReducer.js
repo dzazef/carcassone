@@ -80,8 +80,10 @@ const handleResetError = (state) => ({
 export const gameReducer = (state = defaultGameState, action) => {
     try {
         const newState = handleResetError(state)
-        console.log(action.data) //TODO
+        console.log('gr: ', action.data) //TODO
         switch (action.type) {
+            case 'GAME_INITIAL':
+                return defaultGameState
             case 'GAME_BOARD':
                 return handleGameBoard(newState, action)
             case 'GAME_TURN_INFO':
@@ -90,8 +92,6 @@ export const gameReducer = (state = defaultGameState, action) => {
                 return handlePawnInfo(newState, action)
             case 'GAME_END':
                 return handleEnd(newState, action)
-            case 'GAME_INITIAL':
-                return defaultGameState
             case 'GAME_RCV_ERROR':
                 return handleError(newState, action.data.message,
                     action.data.data, 'GAME_RCV_ERROR')

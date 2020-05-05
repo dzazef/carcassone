@@ -66,13 +66,16 @@ const wsMiddleware = () => {
             store.dispatch(WSActions.wsError('Socket does not exists'))
             return
         }
-        if (store.getState().ws.state === 'WS_CONNECTED') {
+        if (store.getState().ws.state === 'S_WS_CONNECTED') {
             try {
                 console.log(`sending message to host: `, action.data)
                 socket.send(JSON.stringify(action.data))
             } catch (error) {
                 handleError(store, error)
             }
+        }
+        else {
+            handleError(store, {}) //TODO
         }
     }
 

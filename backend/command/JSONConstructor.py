@@ -11,7 +11,7 @@ class JSONConstructor:
                     "color": your_color,
                     "ready": ready
                 },
-                "players": []
+                "lobby": []
             }
         }
 
@@ -20,14 +20,20 @@ class JSONConstructor:
             player = {"id": players_list[i][0], "color": players_list[i][1], "ready": players_list[i][2]}
             player_json.append(player)
 
-        json1["data"]["players"] = player_json
+        json1["data"]["lobby"] = player_json
         return json1
 
     @staticmethod
-    def start_game():
+    def start_game(your_id, your_color, ready):
         json2 = {
             "type": "start",
-            "data": {}
+            "data": {
+                "me": {
+                    "id": your_id,
+                    "color": your_color,
+                    "ready": ready
+                }
+            }
         }
         return json2
 

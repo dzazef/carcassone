@@ -14,6 +14,13 @@ def reciprocal(num):
     return None
 
 
+def other_reciprocal(num):
+    rec = [(3, 3), (0, 1), (0, 3), (0, 5), (1, 6), (3, 6), (5, 6), (6, 5), (6, 3), (6, 1), (5, 0), (3, 0), (1, 0)]
+    if num in range(0, 13):
+        return rec[num]
+    return None
+
+
 class Tile:
 
     #    1 2 3
@@ -21,13 +28,15 @@ class Tile:
     # 11   0   5
     # 10       6
     #    9 8 7
+    amount = 0
 
     def __init__(self):
         # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
         self.sides = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.DEFAULT, 1, None]]
         self.center = [[0], Terrains.DEFAULT, 2, None]
         self.orientation = 0  # 0- standard, 1- once to the left, 2- twice to the left, 3- thrice to the left
-        self.amount = 0
+
+        self.code7x7 = [[0, 0, 0, 0, 0, 0, 0] for _ in range(0, 7)]
 
         self.upTile = None
         self.rightTile = None
@@ -37,13 +46,30 @@ class Tile:
         self.points = 0
         self.penalty_points = 0
 
+    def pawns_in_7x7(self):
+        players = []  # list of (playerID, row, column (row, column on 7x7 tile))
+        i = self.center
+        if i[3] is not None:
+            j = other_reciprocal(i[0][0])
+            players.append((i[3], j[0], j[1]))
+        for i in self.sides:
+            if i[3] is not None:
+                j = other_reciprocal(i[0][0])
+                players.append((i[3], j[0], j[1]))
+
+        return players
+
     def turn_clockwise(self):
+        self.code7x7 = list(zip(*self.code7x7[::-1]))
+
         for i in self.sides:
             for j in range(len(i[0])):
                 i[0][j] = (i[0][j] + 2) % 12 + 1
         self.orientation = (self.orientation - 1) % 4
 
     def turn_counterclockwise(self):
+        self.code7x7 = list(zip(*self.code7x7))[::-1]
+
         for i in self.sides:
             for j in range(len(i[0])):
                 i[0][j] = (i[0][j] - 4) % 12 + 1
@@ -161,5 +187,63 @@ class Tile:
         else:
             print("Couldn't place a pawn here due to an error!")
 
-    def final_score(self, player):
-        pass
+    def count_neighbours(self):
+        neighbours = 0
+        j = self.upTile
+        if j is not None:
+            neighbours += 1
+            if j.leftTile is not None:
+                neighbours += 1
+            if j.rightTile is not None:
+                neighbours += 1
+        j = self.downTile
+        if j is not None:
+            neighbours += 1
+            if j.leftTile is not None:
+                neighbours += 1
+            if j.rightTile is not None:
+                neighbours += 1
+        j = self.leftTile
+        if j is not None:
+            neighbours += 1
+        j = self.rightTile
+        if j is not None:
+            neighbours += 1
+        return neighbours
+
+    def neighbours(self):
+        neighbours = []
+        j = self.upTile
+        if j is not None:
+            neighbours.append(j)
+            if j.leftTile is not None:
+                neighbours.append(j)
+            if j.rightTile is not None:
+                neighbours.append(j)
+        j = self.downTile
+        if j is not None:
+            neighbours.append(j)
+            if j.leftTile is not None:
+                neighbours.append(j)
+            if j.rightTile is not None:
+                neighbours.append(j)
+        j = self.leftTile
+        if j is not None:
+            neighbours.append(j)
+        j = self.rightTile
+        if j is not None:
+            neighbours.append(j)
+        return neighbours
+
+    def check_for_points_after_move_monastery(self):  # ad hoc solution, may be refractored
+        from backend.tile.TileMonastery import TileMonastery
+        result = {}
+        n = self.neighbours()
+        n.append(self)  # can also be already finished
+        for i in n:
+            if isinstance(i, TileMonastery) and i.center[3] is not None and i.count_neighbours() == 8:  # and is instance of TileMonastery ?
+                result[i.center[3]] = [9, 1]
+                i.center[3] = None  # clear pawn
+        return result
+
+

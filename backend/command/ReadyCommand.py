@@ -15,7 +15,7 @@ class ReadyCommand(Command):
             if player.getId() == playerId:
                 player.setReady(True)
 
-        if False in [player.getReady() for player in players]:
+        if len(players) < 2 or False in [player.getReady() for player in players]:
             # not all players ready
             playersList = [[p.getId(), p.getColor(), p.getReady()] for p in players]
             json = {p.getWebsocket(): [dumps(JSONConstructor.players_info_json(

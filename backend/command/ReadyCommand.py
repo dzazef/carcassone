@@ -1,3 +1,4 @@
+from json import dumps
 from backend.command.Command import Command
 from backend.command.JSONConstructor import JSONConstructor
 
@@ -17,12 +18,13 @@ class ReadyCommand(Command):
         if False in [player.getReady() for player in players]:
             # not all players ready
             playersList = [[p.getId(), p.getColor(), p.getReady()] for p in players]
-            json = {p.getWebsocket(): JSONConstructor.players_info_json(p.getId(), p.getColor(),
-                                                                        p.getReady(), playersList)for p in players}
+            json = {p.getWebsocket(): [dumps(JSONConstructor.players_info_json(
+                p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
         else:
             # all players ready, start game
             self._game.start()
-            json = {p.getWebsocket(): JSONConstructor.start_game() for p in players}
+            json = {p.getWebsocket(): [dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady()))]
+                    for p in players}
             # to add to json info about board
 
         return json

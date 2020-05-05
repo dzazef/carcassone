@@ -42,10 +42,10 @@ def test():
             print("road not completed")
             break
     """
-    print(t1.count_points_after_game())  # returns {1: 6}
+    print(t1.check_for_points_after_game_road())  # returns {1: 6}
     t4.sides[0][3] = 2
     t3.sides[0][3] = 1
-    print(t3.count_points_after_game())  # returns {1: 6, 2: 6}
+    print(t3.check_for_points_after_game_road())  # returns {1: 6, 2: 6}
 
 
 if __name__ == '__main__':

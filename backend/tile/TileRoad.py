@@ -9,7 +9,7 @@ class TileRoad(Tile):
         super().__init__()
         self.points = 1
 
-    def count_points_after_move(self):
+    def check_for_points_after_move_road(self):
         score = {}
         x = 0
         for i in self.sides:
@@ -17,7 +17,7 @@ class TileRoad(Tile):
                 dfs = self.dfs_start(i)
                 for i in dfs:
                     if i == (None, None):
-                        return "not completed roade"
+                        return "not completed road"
                 how_many_tiles = [j[0] for j in dfs]
                 how_many_tiles2 = list(set(how_many_tiles))
                 points = len(how_many_tiles2)
@@ -41,7 +41,7 @@ class TileRoad(Tile):
                     j[1][3] = None
         return score
 
-    def count_points_after_game(self):
+    def check_for_points_after_game_road(self):
         score = {}
         for i in self.sides:
             if i[1] == Terrains.ROAD and i[3] is not None:

@@ -5,7 +5,7 @@ from backend.tile.Tile20MeadowRoadCastle import Tile20
 from backend.tile.Tile22MeadowRoad import Tile22
 
 
-def test():
+def test():  # co robi ten test?
     t1 = Tile21()
     t2 = Tile17()
     t3 = Tile18()
@@ -42,10 +42,10 @@ def test():
             print("road not completed")
             break
     """
-    print(t1.count_points_after_move())
+    print(t1.check_for_points_after_move_road())
     t4.sides[0][3] = 2
     t3.sides[0][3] = 1
-    print(t1.count_points_after_move())
+    print(t1.check_for_points_after_move_road())
 
 
 if __name__ == '__main__':

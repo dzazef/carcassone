@@ -1,4 +1,5 @@
 from itertools import count, filterfalse
+from json import dumps
 from backend.command.Command import Command
 from backend.player.Human import Human
 from backend.command.JSONConstructor import JSONConstructor
@@ -24,5 +25,5 @@ class JoinCommand(Command):
 
         # return json
         playersList = [[p.getId(), p.getColor(), p.getReady()] for p in players]
-        return {p.getWebsocket(): JSONConstructor.players_info_json(p.getId(), p.getColor(), p.getReady(), playersList)
-                for p in players}
+        return {p.getWebsocket(): [dumps(JSONConstructor.players_info_json(
+            p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}

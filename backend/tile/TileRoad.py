@@ -66,6 +66,6 @@ class TileRoad(Tile):
                         score[counter2[c][0]] = points
                     else:
                         score[counter2[c][0]] = 0
-                for j in dfs:  # clear pawns # do we have to though?
+                for j in dfs:  # clear pawns
                     j[1][3] = None
         return score

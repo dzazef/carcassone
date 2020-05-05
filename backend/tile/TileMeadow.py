@@ -58,7 +58,7 @@ class TileMeadow(Tile):
                     for j in counter2:
                         if j[0] in result:
                             result[j[0]] += len(nodupcastles) * 3
-                        else:
+                        elif len(nodupcastles) != 0:  # no need to report 0 points
                             result[j[0]] = len(nodupcastles) * 3
 
                     for j in whole_meadow:  # clear pawns

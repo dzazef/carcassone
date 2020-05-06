@@ -1,9 +1,12 @@
 import unittest
 from backend.tile.AuxFunctions import attach_left_right, attach_up_down
+from backend.tile.Enums import Terrains
 
+from backend.tile.Tile25Start import Tile25
 from backend.tile.Tile20MeadowRoadCastle import Tile20
 from backend.tile.Tile2MonasteryMeadowRoad import Tile2
 from backend.tile.Tile11MeadowRoadCastleShield import Tile11
+from backend.tile.Tile9MeadowCastleShield import Tile9
 from backend.tile.Tile8MeadowCastle import Tile8
 from backend.tile.Tile16MeadowCastle import Tile16
 from backend.tile.Tile14MeadowCastle import Tile14
@@ -77,6 +80,42 @@ class TestMeadow(unittest.TestCase):
 
         # seventh tile, this meadow was already checked, so there is no pawn
         self.assertEqual(t7.after_game(), {})
+
+    def test_2(self):
+
+        t1 = Tile25()  # first tile
+
+        t2 = Tile9()
+        self.assertEqual(t1.fit_up(t2), False)
+        t2.turn_counterclockwise()
+        self.assertEqual(t1.fit_up(t2), True)  # fits after rotating
+        attach_up_down(t2, t1)
+        # can place a pawn in the castle and on the meadow
+        self.assertEqual(t2.offer_to_place_a_pawn(), [(10, Terrains.CASTLE), (1, Terrains.MEADOW)])
+        t2.place_a_pawn(10, 1)  # player 1 place a pawn in the castle
+        self.assertEqual(t2.after_move(), {})  # no points given
+
+        # one turn:
+        # -if no tiles remain run function after_game() for each tile, merge their dictionaries and send to all clients
+        # -if there is a tile remaining take it from a deck
+        # -check if it can be placed anywhere on the board in any of its 4 possible rotations
+        # -if no, cast it aside and draw another tile
+        # -otherwise, send possible coordinates to the client
+        # -upon response from the client attach the tile to all adjecent ones
+        # -run offer_to_place_a_pawn() in the recently placed tile
+        # -for the convenience of frontend representation position of these pawns should be translated with the
+        #   other_reciprocal(num) function from Tile.py  ex. 4 = (1, 6) and then sent, upon response
+        #   if client did place a pawn its position should be translated back and then function
+        #   place_a_pawn(position, player) should be executed with the translated position as a 'position' parameter
+        # -execute function after_move() and sent the resulting dictionary to the client ({player: [points, No. pawns]})
+
+        t3 = Tile16()
+        t3.turn_clockwise()
+        self.assertTrue(t2.fit_left(t3))  # fits
+        attach_left_right(t3, t2)  # what a bad move from player 2!
+        self.assertEqual(t3.offer_to_place_a_pawn(), [(7, Terrains.MEADOW)])
+        # decides not to place a pawn
+        self.assertEqual(t3.after_move(), {1: [8, 1]})  # he gave player 1 8 points!(6 from catle tiles 2 from a shield)
 
 
 if __name__ == '__main__':

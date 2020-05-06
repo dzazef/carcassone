@@ -5,10 +5,6 @@ import operator
 
 class TileRoad(Tile):
 
-    def __init__(self):
-        super().__init__()
-        self.points = 1
-
     def check_for_points_after_move_road(self):
         score = {}
         x = 0

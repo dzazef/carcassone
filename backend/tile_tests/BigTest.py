@@ -124,12 +124,20 @@ class BigTest(unittest.TestCase):
         t11.sides[0][3] = 4
         t18.sides[3][3] = 4
 
-        # print(t2.check_for_points_after_game_castle())  # no one is there
+        self.assertEqual(t2.check_for_points_after_game_castle(), {})  # no one is there
 
         t20.sides[0][3] = 1
-        # print(t20.check_for_points_after_game_castle())  # player 1 is there
+        self.assertEqual(t20.check_for_points_after_game_castle(), {1: 5})  # player 1 is there
 
-        print(t8.check_for_points_after_game_meadow())
+        self.assertEqual(t8.check_for_points_after_game_meadow(), {2: 9, 1: 9})
+        self.assertEqual(t11.check_for_points_after_game_meadow(), {4: 12, 3: 12})
+        self.assertEqual(t1.check_for_points_after_game_meadow(), {1: 6})
+
+        t24.sides[0][3] = 1
+        self.assertEqual(t24.check_for_points_after_game_castle(), {1: 2})
+
+        t14.center[3] = 2
+        self.assertEqual(t14.check_for_points_after_game_monastery(), {2: 9})
 
 
 if __name__ == '__main__':

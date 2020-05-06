@@ -28,7 +28,7 @@ class TestMeadow(unittest.TestCase):
         t4.sides[1][3] = 2  # a pawn is placed (player 1)
 
         # castle is unfinished, but player 1 has a pawn here
-        self.assertEqual(t1.check_for_points_after_game_meadow(), {1: 0})
+        self.assertEqual(t1.check_for_points_after_game_meadow(), {})
 
         attach_left_right(t4, t1)
         attach_up_down(t3, t4)

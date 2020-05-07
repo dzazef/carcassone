@@ -238,16 +238,16 @@ class Tile:
         if j is not None:
             neighbours.append(j)
             if j.leftTile is not None:
-                neighbours.append(j)
+                neighbours.append(j.leftTile)
             if j.rightTile is not None:
-                neighbours.append(j)
+                neighbours.append(j.rightTile)
         j = self.downTile
         if j is not None:
             neighbours.append(j)
             if j.leftTile is not None:
-                neighbours.append(j)
+                neighbours.append(j.leftTile)
             if j.rightTile is not None:
-                neighbours.append(j)
+                neighbours.append(j.rightTile)
         j = self.leftTile
         if j is not None:
             neighbours.append(j)

@@ -1,3 +1,6 @@
+import {Tile} from "./graphic-utils/Tile";
+import {MyBoard} from "./graphic-utils/Board";
+
 /**
  * Class handling drawing board on canvas.
  */
@@ -34,10 +37,21 @@ class BoardCanvas {
      *        see front.json (game.turn.possible_places)
      */
     render = (board, turnState, possiblePlaces) => {
-        let ctx = this.canvas.getContext("2d");
-        ctx.beginPath();
-        ctx.arc(100, 75, 50, 0, 2 * Math.PI);
-        ctx.stroke();
+        const _board = new MyBoard(this.canvas, 300);
+        Object.freeze(_board);
+
+        let tileDescription = [
+            0, 1, 1, 1, 1, 1, 0,
+            2, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2,
+            3, 3, 3, 5, 3, 3, 3,
+            2, 2, 2, 3, 2, 2, 2,
+            2, 2, 2, 3, 2, 2, 2,
+            0, 2, 2, 3, 2, 2, 0
+        ];
+
+        const tile = new Tile(tileDescription, _board);
+        tile.setTileCoordinates(0.4, 0.4);
     }
 
 }

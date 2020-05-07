@@ -169,6 +169,12 @@ export class Tile {
         }
     }
 
+    setTilePosition(x, y) {
+        this.setTileCoordinates(
+            0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
+            0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+    }
+
     /**
      * ustala współrzędne środka płytki
      * @param x współrzędna x środka płytki (współrzędne znormalizowane)

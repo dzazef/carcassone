@@ -214,7 +214,7 @@ class TestCountingPoints(unittest.TestCase):
         self.assertEqual(t11.after_game(), {4: 12})  # player 4 is the only one on this meadow
         self.assertEqual(t12.after_game(), {})
         self.assertEqual(t13.after_game(), {})
-        self.assertEqual(t14.after_game(), {None: 1})
+        self.assertEqual(t14.after_game(), {})
         self.assertEqual(t15.after_game(), {})
         self.assertEqual(t16.after_game(), {})
         self.assertEqual(t17.after_game(), {})

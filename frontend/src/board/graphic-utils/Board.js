@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {Tile} from "./Tile";
+import {PossibleTilePlace} from "./PossibleTilePlace";
 
 export class MyBoard {
     /**
@@ -23,6 +24,26 @@ export class MyBoard {
             this.possiblePlaces = [];
             this.prepareApplication();
             this.prepareShaders();
+            document.addEventListener("keydown", handleKeyDown);
+            let that = this;
+            function handleKeyDown(e) {
+                let code = e.which;
+                // eslint-disable-next-line default-case
+                switch(code) {
+                    case 40:  // down
+                        that.moveTiles(0, 5);
+                        break;
+                    case 38:  // up
+                        that.moveTiles(0, -5);
+                        break;
+                    case 39:  // right
+                        that.moveTiles(5, 0);
+                        break;
+                    case 37:  // left
+                        that.moveTiles(-5, 0);
+                        break;
+                }
+            }
             MyBoard.instance = this;
         }
 
@@ -33,8 +54,6 @@ export class MyBoard {
      * rysuje płytki z listy board_json
      */
     drawTiles(board_json) {
-        // TODO: tworzenie obiektów Tile na podstawie listy board_json
-        //  i dodawanie ich do listy this.tiles
         let that = this;
         board_json.forEach(draw);
         function draw(item) {
@@ -47,6 +66,7 @@ export class MyBoard {
             let tile = new Tile(tile_id, that);
             tile.setTilePosition(item.x, item.y);
             tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
+            that.tiles.push(tile);
         }
     }
 
@@ -56,7 +76,13 @@ export class MyBoard {
      * @param possible_places_json
      */
     drawPossiblePlaces(possible_places_json) {
-
+       let that = this;
+       possible_places_json.forEach(draw);
+       function draw(item) {
+           let place = new PossibleTilePlace(that);
+           place.setTilePosition(item.x, item.y);
+           that.possiblePlaces.push(place);
+       }
     }
 
     /**
@@ -68,7 +94,12 @@ export class MyBoard {
      * @param dy przyrost na osi y
      */
     moveTiles(dx, dy) {
-
+        this.tiles.forEach(move);
+        this.possiblePlaces.forEach(move);
+        function move(item) {
+            item.move(dx, dy);
+            item.move(dx, dy);
+        }
     }
 
     prepareApplication() {

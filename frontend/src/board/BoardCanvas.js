@@ -1,6 +1,4 @@
-import {Tile} from "./graphic-utils/Tile";
 import {MyBoard} from "./graphic-utils/Board";
-import {PossibleTilePlace} from "./graphic-utils/PossibleTilePlace";
 
 /**
  * Class handling drawing board on canvas.
@@ -97,12 +95,56 @@ class BoardCanvas {
                 }
             }
         ];
+
+        possiblePlaces = [
+            {
+                x: -1,
+                y: -1
+            },
+            {
+                x: 0,
+                y: -1
+            },
+            {
+                x: -1,
+                y: 0
+            },
+            {
+                x: 1,
+                y: -1
+            },
+            {
+                x: 1,
+                y: 0
+            },
+            {
+                x: 0,
+                y: 0
+            },
+            {
+                x: 0,
+                y: 0
+            },
+            {
+                x: 2,
+                y: 0
+            },
+            {
+                x: 3,
+                y: 0
+            },
+            {
+                x: 4,
+                y: 0
+            }
+        ];
         //-------------------------------------------
 
         const _board = new MyBoard(this.canvas, 100, players);
         Object.freeze(_board);
 
         _board.drawTiles(board);
+        _board.drawPossiblePlaces(possiblePlaces);
 
         // let tileDescription = [
         //     0, 1, 1, 1, 1, 1, 0,
@@ -113,9 +155,12 @@ class BoardCanvas {
         //     2, 2, 2, 3, 2, 2, 2,
         //     0, 2, 2, 3, 2, 2, 0
         // ];
-        //
+
         // const tile0 = new Tile(tileDescription, _board);
-        // tile0.setTilePosition(0, 0);
+        // tile0.setTileCoordinates(-0.5, 0.0);
+        // console.log(tile0.rect.width);
+        // console.log(tile0.rect.y);
+        // _board.tiles.push(tile0);
         //
         // const tile1 = new Tile(tileDescription, _board);
         // tile1.setTilePosition(1, 0);

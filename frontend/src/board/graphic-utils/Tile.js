@@ -18,6 +18,7 @@ export class Tile {
             CASTLE_SHIELD: 6
         };
         this.board = board;
+        this.pawn = null;
         this.prepareRect(this.board.tileSize);
         this.setTileCoordinates(0.5, 0.5);
         this.attachShaders();
@@ -48,13 +49,14 @@ export class Tile {
         graphic.beginFill(color);
         graphic.drawCircle(0, 0, pawnSize / 2);
         graphic.endFill();
+        this.pawn = graphic;
     }
 
     prepareRect(size) {
         this.rect = new PIXI.Graphics();
 
         this.rect.beginFill(0x008000);
-        this.rect.lineStyle(2, 0x000000);
+        this.rect.lineStyle(1, 0x000000);
         this.rect.drawRect(0.0, 0.0, size, size);
         this.rect.endFill();
 
@@ -65,6 +67,8 @@ export class Tile {
         const uniforms = {
             dimensions: [this.rect.width, this.rect.height],
             tileDescription: this.id,
+            uMove: [0.0, 0.0],
+            uMove2: [0.0, 0.0],
             DEFAULT: this.terrains.DEFAULT,
             CASTLE: this.terrains.CASTLE,
             MEADOW: this.terrains.MEADOW,
@@ -81,16 +85,43 @@ export class Tile {
         function handleLoadComplete() {
             // const vShader = that.board.loader.resources["./shaders/vShader.vert"].data;
             // const fShader = that.board.loader.resources["./shaders/fShader.frag"].data;
+            // const vShader = "attribute vec2 aVertexPosition;\n" +
+            //     "attribute vec2 aTextureCoord;\n" +
+            //     "uniform mat3 projectionMatrix;\n" +
+            //     "varying vec2 vTextureCoord;\n" +
+            //     "\n" +
+            //     "void main(void)\n" +
+            //     "{\n" +
+            //     "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n" +
+            //     "    vTextureCoord = aTextureCoord;\n" +
+            //     "}";
             const vShader = "attribute vec2 aVertexPosition;\n" +
                 "attribute vec2 aTextureCoord;\n" +
                 "uniform mat3 projectionMatrix;\n" +
                 "varying vec2 vTextureCoord;\n" +
                 "\n" +
+                "uniform vec2 uMove;\n" +
+                "uniform vec2 uMove2;\n" +
+                "\n" +
                 "void main(void)\n" +
                 "{\n" +
-                "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n" +
+                "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0) + vec4(uMove, 0.0, 0.0);\n" +
                 "    vTextureCoord = aTextureCoord;\n" +
                 "}";
+
+            // const vShader = "attribute vec2 aVertexPosition;\n" +
+            //     "attribute vec2 aTextureCoord;\n" +
+            //     "uniform mat3 projectionMatrix;\n" +
+            //     "varying vec2 vTextureCoord;\n" +
+            //     "\n" +
+            //     "uniform vec2 uMove;\n" +
+            //     "\n" +
+            //     "void main(void)\n" +
+            //     "{\n" +
+            //     "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n" +
+            //     "    vTextureCoord = aTextureCoord + uMove;\n" +
+            //     "}";
+
             const fShader = "precision mediump float;\n" +
                 "\n" +
                 "varying vec2 vTextureCoord;\n" +
@@ -194,6 +225,7 @@ export class Tile {
             // podłączenie filtra do kwadratu
             that.rect.filters = [filter];
         }
+        this.uniforms = uniforms;
     }
 
     /**
@@ -227,7 +259,13 @@ export class Tile {
      * @param dy przyrost w pikselach na osi y
      */
     move(dx, dy) {
+         this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
+         this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
 
+        if(this.pawn !== null) {
+            this.pawn.x += dx;
+            this.pawn.y += dy;
+        }
     }
 
     /**

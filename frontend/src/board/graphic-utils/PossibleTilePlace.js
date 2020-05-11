@@ -14,7 +14,8 @@ export class PossibleTilePlace {
     prepareRect(size) {
         this.rect = new PIXI.Graphics();
 
-        this.rect.lineStyle(2, 0xe6e600);
+        this.lineWidth = 1;  // grubość kontur w pikselach
+        this.rect.lineStyle(this.lineWidth, 0xe6e600);
         this.rect.drawRect(0.0, 0.0, size, size);
 
         this.board.app.stage.addChild(this.rect);
@@ -32,7 +33,7 @@ export class PossibleTilePlace {
      * @param y współrzędna y środka płytki (współrzędne znormalizowane)
      */
     setTileCoordinates(x, y) {
-        this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2;
+        this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2 - this.lineWidth / 2;
         this.rect.y = y * this.board.app.renderer.screen.height - this.rect.height / 2;
     }
 
@@ -42,6 +43,7 @@ export class PossibleTilePlace {
      * @param dy dy przyrost w pikselach na osi y
      */
     move(dx, dy) {
-
+        this.rect.x += dx;
+        this.rect.y += dy;
     }
 }

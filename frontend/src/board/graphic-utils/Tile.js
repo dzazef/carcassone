@@ -4,7 +4,7 @@ export class Tile {
     /**
      * konstruktor klasy Tile
      * @param id id płytki
-     * @param board
+     * @param board plansza, do której należy ta płytka
      */
     constructor(id, board) {
         this.id = id;
@@ -21,6 +21,33 @@ export class Tile {
         this.prepareRect(this.board.tileSize);
         this.setTileCoordinates(0.5, 0.5);
         this.attachShaders();
+    }
+
+    /**
+     * rysuje pionek na tej płytce
+     * @param x numer wiersza, w którym należy postawić pionek
+     * @param y numer kolumny, w którym należy postawić pionek
+     * @param playerId id gracza, którego pionek należy narysować
+     */
+    putPawn(x, y, playerId) {
+        //TODO: zrobić sprite, który postawię w odpowiednim wierszu
+        // i odpowiedniej kolumnie na płytce (położenie pionka ustalić
+        // na podstawie this.rect.height i this.rect.width oraz x i y).
+        // Trzeba też zapisać referencje do tego sprite'a w this.pawn.
+
+        // narazie pionek będzie kółkiem. Jak zadziała,
+        // to zmienię na jakiegoś sprite'a
+        let graphic = new PIXI.Graphics();
+        this.board.app.stage.addChild(graphic);
+        let color = this.board.getPlayerHexColor(playerId);
+        let pawnSize = this.rect.width / 8;  // średnica
+        let cellSize = this.rect.width / 7;
+        graphic.x = this.rect.x + cellSize / 2 + y * cellSize;
+        graphic.y = this.rect.y + cellSize / 2 + x * cellSize;
+        graphic.lineStyle(1, color);
+        graphic.beginFill(color);
+        graphic.drawCircle(0, 0, pawnSize / 2);
+        graphic.endFill();
     }
 
     prepareRect(size) {
@@ -169,10 +196,38 @@ export class Tile {
         }
     }
 
+    /**
+     * ustawia płytkę na właściwej pozycji na planszy
+     * @param x o ile wierszy ta płytka jest przesunięta względem środkowej płytki
+     * @param y o ile kolumn ta płytka jest przesunięta względem środkowej płytki
+     */
     setTilePosition(x, y) {
         this.setTileCoordinates(
             0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
             0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+    }
+
+    /**
+     * zwraca współrzędną x lewego górnego rogu płytki (w pikselach)
+     */
+    getX() {
+        return this.rect.x;
+    }
+
+    /**
+     * zwraca współrzędną y lewego górnego rogu płytki (w pikselach)
+     */
+    getY() {
+        return this.rect.y;
+    }
+
+    /**
+     * przesuwa płytkę i pionka
+     * @param dx przyrost w pikselach na osi x
+     * @param dy przyrost w pikselach na osi y
+     */
+    move(dx, dy) {
+
     }
 
     /**

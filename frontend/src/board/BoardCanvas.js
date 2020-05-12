@@ -141,10 +141,11 @@ class BoardCanvas {
         //-------------------------------------------
 
         const _board = new MyBoard(this.canvas, 100, players);
-        Object.freeze(_board);
 
         _board.drawTiles(board);
         _board.drawPossiblePlaces(possiblePlaces);
+
+        Object.freeze(_board);
 
         // let tileDescription = [
         //     0, 1, 1, 1, 1, 1, 0,

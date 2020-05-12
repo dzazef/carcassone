@@ -19,6 +19,9 @@ export class Tile {
         };
         this.board = board;
         this.pawn = null;
+        // współrzędne znormalizowane środka płytki
+        // this.centerX
+        // this.centerY
         this.prepareRect(this.board.tileSize);
         this.setTileCoordinates(0.5, 0.5);
         this.attachShaders();
@@ -78,9 +81,9 @@ export class Tile {
             CASTLE_SHIELD: this.terrains.CASTLE_SHIELD
         };
 
+        let that = this;
         this.board.loader.onComplete.add(handleLoadComplete)
         this.board.loader.load();
-        let that = this;
 
         function handleLoadComplete() {
             // const vShader = that.board.loader.resources["./shaders/vShader.vert"].data;
@@ -234,23 +237,20 @@ export class Tile {
      * @param y o ile kolumn ta płytka jest przesunięta względem środkowej płytki
      */
     setTilePosition(x, y) {
-        this.setTileCoordinates(
-            0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-            0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
-    }
+        if(this.board.firstTile === null) {
+            this.setTileCoordinates(
+                0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
+                0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+        } else {
+            // współrzędna x środka pierwszej płytki w postaci znormalizowanej
+            let firstTileX = this.board.firstTile.centerX;
+            // współrzędna x środka pierwszej płytki w postaci znormalizowanej
+            let firstTileY = this.board.firstTile.centerY;
 
-    /**
-     * zwraca współrzędną x lewego górnego rogu płytki (w pikselach)
-     */
-    getX() {
-        return this.rect.x;
-    }
-
-    /**
-     * zwraca współrzędną y lewego górnego rogu płytki (w pikselach)
-     */
-    getY() {
-        return this.rect.y;
+            this.setTileCoordinates(
+                firstTileX + y * (this.board.tileSize / this.board.app.renderer.screen.width),
+                firstTileY + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+        }
     }
 
     /**
@@ -261,6 +261,9 @@ export class Tile {
     move(dx, dy) {
          this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
          this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
+
+         this.centerX += dx / this.board.app.renderer.screen.width;
+         this.centerY += dy / this.board.app.renderer.screen.height;
 
         if(this.pawn !== null) {
             this.pawn.x += dx;
@@ -276,5 +279,7 @@ export class Tile {
     setTileCoordinates(x, y) {
         this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2;
         this.rect.y = y * this.board.app.renderer.screen.height - this.rect.height / 2;
+        this.centerX = x;
+        this.centerY = y;
     }
 }

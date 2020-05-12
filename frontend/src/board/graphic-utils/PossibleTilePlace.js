@@ -22,9 +22,24 @@ export class PossibleTilePlace {
     }
 
     setTilePosition(x, y) {
-        this.setTileCoordinates(
-            0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-            0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+        // this.setTileCoordinates(
+        //     0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
+        //     0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+
+        if(this.board.firstTile === null) {
+            this.setTileCoordinates(
+                0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
+                0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+        } else {
+            // współrzędna x środka pierwszej płytki w postaci znormalizowanej
+            let firstTileX = this.board.firstTile.centerX;
+            // współrzędna x środka pierwszej płytki w postaci znormalizowanej
+            let firstTileY = this.board.firstTile.centerY;
+
+            this.setTileCoordinates(
+                firstTileX + y * (this.board.tileSize / this.board.app.renderer.screen.width),
+                firstTileY + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+        }
     }
 
     /**

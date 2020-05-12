@@ -22,6 +22,7 @@ export class MyBoard {
             // lista wszystkich płytek narysowanych na planszy
             this.tiles = [];
             this.possiblePlaces = [];
+            this.firstTile = null;
             this.prepareApplication();
             this.prepareShaders();
             document.addEventListener("keydown", handleKeyDown);
@@ -31,19 +32,25 @@ export class MyBoard {
                 // eslint-disable-next-line default-case
                 switch(code) {
                     case 40:  // down
-                        that.moveTiles(0, 5);
-                        break;
-                    case 38:  // up
                         that.moveTiles(0, -5);
                         break;
+                    case 38:  // up
+                        that.moveTiles(0, 5);
+                        break;
                     case 39:  // right
-                        that.moveTiles(5, 0);
+                        that.moveTiles(-5, 0);
                         break;
                     case 37:  // left
-                        that.moveTiles(-5, 0);
+                        that.moveTiles(5, 0);
                         break;
                 }
             }
+            this.canvas.addEventListener("mousedown", handleMouseDown);
+
+            function handleMouseDown(e) {
+
+            }
+
             MyBoard.instance = this;
         }
 
@@ -67,6 +74,11 @@ export class MyBoard {
             tile.setTilePosition(item.x, item.y);
             tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
             that.tiles.push(tile);
+            // jeśli to była środkowa płytka, to zapamiętujemy ją
+            if(item.x === 0 && item.y === 0) {
+                that.firstTile = tile;
+                console.log("tu");
+            }
         }
     }
 

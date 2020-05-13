@@ -25,9 +25,6 @@ export class MyBoard {
             this.tiles = [];
             this.possiblePlaces = [];
             this.firstTile = null;
-            this.tileVertexShader = null;
-            this.tileFragmentShader = null;
-            this.shieldTexture = null;
             this.CASTLE_SHIELD = 6;  // oznaczenie na tarczę na płytce
             this.prepareApplication();
             this.prepareShaders();

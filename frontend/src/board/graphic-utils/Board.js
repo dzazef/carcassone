@@ -25,30 +25,56 @@ export class MyBoard {
             this.firstTile = null;
             this.prepareApplication();
             this.prepareShaders();
+
+            // przesuwanie planszy strzałkami
             document.addEventListener("keydown", handleKeyDown);
             let that = this;
+            let speed = 5;
             function handleKeyDown(e) {
                 let code = e.which;
                 // eslint-disable-next-line default-case
                 switch(code) {
                     case 40:  // down
-                        that.moveTiles(0, -5);
+                        that.moveTiles(0, -speed);
                         break;
                     case 38:  // up
-                        that.moveTiles(0, 5);
+                        that.moveTiles(0, speed);
                         break;
                     case 39:  // right
-                        that.moveTiles(-5, 0);
+                        that.moveTiles(-speed, 0);
                         break;
                     case 37:  // left
-                        that.moveTiles(5, 0);
+                        that.moveTiles(speed, 0);
                         break;
                 }
             }
+
+            // przesuwanie planszy myszką
+            let mousedown = false;
+            let mouseX = 0;  // współrzędne kursora na canvasie
+            let mouseY = 0;
             this.canvas.addEventListener("mousedown", handleMouseDown);
-
             function handleMouseDown(e) {
-
+                mousedown = true;
+                mouseX = e.clientX - canvas.getBoundingClientRect().left;
+                mouseY = e.clientY - canvas.getBoundingClientRect().top;
+            }
+            this.canvas.addEventListener("mouseup", handleMouseUp);
+            this.canvas.addEventListener("mouseleave", handleMouseUp);
+            function handleMouseUp(e) {
+                mousedown = false;
+            }
+            this.canvas.addEventListener("mousemove", handleMouseMove);
+            function handleMouseMove(e) {
+                if(mousedown) {
+                    let currentMouseX = e.clientX - canvas.getBoundingClientRect().left;
+                    let currentMouseY = e.clientY - canvas.getBoundingClientRect().top;
+                    let dx = mouseX - currentMouseX;
+                    let dy = mouseY - currentMouseY;
+                    that.moveTiles(-dx / 5, -dy / 5);
+                    mouseX = currentMouseX;
+                    mouseY = currentMouseY;
+                }
             }
 
             MyBoard.instance = this;
@@ -77,7 +103,6 @@ export class MyBoard {
             // jeśli to była środkowa płytka, to zapamiętujemy ją
             if(item.x === 0 && item.y === 0) {
                 that.firstTile = tile;
-                console.log("tu");
             }
         }
     }
@@ -123,11 +148,35 @@ export class MyBoard {
             resolution: window.devicePixelRatio,
             autoDensity: true
         });
+        let that = this;
+        window.addEventListener('resize', resize);
+        function resize() {
+            let _w = window.innerWidth;
+            let _h = window.innerHeight;
+
+            that.app.renderer.resize(_w, _h);
+            that.redrawTiles();
+            that.redrawPossiblePlaces();
+        }
     }
 
     prepareShaders() {
         this.loader = PIXI.Loader.shared;
         this.loader.add(['./shaders/vShader.vert', './shaders/fShader.frag']);
+    }
+
+    redrawTiles() {
+        this.tiles.forEach(drawTile);
+        function drawTile(item) {
+            item.redraw();
+        }
+    }
+
+    redrawPossiblePlaces() {
+        this.possiblePlaces.forEach(drawPlaces);
+        function drawPlaces(item) {
+            item.redraw();
+        }
     }
 
     /**

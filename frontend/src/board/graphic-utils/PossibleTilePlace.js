@@ -7,6 +7,8 @@ export class PossibleTilePlace {
      */
     constructor(board) {
         this.board = board;
+        this.row = 0;  // rząd, w którym znajduje się płytka
+        this.column = 0;  // kolumna, w której znajduje się płytka
         this.prepareRect(this.board.tileSize);
         this.setTileCoordinates(0.5, 0.5);
     }
@@ -25,7 +27,8 @@ export class PossibleTilePlace {
         // this.setTileCoordinates(
         //     0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
         //     0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
-
+        this.row = x;
+        this.column = y;
         if(this.board.firstTile === null) {
             this.setTileCoordinates(
                 0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
@@ -60,5 +63,12 @@ export class PossibleTilePlace {
     move(dx, dy) {
         this.rect.x += dx;
         this.rect.y += dy;
+    }
+
+    redraw() {
+        // this.setTilePosition(this.row, this.column);
+        this.setTileCoordinates(
+            0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
+            0.5 + this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
     }
 }

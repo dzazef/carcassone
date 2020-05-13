@@ -19,9 +19,13 @@ export class Tile {
         };
         this.board = board;
         this.pawn = null;
+        this.row = 0;  // rząd, w którym znajduje się płytka
+        this.column = 0;  // kolumna, w której znajduje się płytka
         // współrzędne znormalizowane środka płytki
         // this.centerX
         // this.centerY
+        this.pawnRow = 0;  // rząd, w którym znajduje się pionek
+        this.pawnColumn = 0;  // kolumna, w której znajduje się pionek
         this.prepareRect(this.board.tileSize);
         this.setTileCoordinates(0.5, 0.5);
         this.attachShaders();
@@ -34,25 +38,33 @@ export class Tile {
      * @param playerId id gracza, którego pionek należy narysować
      */
     putPawn(x, y, playerId) {
-        //TODO: zrobić sprite, który postawię w odpowiednim wierszu
-        // i odpowiedniej kolumnie na płytce (położenie pionka ustalić
-        // na podstawie this.rect.height i this.rect.width oraz x i y).
-        // Trzeba też zapisać referencje do tego sprite'a w this.pawn.
-
         // narazie pionek będzie kółkiem. Jak zadziała,
         // to zmienię na jakiegoś sprite'a
         let graphic = new PIXI.Graphics();
         this.board.app.stage.addChild(graphic);
         let color = this.board.getPlayerHexColor(playerId);
         let pawnSize = this.rect.width / 8;  // średnica
-        let cellSize = this.rect.width / 7;
-        graphic.x = this.rect.x + cellSize / 2 + y * cellSize;
-        graphic.y = this.rect.y + cellSize / 2 + x * cellSize;
+        // graphic.x = this.rect.x + cellSize / 2 + y * cellSize;
+        // graphic.y = this.rect.y + cellSize / 2 + x * cellSize;
         graphic.lineStyle(1, color);
         graphic.beginFill(color);
         graphic.drawCircle(0, 0, pawnSize / 2);
         graphic.endFill();
         this.pawn = graphic;
+        this.pawnRow = x;
+        this.pawnColumn = y;
+        this.setPawnPosition(x, y);
+    }
+
+    setPawnPosition(x, y) {
+        let cellSize = this.rect.width / 7;
+        // współrzędne na canvasie lewego górnego rogu płytki
+        let rectX = this.centerX * this.board.app.renderer.screen.width - this.rect.width / 2;
+        let rectY = this.centerY * this.board.app.renderer.screen.height - this.rect.height / 2;
+        // this.pawn.x = this.rect.x + cellSize / 2 + y * cellSize;
+        // this.pawn.y = this.rect.y + cellSize / 2 + x * cellSize;
+        this.pawn.x = rectX + cellSize / 2 + y * cellSize;
+        this.pawn.y = rectY + cellSize / 2 + x * cellSize;
     }
 
     prepareRect(size) {
@@ -86,18 +98,6 @@ export class Tile {
         this.board.loader.load();
 
         function handleLoadComplete() {
-            // const vShader = that.board.loader.resources["./shaders/vShader.vert"].data;
-            // const fShader = that.board.loader.resources["./shaders/fShader.frag"].data;
-            // const vShader = "attribute vec2 aVertexPosition;\n" +
-            //     "attribute vec2 aTextureCoord;\n" +
-            //     "uniform mat3 projectionMatrix;\n" +
-            //     "varying vec2 vTextureCoord;\n" +
-            //     "\n" +
-            //     "void main(void)\n" +
-            //     "{\n" +
-            //     "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n" +
-            //     "    vTextureCoord = aTextureCoord;\n" +
-            //     "}";
             const vShader = "attribute vec2 aVertexPosition;\n" +
                 "attribute vec2 aTextureCoord;\n" +
                 "uniform mat3 projectionMatrix;\n" +
@@ -111,19 +111,6 @@ export class Tile {
                 "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0) + vec4(uMove, 0.0, 0.0);\n" +
                 "    vTextureCoord = aTextureCoord;\n" +
                 "}";
-
-            // const vShader = "attribute vec2 aVertexPosition;\n" +
-            //     "attribute vec2 aTextureCoord;\n" +
-            //     "uniform mat3 projectionMatrix;\n" +
-            //     "varying vec2 vTextureCoord;\n" +
-            //     "\n" +
-            //     "uniform vec2 uMove;\n" +
-            //     "\n" +
-            //     "void main(void)\n" +
-            //     "{\n" +
-            //     "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0);\n" +
-            //     "    vTextureCoord = aTextureCoord + uMove;\n" +
-            //     "}";
 
             const fShader = "precision mediump float;\n" +
                 "\n" +
@@ -237,6 +224,8 @@ export class Tile {
      * @param y o ile kolumn ta płytka jest przesunięta względem środkowej płytki
      */
     setTilePosition(x, y) {
+        this.row = x;
+        this.column = y;
         if(this.board.firstTile === null) {
             this.setTileCoordinates(
                 0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
@@ -281,5 +270,18 @@ export class Tile {
         this.rect.y = y * this.board.app.renderer.screen.height - this.rect.height / 2;
         this.centerX = x;
         this.centerY = y;
+    }
+
+    redraw() {
+        this.uniforms.uMove[0] = 0.0;
+        this.uniforms.uMove[1] = 0.0;
+        this.setTileCoordinates(
+            0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
+            0.5 + this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
+        console.log(this.row);
+        console.log(this.column);
+        if(this.pawn !== null) {
+            this.setPawnPosition(this.pawnRow, this.pawnColumn);
+        }
     }
 }

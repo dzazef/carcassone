@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
 import {Tile} from "./Tile";
 import {PossibleTilePlace} from "./PossibleTilePlace";
+import vertexShader from './shaders/vShader.vert';
+import fragmentShader from './shaders/fShader.frag';
 
 export class MyBoard {
     /**
@@ -23,6 +25,10 @@ export class MyBoard {
             this.tiles = [];
             this.possiblePlaces = [];
             this.firstTile = null;
+            this.tileVertexShader = null;
+            this.tileFragmentShader = null;
+            this.shieldTexture = null;
+            this.CASTLE_SHIELD = 6;  // oznaczenie na tarczę na płytce
             this.prepareApplication();
             this.prepareShaders();
 
@@ -91,14 +97,27 @@ export class MyBoard {
         board_json.forEach(draw);
         function draw(item) {
             let tile_id = [];
+            let shieldTile = false;  // czy płytka jest oznaczona tarczą
+            let shieldRow = 0;  // numer wiersza, w którym znajduje się tarcza
+            let shieldColumn = 0;
             for(let i = 0; i < item.id.length; i++) {
                 for (let j = 0; j < item.id[i].length; j++) {
                     tile_id.push(item.id[i][j]);
+                    if(item.id[i][j] === that.CASTLE_SHIELD) {
+                        shieldTile = true;
+                        shieldRow = i;
+                        shieldColumn = j;
+                    }
                 }
             }
             let tile = new Tile(tile_id, that);
             tile.setTilePosition(item.x, item.y);
-            tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
+            if(item.pawn !== null) {
+                tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
+            }
+            if(shieldTile) {
+                tile.drawShield(shieldRow, shieldColumn);
+            }
             that.tiles.push(tile);
             // jeśli to była środkowa płytka, to zapamiętujemy ją
             if(item.x === 0 && item.y === 0) {
@@ -162,7 +181,8 @@ export class MyBoard {
 
     prepareShaders() {
         this.loader = PIXI.Loader.shared;
-        this.loader.add(['./shaders/vShader.vert', './shaders/fShader.frag']);
+        //this.loader.add(['./shaders/vShader.vert', './shaders/fShader.frag']);
+        this.loader.add([vertexShader, fragmentShader]);
     }
 
     redrawTiles() {

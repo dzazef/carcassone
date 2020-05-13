@@ -32,7 +32,7 @@ export class PossibleTilePlace {
         if(this.board.firstTile === null) {
             this.setTileCoordinates(
                 0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-                0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+                0.5 - x * (this.board.tileSize / this.board.app.renderer.screen.height));
         } else {
             // współrzędna x środka pierwszej płytki w postaci znormalizowanej
             let firstTileX = this.board.firstTile.centerX;
@@ -41,7 +41,7 @@ export class PossibleTilePlace {
 
             this.setTileCoordinates(
                 firstTileX + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-                firstTileY + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+                firstTileY - x * (this.board.tileSize / this.board.app.renderer.screen.height));
         }
     }
 
@@ -69,6 +69,6 @@ export class PossibleTilePlace {
         // this.setTilePosition(this.row, this.column);
         this.setTileCoordinates(
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
-            0.5 + this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
+            0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
     }
 }

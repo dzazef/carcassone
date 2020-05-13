@@ -1,4 +1,7 @@
 import * as PIXI from 'pixi.js';
+import shield from '../images/shield.png'
+import vertexShader from './shaders/vShader.vert';
+import fragmentShader from './shaders/fShader.frag';
 
 export class Tile {
     /**
@@ -19,6 +22,9 @@ export class Tile {
         };
         this.board = board;
         this.pawn = null;
+        this.shield = null;
+        this.shieldRow = 0;
+        this.shieldColumn = 0;
         this.row = 0;  // rząd, w którym znajduje się płytka
         this.column = 0;  // kolumna, w której znajduje się płytka
         // współrzędne znormalizowane środka płytki
@@ -44,8 +50,6 @@ export class Tile {
         this.board.app.stage.addChild(graphic);
         let color = this.board.getPlayerHexColor(playerId);
         let pawnSize = this.rect.width / 8;  // średnica
-        // graphic.x = this.rect.x + cellSize / 2 + y * cellSize;
-        // graphic.y = this.rect.y + cellSize / 2 + x * cellSize;
         graphic.lineStyle(1, color);
         graphic.beginFill(color);
         graphic.drawCircle(0, 0, pawnSize / 2);
@@ -56,6 +60,11 @@ export class Tile {
         this.setPawnPosition(x, y);
     }
 
+    /**
+     * ustawia współrzędne pionka
+     * @param x numer wiersza na płytce, w którym znajduje się pionek
+     * @param y numer kolumy na płytce, w której znajduje się pionek
+     */
     setPawnPosition(x, y) {
         let cellSize = this.rect.width / 7;
         // współrzędne na canvasie lewego górnego rogu płytki
@@ -98,120 +107,9 @@ export class Tile {
         this.board.loader.load();
 
         function handleLoadComplete() {
-            const vShader = "attribute vec2 aVertexPosition;\n" +
-                "attribute vec2 aTextureCoord;\n" +
-                "uniform mat3 projectionMatrix;\n" +
-                "varying vec2 vTextureCoord;\n" +
-                "\n" +
-                "uniform vec2 uMove;\n" +
-                "uniform vec2 uMove2;\n" +
-                "\n" +
-                "void main(void)\n" +
-                "{\n" +
-                "    gl_Position = vec4((projectionMatrix * vec3(aVertexPosition, 1.0)).xy, 0.0, 1.0) + vec4(uMove, 0.0, 0.0);\n" +
-                "    vTextureCoord = aTextureCoord;\n" +
-                "}";
-
-            const fShader = "precision mediump float;\n" +
-                "\n" +
-                "varying vec2 vTextureCoord;\n" +
-                "uniform sampler2D uSampler;\n" +
-                "uniform vec2 dimensions;\n" +
-                "uniform vec4 filterArea;\n" +
-                "uniform int tileDescription[49];\n" +
-                "uniform int DEFAULT;\n" +
-                "uniform int CASTLE;\n" +
-                "uniform int MEADOW;\n" +
-                "uniform int ROAD_END;\n" +
-                "uniform int CASTLE_SHIELD;\n" +
-                "uniform int ROAD;\n" +
-                "uniform int MONASTERY;\n" +
-                "float borderWidth = 0.005;\n" +
-                "\n" +
-                "// przekształcenie canvasowych współrzędnych\n" +
-                "// na współrzędne na spricie ((0,0) - lewy górny róg,\n" +
-                "// (1,1) - prawy dolny róg)\n" +
-                "vec2 normalizeCoord(vec2 coords) {\n" +
-                "    vec2 pixelCoord = vTextureCoord * filterArea.xy;\n" +
-                "    return pixelCoord / dimensions;\n" +
-                "}\n" +
-                "\n" +
-                "vec4 meadowColor() {\n" +
-                "    return vec4(0.0, 0.5, 0.0, 1.0);\n" +
-                "}\n" +
-                "\n" +
-                "vec4 defaultColor() {\n" +
-                "    return meadowColor();\n" +
-                "}\n" +
-                "\n" +
-                "vec4 castleColor() {\n" +
-                "    return vec4(0.4, 0.2, 0.0, 1.0);\n" +
-                "}\n" +
-                "\n" +
-                "vec4 roadColor() {\n" +
-                "    return vec4(0.4, 0.4, 0.4, 1.0);\n" +
-                "}\n" +
-                "\n" +
-                "vec4 monasteryColor() {\n" +
-                "    return vec4(1.0, 0.6, 0.8, 1.0);\n" +
-                "}\n" +
-                "\n" +
-                "vec4 roadEndColor() {\n" +
-                "    return vec4(0.0, 0.0, 0.0, 1.0);\n" +
-                "}\n" +
-                "\n" +
-                "// zwraca kolor, jaki odpowiada obszarowi\n" +
-                "// o numerze areaNumber\n" +
-                "vec4 getColor(int areaNumber) {\n" +
-                "    if(areaNumber == DEFAULT) {\n" +
-                "        return defaultColor();\n" +
-                "    }\n" +
-                "    if(areaNumber == MEADOW) {\n" +
-                "        return meadowColor();\n" +
-                "    }\n" +
-                "    if(areaNumber == MONASTERY) {\n" +
-                "        return monasteryColor();\n" +
-                "    }\n" +
-                "    if(areaNumber == ROAD) {\n" +
-                "        return roadColor();\n" +
-                "    }\n" +
-                "    if(areaNumber == ROAD_END) {\n" +
-                "        return roadEndColor();\n" +
-                "    }\n" +
-                "    if(areaNumber == CASTLE) {\n" +
-                "        return castleColor();\n" +
-                "    }\n" +
-                "    // areaNumber == CASTLE_SHIELD\n" +
-                "    return castleColor();\n" +
-                "}\n" +
-                "\n" +
-                "int getAreaNumber(float x, float y) {\n" +
-                "    for(int i = 0; i < 49; i++) {\n" +
-                "        int row = i / 7;\n" +
-                "        int column = i - row * 7;\n" +
-                "        if(x < float(column + 1) / 7.0 && y < float(row + 1) / 7.0) {\n" +
-                "            return tileDescription[i];\n" +
-                "        }\n" +
-                "    }\n" +
-                "    return 0;\n" +
-                "}\n" +
-                "\n" +
-                "void main(void)\n" +
-                "{\n" +
-                "    // kolor piksela o współrzędnych (na canvasie!)\n" +
-                "    // vTextureCoord na obrazie uSampler\n" +
-                "    vec4 color = texture2D(uSampler, vTextureCoord);\n" +
-                "    vec2 normalizedCoord = normalizeCoord(vTextureCoord);\n" +
-                "    float x = normalizedCoord.x;\n" +
-                "    float y = normalizedCoord.y;\n" +
-                "\n" +
-                "    color = getColor(getAreaNumber(x, y));\n" +
-                "\n" +
-                "    gl_FragColor = color;\n" +
-                "}";
-
+            let vShader = that.board.loader.resources[vertexShader].data;
+            let fShader = that.board.loader.resources[fragmentShader].data;
             const filter = new PIXI.Filter(vShader, fShader, uniforms);
-
             // podłączenie filtra do kwadratu
             that.rect.filters = [filter];
         }
@@ -229,7 +127,7 @@ export class Tile {
         if(this.board.firstTile === null) {
             this.setTileCoordinates(
                 0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-                0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+                0.5 - x * (this.board.tileSize / this.board.app.renderer.screen.height));
         } else {
             // współrzędna x środka pierwszej płytki w postaci znormalizowanej
             let firstTileX = this.board.firstTile.centerX;
@@ -238,7 +136,7 @@ export class Tile {
 
             this.setTileCoordinates(
                 firstTileX + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-                firstTileY + x * (this.board.tileSize / this.board.app.renderer.screen.height));
+                firstTileY - x * (this.board.tileSize / this.board.app.renderer.screen.height));
         }
     }
 
@@ -258,6 +156,10 @@ export class Tile {
             this.pawn.x += dx;
             this.pawn.y += dy;
         }
+        if(this.shield !== null) {
+            this.shield.x += dx;
+            this.shield.y += dy;
+        }
     }
 
     /**
@@ -272,16 +174,48 @@ export class Tile {
         this.centerY = y;
     }
 
+    /**
+     * rysuje tarczę na płytce w odpowiednim wierszu i kolumnie
+     * @param x numer wiersza
+     * @param y numer kolumny
+     */
+    drawShield(x, y) {
+        let texture = PIXI.Texture.from(shield);
+        let img = new PIXI.Sprite(texture);
+        this.shieldRow = x;
+        this.shieldColumn = y;
+        img.x = this.board.app.renderer.screen.width / 2;
+        img.y = this.board.app.renderer.screen.height / 2;
+        let shieldSize = this.rect.width / 5;  // średnica
+        img.width = shieldSize;
+        img.height = shieldSize;
+        this.board.app.stage.addChild(img);
+        this.shield = img;
+        this.setShieldPosition(x, y);
+    }
+
+    setShieldPosition(x, y) {
+        let cellSize = this.rect.width / 7;
+        // współrzędne na canvasie lewego górnego rogu płytki
+        let rectX = this.centerX * this.board.app.renderer.screen.width - this.rect.width / 2;
+        let rectY = this.centerY * this.board.app.renderer.screen.height - this.rect.height / 2;
+        this.shield.x = rectX + y * cellSize;
+        this.shield.y = rectY + x * cellSize;
+    }
+
     redraw() {
         this.uniforms.uMove[0] = 0.0;
         this.uniforms.uMove[1] = 0.0;
         this.setTileCoordinates(
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
-            0.5 + this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
+            0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
         console.log(this.row);
         console.log(this.column);
         if(this.pawn !== null) {
             this.setPawnPosition(this.pawnRow, this.pawnColumn);
+        }
+        if(this.shield !== null) {
+            this.setShieldPosition(this.shieldRow, this.shieldColumn);
         }
     }
 }

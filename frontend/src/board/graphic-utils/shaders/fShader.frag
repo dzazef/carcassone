@@ -68,7 +68,7 @@ vec4 getColor(int areaNumber) {
         return castleColor();
     }
     // areaNumber == CASTLE_SHIELD
-    return castleColor();
+    return meadowColor();
 }
 
 int getAreaNumber(float x, float y) {

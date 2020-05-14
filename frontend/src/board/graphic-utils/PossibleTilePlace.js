@@ -20,6 +20,17 @@ export class PossibleTilePlace {
         this.rect.lineStyle(this.lineWidth, 0xe6e600);
         this.rect.drawRect(0.0, 0.0, size, size);
 
+        this.rect.buttonMode = true;
+        this.rect.interactive = true;
+        this.rect.on('click', onClick);
+        this.rect.hitArea = new PIXI.Rectangle(0.0, 0.0, size, size);
+        let that = this;
+        function onClick() {
+            console.log("row: ", that.row);
+            console.log("column", that.column);
+            that.board.tileCallback(that.row, that.column);
+        }
+
         this.board.app.stage.addChild(this.rect);
     }
 

@@ -22,6 +22,9 @@ export class Tile {
         };
         this.board = board;
         this.pawn = null;
+        // lista obiektów postaci
+        // {"pawn": graphics, "row": number, "column": number}
+        this.pawnPlaces = [];
         this.shield = null;
         this.shieldRow = 0;
         this.shieldColumn = 0;
@@ -38,14 +41,91 @@ export class Tile {
     }
 
     /**
+     * rysuje możliwe miejsca na pionek na podstawie pawnPlacesJson
+     * @param pawnPlacesJson lista obiektów postaci
+     * {x: numer_wiersza, y: numer_kolumny}
+     */
+    drawPawnPlaces(pawnPlacesJson) {
+        let that = this;
+        this.pawnPlaces = [];
+        pawnPlacesJson.forEach(draw);
+        function draw(item) {
+            that.putPawnPlace(item.x, item.y);
+        }
+    }
+
+    /**
+     * rysuje miejsce na pionek na tej płytce
+     * @param x numer wiersza, w którym należy postawić pionek
+     * @param y numer kolumny, w którym należy postawić pionek
+     */
+    putPawnPlace(x, y) {
+        let graphic = new PIXI.Graphics();
+        this.board.app.stage.addChild(graphic);
+        let color = 0xe6e600;
+        let pawnSize = this.rect.width / 8;  // średnica
+        graphic.lineStyle(2, color);
+        graphic.drawCircle(0, 0, pawnSize / 2);
+        this.pawnPlaces.push({"pawn": graphic, "row": x, "column": y});
+        this.setPawnPlacePosition(x, y, graphic);
+
+        graphic.buttonMode = true;
+        graphic.interactive = true;
+        graphic.hitArea = new PIXI.Circle(0, 0, pawnSize / 2);
+        graphic.on('click', onClick);
+        let that = this;
+        function onClick() {
+            console.log(x);
+            console.log(y);
+            that.board.pawnCallback(x, y);
+        }
+    }
+
+    /**
+     *
+     * @param x numer wiersza na płytce, w którym znajduje się
+     * miejsce na pionek
+     * @param y numer kolumny na płytce, w której znajduje się
+     * miejsce na pionek
+     * @param graphic miejsce na pionek, którego pozycję chcemy ustawić
+     */
+    setPawnPlacePosition(x, y, graphic) {
+        let cellSize = this.rect.width / 7;
+        // współrzędne na canvasie lewego górnego rogu płytki
+        let rectX = this.centerX * this.board.app.renderer.screen.width - this.rect.width / 2;
+        let rectY = this.centerY * this.board.app.renderer.screen.height - this.rect.height / 2;
+        graphic.x = rectX + cellSize / 2 + y * cellSize;
+        graphic.y = rectY + cellSize / 2 + x * cellSize;
+    }
+
+    redrawPawnPlaces() {
+        let that = this;
+        this.pawnPlaces.forEach(draw);
+        function draw(item) {
+            that.setPawnPlacePosition(item.row, item.column, item.pawn);
+        }
+    }
+
+    /**
+     * przesuwa wszystkie miejsca na pionek z listy this.pawnPlaces
+     * @param dx o ile pikseli wzdłuż osi x należy przesunąć pawnPlaces
+     * @param dy o ile pikseli wzdłuż osi y należy przesunąć pawnPlaces
+     */
+    movePawnPlaces(dx, dy) {
+        this.pawnPlaces.forEach(move);
+        function move(item) {
+            item.pawn.x += dx;
+            item.pawn.y += dy;
+        }
+    }
+
+    /**
      * rysuje pionek na tej płytce
      * @param x numer wiersza, w którym należy postawić pionek
      * @param y numer kolumny, w którym należy postawić pionek
      * @param playerId id gracza, którego pionek należy narysować
      */
     putPawn(x, y, playerId) {
-        // narazie pionek będzie kółkiem. Jak zadziała,
-        // to zmienię na jakiegoś sprite'a
         let graphic = new PIXI.Graphics();
         this.board.app.stage.addChild(graphic);
         let color = this.board.getPlayerHexColor(playerId);
@@ -160,6 +240,7 @@ export class Tile {
             this.shield.x += dx;
             this.shield.y += dy;
         }
+        this.movePawnPlaces(dx, dy);
     }
 
     /**
@@ -217,5 +298,6 @@ export class Tile {
         if(this.shield !== null) {
             this.setShieldPosition(this.shieldRow, this.shieldColumn);
         }
+        this.redrawPawnPlaces();
     }
 }

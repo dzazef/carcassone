@@ -38,6 +38,8 @@ class BoardCanvas {
      */
     render = (players, board, turnState, possiblePlaces) => {
 
+        // tileCallback(x, y);  // x - numer wiersza, y - numer kolumny
+
         // -------------do testów--------------------
         // przypisanie jakiś wartości argumentom
         players = [
@@ -131,18 +133,6 @@ class BoardCanvas {
                 y: -1
             },
             {
-                x: 1,
-                y: 0
-            },
-            {
-                x: 0,
-                y: 0
-            },
-            {
-                x: 0,
-                y: 0
-            },
-            {
                 x: 2,
                 y: 0
             },
@@ -157,12 +147,27 @@ class BoardCanvas {
         ];
         //-------------------------------------------
 
-        const _board = new MyBoard(this.canvas, 100, players);
+        const _board = new MyBoard(this.canvas, 100, players,
+            this.tileCallback, this.pawnCallback);
 
         _board.drawTiles(board);
         _board.drawPossiblePlaces(possiblePlaces);
 
         Object.freeze(_board);
+
+        // test!
+        let list = [
+            {
+                "x": 3,
+                "y": 3
+            },
+            {
+                "x": 2,
+                "y": 3
+            }
+        ];
+        _board.tiles[0].drawPawnPlaces(list);
+        //koniec testu =)
 
         // let tileDescription = [
         //     0, 1, 1, 1, 1, 1, 0,

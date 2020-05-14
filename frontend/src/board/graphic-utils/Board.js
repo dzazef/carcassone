@@ -10,9 +10,13 @@ export class MyBoard {
      * @param canvas canvas, na którym będzie rysowana plansza
      * @param tileSize rozmiar płytek na planszy
      * @param players lista par {id_gracza, kolor_gracza}
+     * @param tileCallback funkcja, którą należy wywołać,
+     * gdy gracz wybierze miejsce na płytkę
+     * @param pawnCallback funkcja, którą należy wywołać,
+     * gdy gracz wybierze miejsce na pionek
      * @returns {MyBoard}
      */
-    constructor(canvas, tileSize, players) {
+    constructor(canvas, tileSize, players, tileCallback, pawnCallback) {
         if(! MyBoard.instance){
             this.canvas = canvas;
             this.tileSize = tileSize;
@@ -25,6 +29,8 @@ export class MyBoard {
             this.tiles = [];
             this.possiblePlaces = [];
             this.firstTile = null;
+            this.tileCallback = tileCallback;
+            this.pawnCallback = pawnCallback;
             this.CASTLE_SHIELD = 6;  // oznaczenie na tarczę na płytce
             this.prepareApplication();
             this.prepareShaders();
@@ -91,6 +97,7 @@ export class MyBoard {
      */
     drawTiles(board_json) {
         let that = this;
+        this.tiles = [];
         board_json.forEach(draw);
         function draw(item) {
             let tile_id = [];
@@ -130,6 +137,7 @@ export class MyBoard {
      */
     drawPossiblePlaces(possible_places_json) {
        let that = this;
+       this.possiblePlaces = [];
        possible_places_json.forEach(draw);
        function draw(item) {
            let place = new PossibleTilePlace(that);

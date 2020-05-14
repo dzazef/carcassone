@@ -55,6 +55,31 @@ export class Tile {
     }
 
     /**
+     * usuwa wszystkie miejsca na pionki
+     */
+    removePawnPlaces() {
+        this.pawnPlaces.forEach(remove);
+        function remove(item) {
+            item.pawn.destroy();
+        }
+        this.pawnPlaces = [];
+    }
+
+    /**
+     * usuwa płytkę i wszystkie jej składowe
+     */
+    remove() {
+        this.removePawnPlaces();
+        this.rect.destroy();
+        if(this.pawn !== null) {
+            this.pawn.destroy();
+        }
+        if(this.shield !== null) {
+            this.shield.destroy();
+        }
+    }
+
+    /**
      * rysuje miejsce na pionek na tej płytce
      * @param x numer wiersza, w którym należy postawić pionek
      * @param y numer kolumny, w którym należy postawić pionek
@@ -290,8 +315,6 @@ export class Tile {
         this.setTileCoordinates(
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
             0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
-        console.log(this.row);
-        console.log(this.column);
         if(this.pawn !== null) {
             this.setPawnPosition(this.pawnRow, this.pawnColumn);
         }

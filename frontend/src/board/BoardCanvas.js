@@ -38,10 +38,10 @@ class BoardCanvas {
      */
     render = (players, board, turnState, possiblePlaces) => {
 
-        // tileCallback(x, y);  // x - numer wiersza, y - numer kolumny
-
         // -------------do testów--------------------
         // przypisanie jakiś wartości argumentom
+        turnState = "S_EMPTY";
+
         players = [
             {
                 id: 1,
@@ -115,48 +115,38 @@ class BoardCanvas {
             }
         ];
 
+        // possiblePlaces = [
+        //     {
+        //         x: -1,
+        //         y: -1
+        //     },
+        //     {
+        //         x: 0,
+        //         y: -1
+        //     },
+        //     {
+        //         x: -1,
+        //         y: 0
+        //     },
+        //     {
+        //         x: 1,
+        //         y: -1
+        //     },
+        //     {
+        //         x: 2,
+        //         y: 0
+        //     },
+        //     {
+        //         x: 3,
+        //         y: 0
+        //     },
+        //     {
+        //         x: 4,
+        //         y: 0
+        //     }
+        // ];
+
         possiblePlaces = [
-            {
-                x: -1,
-                y: -1
-            },
-            {
-                x: 0,
-                y: -1
-            },
-            {
-                x: -1,
-                y: 0
-            },
-            {
-                x: 1,
-                y: -1
-            },
-            {
-                x: 2,
-                y: 0
-            },
-            {
-                x: 3,
-                y: 0
-            },
-            {
-                x: 4,
-                y: 0
-            }
-        ];
-        //-------------------------------------------
-
-        const _board = new MyBoard(this.canvas, 100, players,
-            this.tileCallback, this.pawnCallback);
-
-        _board.drawTiles(board);
-        _board.drawPossiblePlaces(possiblePlaces);
-
-        Object.freeze(_board);
-
-        // test!
-        let list = [
             {
                 "x": 3,
                 "y": 3
@@ -166,35 +156,26 @@ class BoardCanvas {
                 "y": 3
             }
         ];
-        _board.tiles[0].drawPawnPlaces(list);
-        //koniec testu =)
+        //-------------------------------------------
 
-        // let tileDescription = [
-        //     0, 1, 1, 1, 1, 1, 0,
-        //     2, 2, 2, 2, 2, 2, 2,
-        //     2, 2, 2, 2, 2, 2, 2,
-        //     3, 3, 3, 5, 3, 3, 3,
-        //     2, 2, 2, 3, 2, 2, 2,
-        //     2, 2, 2, 3, 2, 2, 2,
-        //     0, 2, 2, 3, 2, 2, 0
-        // ];
+        const _board = new MyBoard(this.canvas, 100, players,
+            this.tileCallback, this.pawnCallback);
 
-        // const tile0 = new Tile(tileDescription, _board);
-        // tile0.setTileCoordinates(-0.5, 0.0);
-        // console.log(tile0.rect.width);
-        // console.log(tile0.rect.y);
-        // _board.tiles.push(tile0);
-        //
-        // const tile1 = new Tile(tileDescription, _board);
-        // tile1.setTilePosition(1, 0);
-        //
-        // const tile2 = new Tile(tileDescription, _board);
-        // tile2.setTilePosition(1, 1);
-        //
-        // tile2.putPawn(5, 3, 2);
-        //
-        // const place = new PossibleTilePlace(_board);
-        // place.setTilePosition(1,2);
+        _board.removeTiles();
+        _board.removePossiblePlaces();
+        _board.removePawnPlaces();
+
+        if(turnState === "S_SHOW_POSSIBLE_TILES") {
+            _board.drawTiles(board);
+            _board.drawPossiblePlaces(possiblePlaces);
+        } else if(turnState === "S_SHOW_POSSIBLE_PAWNS") {
+            // pokazuje miejsca na położenie pionków na płytce
+            // ostatniej na liście
+            _board.drawTiles(board);
+            _board.showPawnPlaces(possiblePlaces);
+        } else if(turnState === "S_EMPTY") {
+            _board.drawTiles(board);
+        }
     }
 
 }

@@ -82,4 +82,11 @@ export class PossibleTilePlace {
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
             0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
     }
+
+    /**
+     * usuwa z pamięci this.rect
+     */
+    remove() {
+        this.rect.destroy();
+    }
 }

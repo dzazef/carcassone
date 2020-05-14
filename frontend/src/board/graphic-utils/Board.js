@@ -93,6 +93,15 @@ export class MyBoard {
     }
 
     /**
+     * rysuje na ostatniej płytce na liście this.tiles
+     * możliwe miejsca na położenie pionka
+     * @param possiblePlacesList
+     */
+    showPawnPlaces(possiblePlacesList) {
+        this.tiles[this.tiles.length - 1].drawPawnPlaces(possiblePlacesList);
+    }
+
+    /**
      * rysuje płytki z listy board_json
      */
     drawTiles(board_json) {
@@ -144,6 +153,35 @@ export class MyBoard {
            place.setTilePosition(item.x, item.y);
            that.possiblePlaces.push(place);
        }
+    }
+
+    /**
+     * usuwa z pamięci wszystkie possible_place
+     * z listy this.possiblePlaces
+     */
+    removePossiblePlaces() {
+        this.possiblePlaces.forEach(remove);
+        function remove(item) {
+            item.remove();
+        }
+        this.possiblePlaces = [];
+    }
+
+    removeTiles() {
+        this.tiles.forEach(remove);
+        function remove(item) {
+            item.remove();
+        }
+        this.tiles = [];
+    }
+
+    /**
+     * usuwa wszystkie miejsca na pionki z ostatniej płytki
+     */
+    removePawnPlaces() {
+        if(this.tiles.length > 0) {
+            this.tiles[this.tiles.length - 1].removePawnPlaces();
+        }
     }
 
     /**

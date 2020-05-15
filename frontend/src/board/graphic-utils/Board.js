@@ -16,15 +16,11 @@ export class MyBoard {
      * gdy gracz wybierze miejsce na pionek
      * @returns {MyBoard}
      */
-    constructor(canvas, tileSize, players, tileCallback, pawnCallback) {
+    constructor(canvas, tileSize, tileCallback, pawnCallback) {
         if(! MyBoard.instance){
             this.canvas = canvas;
             this.tileSize = tileSize;
-            // zamiana listy players na mapę id_gracza:kolor_gracza
-            this.players = players.reduce(function(map, obj) {
-                map[obj.id] = obj.color;
-                return map;
-            }, {});
+            // this.players
             // lista wszystkich płytek narysowanych na planszy
             this.tiles = [];
             this.possiblePlaces = [];
@@ -90,6 +86,14 @@ export class MyBoard {
         }
 
         return MyBoard.instance;
+    }
+
+    setPlayers(playersJson) {
+        // zamiana listy players na mapę id_gracza:kolor_gracza
+        this.players = playersJson.reduce(function(map, obj) {
+            map[obj.id] = obj.color;
+            return map;
+        }, {});
     }
 
     /**

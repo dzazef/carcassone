@@ -7,7 +7,7 @@ from backend.tile.AuxFunctions import merge_dicts_during_game, merge_dicts_after
 
 class Tile25(TileCastle, TileMeadow, TileRoad):
 
-    did = TileIDs.TILESTART
+    id = TileIDs.TILESTART
     amount = 1
 
     def __init__(self):

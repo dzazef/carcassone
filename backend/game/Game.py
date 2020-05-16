@@ -1,5 +1,6 @@
 from random import shuffle
 from backend.game.Board import Board
+from backend.tile.Tile import other_reciprocal
 import backend.tile as tiles
 
 
@@ -35,37 +36,31 @@ class Game:
     def getBoard(self):
         return self.__board
 
+    def getTilesLeftAmount(self):
+        return len(self.__tileStack)
+
     # returns [(x, y)], where x and y are coordinates on board
     def getTilePositions(self, tile):
         result = []
+        boardTiles = self.__board.getTiles()
 
-        for boardTile in self.__board.getTiles():
-            if boardTile.upTile is None and boardTile.fit_up(tile):
-                result.append((boardTile.x, boardTile.y - 1))
-            if boardTile.downTile is None and boardTile.fit_down(tile):
-                result.append((boardTile.x, boardTile.y + 1))
-            if boardTile.leftTile is None and boardTile.fit_left(tile):
-                result.append((boardTile.x - 1, boardTile.y))
-            if boardTile.rightTile is None and boardTile.fit_right(tile):
-                result.append((boardTile.x + 1, boardTile.y))
+        for i in range(len(boardTiles)):
+            for j in range(len(boardTiles[0])):
+                if boardTiles[i][j] is not None:
+                    if boardTiles[i][j].upTile is None and boardTiles[i][j].fit_up(tile):
+                        result.append((i, j - 1))
+                    if boardTiles[i][j].downTile is None and boardTiles[i][j].fit_down(tile):
+                        result.append((i, j + 1))
+                    if boardTiles[i][j].leftTile is None and boardTiles[i][j].fit_left(tile):
+                        result.append((i - 1, j))
+                    if boardTiles[i][j].rightTile is None and boardTiles[i][j].fit_right(tile):
+                        result.append((i + 1, j))
 
         return result
 
     # returns [(x, y)], where x and y are coordinates on tile (7x7 representation)
-    def getPawnPositions(self, tile):
-        result = []
-
-        for number in [placeInfo[0] for placeInfo in tile.offer_to_place_a_pawn()]:
-            if 1 <= number <= 3:
-                result.append([(0, 1 + number)])
-            elif 4 <= number <= 6:
-                result.append([(-2 + number, 6)])
-            elif 7 <= number <= 9:
-                result.append([(6, -number + 11)])
-            elif 10 <= number <= 12:
-                result.append([(-number + 14, 0)])
-
-        return result
+    def getPawnPositions(self):
+        return [other_reciprocal(n) for n in [place[0] for place in self.__currTile.offer_to_place_a_pawn()]]
 
     def __setNextTile(self):
         for tile in self.__tileStack:

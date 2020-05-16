@@ -63,13 +63,16 @@ class JSONConstructor:
             board1 = {"x": board_list[i][0],
                       "y": board_list[i][1],
                       "id": board_list[i][2],
-                      "rotate": board_list[i][3],
-                      "pawn": {
-                          "id": board_list[i][4][0],
-                          "x": board_list[i][4][1],
-                          "y": board_list[i][4][2]
+                      "rotate": board_list[i][3]
                       }
-                      }
+
+            if board_list[i][4]:
+                board1["pawn"] = {
+                    "id": board_list[i][4][0],
+                    "x": board_list[i][4][1],
+                    "y": board_list[i][4][2]
+                }
+
             board_json.append(board1)
 
         json3["data"]["board"] = board_json

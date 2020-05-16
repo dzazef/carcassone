@@ -27,7 +27,7 @@ class Player(ABC):
         return self._points
 
     def getPawnsNumber(self):
-        return self._pawns
+        return self._pawnsNumber
 
     def setPawnsNumber(self, number):
         self._pawnsNumber = number

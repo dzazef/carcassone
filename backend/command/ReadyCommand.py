@@ -22,9 +22,11 @@ class ReadyCommand(Command):
                 p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
         else:
             # all players ready, start game
+            playersList = [[p.getId(), p.getColor(), p.getPoints(), p.getPawnsNumber()] for p in players]
+            boardList = self._game.getBoard().getTiles()
+            tilesLeft = self._game.getTilesLeftAmount()
             self._game.start()
-            json = {p.getWebsocket(): [dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady()))]
+            json = {p.getWebsocket(): [[dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady()))],
+                                       [dumps(JSONConstructor.board_state(tilesLeft,playersList,boardList))]]
                     for p in players}
-            # to add to json info about board
-
         return json

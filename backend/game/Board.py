@@ -8,13 +8,12 @@ class Board:
     def getTiles(self):
         # board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]
         # pawn = (id, x, y)
-        tileList = list()
-        for i in range(150):
-            for j in range(150):
-                if(self.tile_matrix[i][j] != None):
-                    tile = self.tile_matrix[i][j]
-                    tileList.append((i,j,tile.id,tile.orientation,None)) #TODO None >>> Pawn + tile.id wraca obiekt enum zamiast ciągu znaków
-        return tileList
+        board = []
+        for i in range(len(self.tile_matrix)):
+            for j in range(len(self.tile_matrix[0])):
+                if self.tile_matrix[i][j] is not None:
+                    board.append((i, j, self.tile_matrix[i][j].id, self.tile_matrix[i][j].orientation, self.tile_matrix[i][j].pawns_in_7x7()))
+        return board
 
     def putTile(self, tile, x, y):
         if y-1 >= 0 and self.tile_matrix[x][y-1] != None:

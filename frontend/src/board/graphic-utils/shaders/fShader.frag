@@ -27,7 +27,8 @@ vec4 meadowColor() {
 }
 
 vec4 defaultColor() {
-    return meadowColor();
+    //return meadowColor();
+    return vec4(0.66, 0.66, 0.66, 1.0);
 }
 
 vec4 castleColor() {
@@ -91,7 +92,9 @@ void main(void)
     float x = normalizedCoord.x;
     float y = normalizedCoord.y;
 
-    color = getColor(getAreaNumber(x, y));
+    int areaNumber = getAreaNumber(x, y);
+    color = getColor(areaNumber);
+
 
     gl_FragColor = color;
 }

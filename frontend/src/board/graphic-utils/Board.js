@@ -9,7 +9,6 @@ export class MyBoard {
      *
      * @param canvas canvas, na którym będzie rysowana plansza
      * @param tileSize rozmiar płytek na planszy
-     * @param players lista par {id_gracza, kolor_gracza}
      * @param tileCallback funkcja, którą należy wywołać,
      * gdy gracz wybierze miejsce na płytkę
      * @param pawnCallback funkcja, którą należy wywołać,

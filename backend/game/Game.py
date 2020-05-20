@@ -26,7 +26,11 @@ class Game:
     # it sets currPlayer and currTile
     # return true, if next turn is possible, false otherwise
     def nextTurn(self):
-        self.__currPlayer = self.__players[(self.__players.index(self.__currPlayer) + 1) % len(self.__players)]
+        index = (self.__players.index(self.__currPlayer) + 1) % len(self.__players)
+        while not self.__players[index].ifActive():
+            index = (index + 1) % len(self.__players)
+        self.__currPlayer = self.__players[index]
+
         self.__tileStack.remove(self.__currTile)
         return self.__setNextTile()
 
@@ -39,25 +43,6 @@ class Game:
     def getTilesLeftAmount(self):
         return len(self.__tileStack)
 
-    # returns [(x, y)], where x and y are coordinates on board
-    def getTilePositions(self, tile):
-        result = []
-        boardTiles = self.__board.getTiles()
-
-        for i in range(len(boardTiles)):
-            for j in range(len(boardTiles[0])):
-                if boardTiles[i][j] is not None:
-                    if boardTiles[i][j].upTile is None and boardTiles[i][j].fit_up(tile):
-                        result.append((i, j - 1))
-                    if boardTiles[i][j].downTile is None and boardTiles[i][j].fit_down(tile):
-                        result.append((i, j + 1))
-                    if boardTiles[i][j].leftTile is None and boardTiles[i][j].fit_left(tile):
-                        result.append((i - 1, j))
-                    if boardTiles[i][j].rightTile is None and boardTiles[i][j].fit_right(tile):
-                        result.append((i + 1, j))
-
-        return result
-
     # returns [(x, y)], where x and y are coordinates on tile (7x7 representation)
     def getPawnPositions(self):
         return [other_reciprocal(n) for n in [place[0] for place in self.__currTile.offer_to_place_a_pawn()]]
@@ -65,7 +50,7 @@ class Game:
     def __setNextTile(self):
         for tile in self.__tileStack:
             for _ in range(4):
-                if self.getTilePositions(tile):
+                if self.__board.getTilePositions(tile):
                     self.__currTile = tile
                     return True
                 tile.turn_clockwise()

@@ -26,7 +26,7 @@ class ReadyCommand(Command):
             boardList = self._game.getBoard().getTiles()
             tilesLeft = self._game.getTilesLeftAmount()
             self._game.start()
-            json = {p.getWebsocket(): [[dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady()))],
-                                       [dumps(JSONConstructor.board_state(tilesLeft,playersList,boardList))]]
+            json = {p.getWebsocket(): [dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady())),
+                                       dumps(JSONConstructor.board_state(tilesLeft,playersList,boardList))]
                     for p in players}
         return json

@@ -32,3 +32,21 @@ class Board:
 
     def putPawn(self, tile, color, x, y):
         pass
+
+    # returns [(x, y)], where x and y are coordinates on board
+    def getTilePositions(self, tile):
+        result = []
+
+        for i in range(len(self.tile_matrix)):
+            for j in range(len(self.tile_matrix[0])):
+                if self.tile_matrix[i][j] is not None:
+                    if self.tile_matrix[i][j].upTile is None and self.tile_matrix[i][j].fit_up(tile):
+                        result.append((i, j - 1))
+                    if self.tile_matrix[i][j].downTile is None and self.tile_matrix[i][j].fit_down(tile):
+                        result.append((i, j + 1))
+                    if self.tile_matrix[i][j].leftTile is None and self.tile_matrix[i][j].fit_left(tile):
+                        result.append((i - 1, j))
+                    if self.tile_matrix[i][j].rightTile is None and self.tile_matrix[i][j].fit_right(tile):
+                        result.append((i + 1, j))
+
+        return result

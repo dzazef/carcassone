@@ -11,19 +11,12 @@ class PutTileCommand(Command):
         self._game.getBoard().putTile(self._game.getCurrTile(), self._data['data']['x'], self._data['data']['y'])
 
         players = self._game.getPlayers()
-        tiles = self._game.getBoard().getTiles()
-        board = []
-
-        for i in range(len(tiles)):
-            for j in range(len(tiles[0])):
-                if tiles[i][j] is not None:
-                    board.append((i, j, tiles[i][j].id, tiles[i][j].orientation, tiles[i][j].pawns_in_7x7()))
 
         json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(
             self._game.getTilesLeftAmount(),
             [[p.getId(), p.getColor(), p.getPoints(), p.getPawnsNumber()] for p in players],
-            board
-        ))] for p in players}
+            self._game.getBoard().getTiles()
+        ))] for p in players if p.ifActive()}
 
         currPlayer = self._game.getCurrPlayer()
         json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.put_pawn(

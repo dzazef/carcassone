@@ -1,6 +1,3 @@
-from tile import Tile2, Tile3
-
-
 class Board:
     def __init__(self):
         self.tile_matrix = [[None for i in range(150)] for i in range(150)]

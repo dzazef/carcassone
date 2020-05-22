@@ -1,7 +1,7 @@
 from json import dumps
 from operator import itemgetter
 
-import JSONConstructor
+from backend.command.JSONConstructor import JSONConstructor
 from backend.command.Command import Command
 
 

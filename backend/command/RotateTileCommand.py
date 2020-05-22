@@ -1,6 +1,6 @@
 from json import dumps
 
-import JSONConstructor
+from backend.command.JSONConstructor import JSONConstructor
 from backend.command.Command import Command
 
 

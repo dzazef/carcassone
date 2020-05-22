@@ -12,18 +12,25 @@ class JoinCommand(Command):
         self.__colors = ['blue', 'yellow', 'green', 'red', 'black']
 
     def execute(self):
-        players = self._game.getPlayers()
+        if self._game.getCurrPlayer() is None:
+            # game hasn't started yet, add player
+            players = self._game.getPlayers()
 
-        for player in players:
-            self.__colors.remove(player.getColor())
-        color = self.__colors[0]
+            for player in players:
+                self.__colors.remove(player.getColor())
+            color = self.__colors[0]
 
-        # find the smallest positive id number not in list
-        id = next(filterfalse([player.getId() for player in players].__contains__, count(1)))
+            # find the smallest positive id number not in list
+            id = next(filterfalse([player.getId() for player in players].__contains__, count(1)))
 
-        players.append(Human(id, self.__websocket, color))
+            players.append(Human(id, self.__websocket, color))
 
-        # return json
-        playersList = [[p.getId(), p.getColor(), p.getReady()] for p in players]
-        return {p.getWebsocket(): [dumps(JSONConstructor.players_info_json(
-            p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
+            # create json
+            playersList = [[p.getId(), p.getColor(), p.getReady()] for p in players]
+            json = {p.getWebsocket(): [dumps(JSONConstructor.players_info_json(
+                p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
+        else:
+            # game has already started, send information about being late
+            json = {}  # to implement
+
+        return json

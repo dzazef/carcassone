@@ -111,7 +111,7 @@ export class MyBoard {
     }
 
     drawCurrentTile(id, tile_id) {
-        this.currentTile = new Tile(tile_id, this);
+        this.currentTile = new Tile(tile_id, this, id);
         this.currentTile.rect.buttonMode = true;
         this.currentTile.rect.interactive = true;
         this.currentTile.rect.hitArea = new PIXI.Rectangle(0, 0,
@@ -291,8 +291,9 @@ export class MyBoard {
         }
         if(this.currentTile != null) {
             let currentTileId = this.currentTile.id;
+            let currentTileIdMatrix = this.currentTile.tile_id;
             this.removeCurrentTile();
-            this.drawCurrentTile(currentTileId);
+            this.drawCurrentTile(currentTileIdMatrix, currentTileId);
         }
     }
 

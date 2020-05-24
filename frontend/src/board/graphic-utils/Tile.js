@@ -100,8 +100,6 @@ export class Tile {
         graphic.on('click', onClick);
         let that = this;
         function onClick() {
-            console.log(x);
-            console.log(y);
             that.board.pawnCallback(x, y);
         }
     }

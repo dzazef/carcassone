@@ -3,6 +3,7 @@ import {Tile} from "./Tile";
 import {PossibleTilePlace} from "./PossibleTilePlace";
 import vertexShader from './shaders/vShader.vert';
 import fragmentShader from './shaders/fShader.frag';
+import turn from '../images/turn.png';
 
 export class MyBoard {
     /**
@@ -26,6 +27,7 @@ export class MyBoard {
             this.firstTile = null;
             this.tileCallback = tileCallback;
             this.pawnCallback = pawnCallback;
+            this.currentTile = null;
             this.CASTLE_SHIELD = 6;  // oznaczenie na tarczę na płytce
             this.prepareApplication();
             this.prepareShaders();
@@ -93,6 +95,40 @@ export class MyBoard {
             map[obj.id] = obj.color;
             return map;
         }, {});
+    }
+
+    showCurrentTile(id) {
+        let tile_id = [];
+        for (let i = 0; i < id.length; i++) {
+            for (let j = 0; j < id[i].length; j++) {
+                tile_id.push(id[i][j]);
+            }
+        }
+        this.drawCurrentTile(tile_id);
+    }
+
+    drawCurrentTile(tile_id) {
+        this.currentTile = new Tile(tile_id, this);
+        this.currentTile.rect.buttonMode = true;
+        this.currentTile.rect.interactive = true;
+        this.currentTile.rect.hitArea = new PIXI.Rectangle(0, 0,
+            this.tileSize, this.tileSize);
+        this.currentTile.rect.on('click', onClick);
+        function onClick() {
+            // obrócenie płytki
+            console.log("obrót");
+        }
+        this.currentTile.setTileCoordinates(
+            1.0 - (this.tileSize / 2) / this.app.renderer.screen.width - 0.01,
+            1.0 - (this.tileSize / 2) / this.app.renderer.screen.height - 0.01);
+        let texture = PIXI.Texture.from(turn);
+        this.img = new PIXI.Sprite(texture);
+        let size = this.tileSize;
+        this.img.width = size;
+        this.img.height = size;
+        this.img.x = this.currentTile.centerX * this.app.renderer.screen.width - size / 2;
+        this.img.y = this.currentTile.centerY * this.app.renderer.screen.height - size / 2;
+        this.app.stage.addChild(this.img);
     }
 
     /**
@@ -178,6 +214,15 @@ export class MyBoard {
         this.tiles = [];
     }
 
+    removeCurrentTile() {
+        if(this.currentTile != null) {
+            this.currentTile.remove();
+            this.currentTile = null;
+            this.img.destroy();
+            this.img = null;
+        }
+    }
+
     /**
      * usuwa wszystkie miejsca na pionki z ostatniej płytki
      */
@@ -227,7 +272,6 @@ export class MyBoard {
 
     prepareShaders() {
         this.loader = PIXI.Loader.shared;
-        //this.loader.add(['./shaders/vShader.vert', './shaders/fShader.frag']);
         this.loader.add([vertexShader, fragmentShader]);
     }
 
@@ -235,6 +279,11 @@ export class MyBoard {
         this.tiles.forEach(drawTile);
         function drawTile(item) {
             item.redraw();
+        }
+        if(this.currentTile != null) {
+            let currentTileId = this.currentTile.id;
+            this.removeCurrentTile();
+            this.drawCurrentTile(currentTileId);
         }
     }
 

@@ -38,8 +38,10 @@ class BoardCanvas {
      * @param possiblePlaces: holds info about possible places
      *        of pawns and tiles (depending on turnState)
      *        see front.json (game.turn.possible_places)
+     * @param myTurn
+     * @param currentTile
      */
-    render = (players, board, turnState, possiblePlaces) => {
+    render = (players, board, turnState, possiblePlaces, myTurn, currentTile) => {
 
         // -------------do testów--------------------
         turnState = "S_EMPTY";
@@ -74,6 +76,12 @@ class BoardCanvas {
                 "pawn": null
             }
         ];
+
+        currentTile = {
+            "id": id1,
+            "rotate": 0
+        };
+        myTurn = true;
         //-------------------------------------------
 
         this.board.setPlayers(players);
@@ -92,6 +100,13 @@ class BoardCanvas {
             this.board.showPawnPlaces(possiblePlaces);
         } else if(turnState === "S_EMPTY") {
             this.board.drawTiles(board);
+        }
+
+        // rysowanie bieżącej płytki
+        if(myTurn) {
+            this.board.showCurrentTile(currentTile.id);
+        } else {
+            this.board.removeCurrentTile();
         }
     }
 

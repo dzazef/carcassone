@@ -1,4 +1,6 @@
 import * as GameActions from '../store/actions/gameActions'
+import * as MainActions from '../store/actions/mainActions'
+import * as LobbyActions from '../store/actions/lobbyActions'
 
 const handleError = (store, message, data) => {
     store.dispatch(GameActions.gameReceiveError({
@@ -17,6 +19,7 @@ const parseMessage = (store, data) => {
     return payload
 }
 
+// TODO: make error as single reducer
 export const wsReceiver = (store, data) => {
 
     let payload = parseMessage(store, data)
@@ -25,11 +28,11 @@ export const wsReceiver = (store, data) => {
     console.log("ws_rcv: ", payload.type)
 
     switch (payload.type) {
-        case("player_count"):
-            store.dispatch(GameActions.gamePlayerLobby(payload.data))
+        case("player_lobby"):
+            store.dispatch(LobbyActions.lobbyPlayer(payload.data))
             break
         case("start"):
-            store.dispatch(GameActions.gameStart())
+            store.dispatch(MainActions.mainGame())
             break
         case("board"):
             store.dispatch(GameActions.gameUpdateBoard(payload.data))

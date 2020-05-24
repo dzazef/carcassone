@@ -27,7 +27,12 @@ class Board extends Component {
             this.tileChosenDummy,
             this.pawnChosenDummy
         )
-        this.boardCanvas.render()
+        this.boardCanvas.render(
+            this.props?.game?.players,
+            this.props?.game?.board,
+            this.props?.game?.turn?.state,
+            this.props?.game?.turn?.possible_places,
+        )
     }
 
     render() {

@@ -2,19 +2,8 @@ import React, {Component} from 'react';
 import './carcassone.css'
 import Logo from "../../common/logo/Logo";
 import Button1 from "../../common/button-1/Button1";
-import store from '../../../store/store'
-import * as WSActions from '../../../store/actions/wsActions'
-import config from '../../../config.json'
 
 class Carcassone extends Component {
-
-    create = () => {
-        store.dispatch(WSActions.wsConnect(config.host))
-    }
-
-    send = () => {
-        store.dispatch(WSActions.wsSend({message: 'XD'}))
-    }
 
     render() {
         return (
@@ -23,8 +12,9 @@ class Carcassone extends Component {
                     <Logo/>
                 </div>
                 <div className={"m-carcassone-button-wrapper c-flex-ctr"}>
-                    <Button1 text={"create"} onClick={this.create}/>
-                    <Button1 text={"send"} onClick={this.send}/>
+                    <Button1 text={"play"} onClick={this.props.connect}/>
+                    <Button1 text={"send to srv"} onClick={this.props.send}/>
+                    {/*TODO: delete when done*/}
                 </div>
             </div>
         );

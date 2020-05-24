@@ -4,6 +4,8 @@ export const mainReducer = (state = defaultState, action) => {
     switch (action.type) {
         case 'MAIN_INITIAL':
             return 'S_MAIN_INITIAL'
+        case 'MAIN_LOBBY':
+            return 'S_MAIN_LOBBY'
         case 'MAIN_GAME':
             return 'S_MAIN_GAME'
         default:

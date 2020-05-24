@@ -30,7 +30,7 @@ class BoardCanvas {
 
     /**
      * Render board after update.
-     * @param players
+     * @param players: list of players including player id and color
      * @param board: holds info about placed tiles and pawns,
      *        see front.json (game.board)
      * @param turnState: holds info about what should be displayed

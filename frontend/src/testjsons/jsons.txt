@@ -1,0 +1,5 @@
+{"type":"board","data":{"tiles_left":"<number>","players":[{"id":"<number>","color":"<color>","points":"<number>","pawns_left":"<number>"}],"board":[{"x":"<number>","y":"<number>","id":"MMMTTTTTTKKKKKKKK","rotate":"<number>","pawn":{"id":"<number>","x":"<number>","y":"<number>"}}]}}
+
+{"type":"player_lobby","data":{"me":{"id":"1","color":"red","ready":"false"},"lobby":[{"id":"2","color":"green","ready":"false"},{"id":"3","color":"black","ready":"false"}]}}
+
+{"type": "start"}

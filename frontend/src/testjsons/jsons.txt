@@ -3,3 +3,7 @@
 {"type":"player_lobby","data":{"me":{"id":"1","color":"red","ready":"false"},"lobby":[{"id":"2","color":"green","ready":"false"},{"id":"3","color":"black","ready":"false"}]}}
 
 {"type": "start"}
+
+{"type":"board","data":{"tiles_left":"<number>","players":[{"id":"1","color":"00ff00","points":"5","pawns_left":"10"}],"board":[{"x":"0","y":"0","id":"","rotate":"","pawn":{}}],"my_turn":"<true/false>","player_turn":"<number>","turn":{"state":"S_SHOW_POSSIBLE_TILES / S_SHOW_POSSIBLE_PAWNS / S_EMPTY","tile":{"id":"MMMTKMTKTMKTMKTMTKMTKMTKMTMTKMTKTMT","rotate":"<number>"},"possible_places":[{"x":"<number>","y":"<number>"}]}}}
+
+{"type":"turn_info","data":{"id":"<number>","tile":{"id":"MMMTKMTKTMKTMKTMTKMTKMTKMTMTKMTKTMT","rotate":"<number>"},"possible_places":[{"x":"<number>","y":"<number>"}]}}

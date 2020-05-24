@@ -18,11 +18,13 @@ class BoardCanvas {
      * @param canvas: canvas on which board should be drawn
      * @param tileCallback: function called when user chooses tile
      * @param pawnCallback: function called when user chooses pawn
+     * @param rotateCallback:  function called on rotate
      */
-    constructor(canvas, tileCallback, pawnCallback) {
+    constructor(canvas, tileCallback, pawnCallback, rotateCallback) {
         this.canvas = canvas
         this.tileCallback = tileCallback
         this.pawnCallback = pawnCallback
+        this.rotateCallback = rotateCallback
         //--------------------------------------------
         this.board = new MyBoard(this.canvas, 100,
             this.tileCallback, this.pawnCallback);

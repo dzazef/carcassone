@@ -1,6 +1,7 @@
 import * as WSActions from '../store/actions/wsActions'
 import * as MainActions from '../store/actions/mainActions'
 import {wsReceiver} from "./wsReceiver";
+import * as CommandBuilder from './commandBuilder'
 
 const wsMiddleware = () => {
 
@@ -11,10 +12,7 @@ const wsMiddleware = () => {
         store.dispatch(WSActions.wsConnected(event.target.url))
         if (store.getState().state === 'S_MAIN_INITIAL') {
             store.dispatch(MainActions.mainLobby())
-            store.dispatch(WSActions.wsSend({ //TODO!!!!!!!!!!!!
-                type: "join",
-                data: {}
-            }))
+            store.dispatch(WSActions.wsSend(CommandBuilder.buildJoin()))
         }
     }
 
@@ -32,7 +30,6 @@ const wsMiddleware = () => {
         console.log(`ws_msg_in:`, event.data)
         wsReceiver(store, event.data)
     }
-
 
     const handleError = (store, error) => {
         console.log(`ws_unexpect_err:`, error)

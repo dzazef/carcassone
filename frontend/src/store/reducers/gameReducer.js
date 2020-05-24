@@ -1,19 +1,18 @@
 const defaultGameState = {
-    state: "S_GAME_INITIAL"
+    state: "S_GAME_INITIAL",
+    tiles_left: undefined,
+    players: undefined,
+    board: undefined,
+    my_turn: undefined,
+    player_turn: undefined,
+    turn: {
+        state: undefined,
+        tile: undefined,
+        possible_places: undefined
+    },
+    winners: undefined,
+    error: undefined
 }
-
-// const checkIfDefined = (...props) => {
-//     // usage:
-//     // if (!checkIfDefined(data.me.id, data.players)) {
-//     //     return handleError(state, 'Incorrect format', data, action.type)
-//     // }
-//     for (let i = 0; i < props.length; i++) {
-//         if (props[i] === undefined) {
-//             return false
-//         }
-//     }
-//     return true
-// }
 
 const handleGameBoard = (state, action) => {
     const data = action.data
@@ -102,3 +101,16 @@ export const gameReducer = (state = defaultGameState, action) => {
         return handleError(state, error.message, action.data, action.type)
     }
 }
+
+// const checkIfDefined = (...props) => {
+//     // usage:
+//     // if (!checkIfDefined(data.me.id, data.players)) {
+//     //     return handleError(state, 'Incorrect format', data, action.type)
+//     // }
+//     for (let i = 0; i < props.length; i++) {
+//         if (props[i] === undefined) {
+//             return false
+//         }
+//     }
+//     return true
+// }

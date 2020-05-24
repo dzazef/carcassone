@@ -3,35 +3,38 @@ import BoardCanvas from "../../../board/BoardCanvas";
 
 class Board extends Component {
 
-    tileChosenDummy = () => {
-        //TODO: Implement
-        console.log("tile chosen")
-    }
+    rotateCallback = (tile_id, rotate) =>
+        this.props.rotateCallback(this.props?.my_id, tile_id, rotate)
 
-    pawnChosenDummy = () => {
-        //TODO: Implement
-        console.log("pawn chosen")
-    }
+    tilePlacedCallback = (tile_x, tile_y) =>
+        this.props.tilePlacedCallback(this.props?.my_id, tile_x, tile_y)
+
+    pawnPlacedCallback = (tile_id, rotate, pawn_x, pawn_y) =>
+        this.props.pawnPlacedCallback(this.props?.my_id, tile_id, rotate, pawn_x, pawn_y)
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         this.boardCanvas.render(
-            this.props?.game?.board,
-            this.props?.game?.turn?.state,
-            this.props?.game?.turn?.possible_places,
+            this.props?.players,
+            this.props?.board,
+            this.props?.turn?.state,
+            this.props?.turn?.possible_places,
+            this.props?.turn?.tile
         )
     }
 
     componentDidMount() {
         this.boardCanvas = new BoardCanvas(
             this.canvas,
-            this.tileChosenDummy,
-            this.pawnChosenDummy
+            this.tilePlacedCallback,
+            this.pawnPlacedCallback,
+            this.rotateCallback
         )
         this.boardCanvas.render(
-            this.props?.game?.players,
-            this.props?.game?.board,
-            this.props?.game?.turn?.state,
-            this.props?.game?.turn?.possible_places,
+            this.props?.players,
+            this.props?.board,
+            this.props?.turn?.state,
+            this.props?.turn?.possible_places,
+            this.props?.turn?.tile
         )
     }
 

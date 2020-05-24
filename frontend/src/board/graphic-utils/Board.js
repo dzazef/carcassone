@@ -16,7 +16,7 @@ export class MyBoard {
      * gdy gracz wybierze miejsce na pionek
      * @returns {MyBoard}
      */
-    constructor(canvas, tileSize, tileCallback, pawnCallback) {
+    constructor(canvas, tileSize, tileCallback, pawnCallback, rotateCallback) {
         if(! MyBoard.instance){
             this.canvas = canvas;
             this.tileSize = tileSize;
@@ -27,7 +27,9 @@ export class MyBoard {
             this.firstTile = null;
             this.tileCallback = tileCallback;
             this.pawnCallback = pawnCallback;
+            this.rotateCallback = rotateCallback;
             this.currentTile = null;
+            this.currentTileRotate = 0;
             this.CASTLE_SHIELD = 6;  // oznaczenie na tarczę na płytce
             this.prepareApplication();
             this.prepareShaders();
@@ -98,25 +100,31 @@ export class MyBoard {
     }
 
     showCurrentTile(id) {
+        this.currentTileRotate = 0;
         let tile_id = [];
         for (let i = 0; i < id.length; i++) {
             for (let j = 0; j < id[i].length; j++) {
                 tile_id.push(id[i][j]);
             }
         }
-        this.drawCurrentTile(tile_id);
+        this.drawCurrentTile(id, tile_id);
     }
 
-    drawCurrentTile(tile_id) {
+    drawCurrentTile(id, tile_id) {
         this.currentTile = new Tile(tile_id, this);
         this.currentTile.rect.buttonMode = true;
         this.currentTile.rect.interactive = true;
         this.currentTile.rect.hitArea = new PIXI.Rectangle(0, 0,
             this.tileSize, this.tileSize);
         this.currentTile.rect.on('click', onClick);
+        let that = this;
         function onClick() {
             // obrócenie płytki
             console.log("obrót");
+            console.log(id);
+            that.currentTileRotate = (that.currentTileRotate + 1) % 4;
+            console.log(that.currentTileRotate);
+            that.rotateCallback(id, that.currentTileRotate);
         }
         this.currentTile.setTileCoordinates(
             1.0 - (this.tileSize / 2) / this.app.renderer.screen.width - 0.01,
@@ -162,7 +170,7 @@ export class MyBoard {
                     }
                 }
             }
-            let tile = new Tile(tile_id, that);
+            let tile = new Tile(tile_id, that, item.id);
             tile.setTilePosition(item.x, item.y);
             if(item.pawn !== null) {
                 tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
@@ -218,6 +226,7 @@ export class MyBoard {
         if(this.currentTile != null) {
             this.currentTile.remove();
             this.currentTile = null;
+            this.currentTileRotate = 0;
             this.img.destroy();
             this.img = null;
         }

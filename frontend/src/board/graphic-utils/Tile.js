@@ -6,10 +6,11 @@ import fragmentShader from './shaders/fShader.frag';
 export class Tile {
     /**
      * konstruktor klasy Tile
-     * @param id id płytki
+     * @param id id płytki w postaci listy
      * @param board plansza, do której należy ta płytka
+     * @param tile_id id płytki w postaci macierzy
      */
-    constructor(id, board) {
+    constructor(id, board, tile_id) {
         this.id = id;
         this.terrains = {
             DEFAULT: 0,
@@ -22,6 +23,7 @@ export class Tile {
         };
         this.board = board;
         this.pawn = null;
+        this.tile_id = tile_id;
         // lista obiektów postaci
         // {"pawn": graphics, "row": number, "column": number}
         this.pawnPlaces = [];
@@ -100,7 +102,8 @@ export class Tile {
         graphic.on('click', onClick);
         let that = this;
         function onClick() {
-            that.board.pawnCallback(x, y);
+            console.log(that.tile_id);
+            that.board.pawnCallback(that.tile_id, that.board.currentTileRotate, x, y);
         }
     }
 

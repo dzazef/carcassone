@@ -23,7 +23,7 @@ class Lobby extends Component {
                     <Modal.Body>
                         {
                             this.props?.lobbyplayers?.map((player, i) => (
-                                    <p key={i}>{player.id} {player.color} {player.ready}</p>
+                                    <p key={i}>{player.id} {player.color} {player.ready ? "true": "false"}</p>
                                 )
                             )
                         }

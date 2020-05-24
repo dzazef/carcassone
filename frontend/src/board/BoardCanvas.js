@@ -25,6 +25,7 @@ class BoardCanvas {
 
     /**
      * Render board after update.
+     * @param players: list of players including player id and color
      * @param board: holds info about placed tiles and pawns,
      *        see front.json (game.board)
      * @param turnState: holds info about what should be displayed
@@ -33,7 +34,7 @@ class BoardCanvas {
      *        of pawns and tiles (depending on turnState)
      *        see front.json (game.turn.possible_places)
      */
-    render = (board, turnState, possiblePlaces) => {
+    render = (players, board, turnState, possiblePlaces) => {
         let ctx = this.canvas.getContext("2d");
         ctx.beginPath();
         ctx.arc(100, 75, 50, 0, 2 * Math.PI);

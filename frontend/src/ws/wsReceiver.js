@@ -28,7 +28,7 @@ export const wsReceiver = (store, data) => {
     console.log("ws_rcv: ", payload.type)
 
     switch (payload.type) {
-        case("player_count"):
+        case("player_lobby"):
             store.dispatch(LobbyActions.lobbyPlayer(payload.data))
             break
         case("start"):

@@ -11,6 +11,10 @@ const wsMiddleware = () => {
         store.dispatch(WSActions.wsConnected(event.target.url))
         if (store.getState().state === 'S_MAIN_INITIAL') {
             store.dispatch(MainActions.mainLobby())
+            store.dispatch(WSActions.wsSend({ //TODO!!!!!!!!!!!!
+                type: "join",
+                data: {}
+            }))
         }
     }
 

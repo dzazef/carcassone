@@ -201,31 +201,6 @@ class TestCountingPoints(unittest.TestCase):
         t24.place_a_pawn(t24.offer_to_place_a_pawn()[0][0], 1)  # 1 player put pawn on castle
         self.assertEqual(t24.after_move(), {1: [4, 1]})
 
-        self.assertEqual(t1.after_game(), {1: 6})  # there is only 1 player on tile1
-        self.assertEqual(t2.after_game(), {})
-        self.assertEqual(t3.after_game(), {})
-        self.assertEqual(t4.after_game(), {})
-        self.assertEqual(t5.after_game(), {})
-        self.assertEqual(t6.after_game(), {})
-        self.assertEqual(t7.after_game(), {})
-        self.assertEqual(t8.after_game(), {2: 9, 4: 9})  # there are 2 pawns(from player 2 and 4)
-        self.assertEqual(t9.after_game(), {})
-        self.assertEqual(t10.after_game(), {})
-        self.assertEqual(t11.after_game(), {4: 12})  # player 4 is the only one on this meadow
-        self.assertEqual(t12.after_game(), {})
-        self.assertEqual(t13.after_game(), {})
-        self.assertEqual(t14.after_game(), {})
-        self.assertEqual(t15.after_game(), {})
-        self.assertEqual(t16.after_game(), {})
-        self.assertEqual(t17.after_game(), {})
-        self.assertEqual(t18.after_game(), {})
-        self.assertEqual(t19.after_game(), {})
-        self.assertEqual(t20.after_game(), {})
-        self.assertEqual(t21.after_game(), {})
-        self.assertEqual(t22.after_game(), {})
-        self.assertEqual(t23.after_game(), {1: 6})  # there is a pawn from player 1 on the castle
-        self.assertEqual(t24.after_game(), {})
-
 
 if __name__ == '__main__':
     unittest.main()

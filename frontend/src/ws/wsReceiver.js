@@ -1,9 +1,10 @@
 import * as GameActions from '../store/actions/gameActions'
 import * as MainActions from '../store/actions/mainActions'
 import * as LobbyActions from '../store/actions/lobbyActions'
+import * as ErrorActions from '../store/actions/errorActions'
 
 const handleError = (store, message, data) => {
-    store.dispatch(GameActions.gameReceiveError({
+    store.dispatch(ErrorActions.errorHandle({
         message,
         data
     }))
@@ -19,7 +20,7 @@ const parseMessage = (store, data) => {
     return payload
 }
 
-// TODO: make error as single reducer
+
 export const wsReceiver = (store, data) => {
 
     let payload = parseMessage(store, data)
@@ -33,6 +34,7 @@ export const wsReceiver = (store, data) => {
             break
         case("start"):
             store.dispatch(MainActions.mainGame())
+            store.dispatch(GameActions.gameStart(payload.data))
             break
         case("board"):
             store.dispatch(GameActions.gameUpdateBoard(payload.data))

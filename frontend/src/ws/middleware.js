@@ -1,11 +1,18 @@
 import * as WSActions from '../store/actions/wsActions'
 import * as MainActions from '../store/actions/mainActions'
 import {wsReceiver} from "./wsReceiver";
+import * as ErrorActions from '../store/actions/errorActions'
 import * as CommandBuilder from './commandBuilder'
 
 const wsMiddleware = () => {
 
     let socket = null
+
+
+    const handleError = (store, message, data) => {
+        store.dispatch(ErrorActions.errorHandle({message, data}))
+    }
+
 
     const onOpen = store => (event) => {
         console.log(`ws_open: ${event.target.url}`)
@@ -23,17 +30,12 @@ const wsMiddleware = () => {
 
     const onError = store => (event) => {
         console.log(`ws_err:`, event)
-        store.dispatch(WSActions.wsError(event))
+        handleError(store, "Socket error, isn't the server down?", {})
     }
 
     const onMessage = store => (event) => {
         console.log(`ws_msg_in:`, event.data)
         wsReceiver(store, event.data)
-    }
-
-    const handleError = (store, error) => {
-        console.log(`ws_unexpect_err:`, error)
-        store.dispatch(WSActions.wsError(store, error))
     }
 
     const connect = (store, action) => {
@@ -55,7 +57,7 @@ const wsMiddleware = () => {
                 store.dispatch(WSActions.wsDisconnecting())
                 socket.close();
             } catch (error) {
-                handleError(store, error)
+                handleError(store, "Error while disconnecting", {})
             }
         }
         socket = null
@@ -63,8 +65,7 @@ const wsMiddleware = () => {
 
     const send = (store, action) => {
         if (socket === null) {
-            console.log('Tried to send a message, but socket does not exist.')
-            store.dispatch(WSActions.wsError('Socket does not exists'))
+            store.dispatch(handleError(store, 'Socket does not exists', {}))
             return
         }
         if (store.getState().ws.state === 'S_WS_CONNECTED') {
@@ -72,11 +73,11 @@ const wsMiddleware = () => {
                 console.log(`sending message to host: `, action.data)
                 socket.send(JSON.stringify(action.data))
             } catch (error) {
-                handleError(store, error)
+                handleError(store, "Error while creating message", {})
             }
         }
         else {
-            handleError(store, {}) //TODO
+            handleError(store, "Error: You are not connected!", {})
         }
     }
 

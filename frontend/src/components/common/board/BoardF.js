@@ -1,6 +1,7 @@
 import Board from "./Board";
 import {connect} from "react-redux";
 import * as WSActions from '../../../store/actions/wsActions'
+import * as GameActions from '../../../store/actions/gameActions'
 import * as CommandBuilder from '../../../ws/commandBuilder'
 
 const mapStateToProps = (state) => ({
@@ -16,11 +17,13 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(WSActions.wsSend(CommandBuilder.buildRotate(id, tile_id, rotate))),
     tilePlacedCallback: (id, tile_x, tile_y) =>
         dispatch(WSActions.wsSend(CommandBuilder.buildPutTile(id, tile_x, tile_y))),
-    pawnPlacedCallback: (id, tile_id, rotate, pawn_x, pawn_y) =>
+    pawnPlacedCallback: (id, tile_id, rotate, pawn_x, pawn_y) => {//TODO: remove tile_id
+        dispatch(GameActions.gameEndTurn())
         dispatch(WSActions.wsSend(
-                CommandBuilder.buildEndTurn(id, tile_id, rotate, true, pawn_x, pawn_y)
+            CommandBuilder.buildEndTurn(id, tile_id, rotate, true, pawn_x, pawn_y)
             )
         )
+    }
 })
 
 const BoardF = connect(mapStateToProps, mapDispatchToProps)(Board)

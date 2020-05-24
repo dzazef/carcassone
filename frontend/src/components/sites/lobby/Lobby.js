@@ -2,8 +2,13 @@ import React, {Component} from 'react';
 import './lobby.css'
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
+import Spinner from 'react-bootstrap/Spinner'
 
 class Lobby extends Component {
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(this.props.lobbyplayers)
+    }
 
     render() {
         return (
@@ -20,12 +25,32 @@ class Lobby extends Component {
                             Lobby
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body className={"c-flex-ctr m-lobby-body"} >
                         {
-                            this.props?.lobbyplayers?.map((player, i) => (
-                                    <p key={i}>{player.id} {player.color} {player.ready ? "true": "false"}</p>
+                            this.props?.lobbyplayers?.length > 0
+                                ?
+                                this.props?.lobbyplayers?.map((player, i) => (
+                                        <div
+                                            key={i}
+                                            className={"m-lobby-player"}
+                                            style={{backgroundColor: player.color}}
+                                        >
+                                        <span className={""}>
+                                            {`Player${player.id}`}
+                                        </span>
+                                            <span
+                                                className={"m-lobby-player-ready"}
+                                                style={{
+                                                    backgroundColor: player.ready ? "rgb(40, 168, 13)" : "rgb(253, 56, 56)"
+                                                }}
+                                            >
+                                            {player.ready ? "Ready!" : "Not ready :c"}
+                                        </span>
+                                        </div>
+                                    )
                                 )
-                            )
+                                :
+                                <Spinner animation="grow" variant="secondary" />
                         }
                     </Modal.Body>
                     <Modal.Footer>

@@ -16,13 +16,7 @@ class App extends Component {
                     :
                         <>
                             <CarcassoneF/>
-                            <LobbyF
-                                show={this.props.inLobby}
-                                onHide={this.props.disconnect}
-                                ready={this.props.ready}
-                                myid={this.props.myid}
-                                lobbyplayers={this.props.lobbyPlayers}
-                            />
+                            <LobbyF/>
                         </>
                 }
             </>

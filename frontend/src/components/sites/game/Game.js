@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './game.css'
 import BoardF from "../../common/board/BoardF";
+import PlayerListF from "../../common/player-list/PlayerListF";
 
 class Game extends Component {
 
@@ -8,11 +9,12 @@ class Game extends Component {
 
     render() {
         return (
-            // <div id={"m-game-root"} className={"c-max-size"}>
             <>
+                <div className={"m-game-player-list"}>
+                    <PlayerListF/>
+                </div>
                 <BoardF/>
             </>
-            // </div>
         );
     }
 }

@@ -13,8 +13,6 @@ class Carcassone extends Component {
                 </div>
                 <div className={"m-carcassone-button-wrapper c-flex-ctr"}>
                     <Button1 text={"play"} onClick={this.props.connect}/>
-                    <Button1 text={"send to srv"} onClick={this.props.send}/>
-                    {/*TODO: delete when done*/}
                 </div>
             </div>
         );

@@ -1,5 +1,8 @@
-#m-game-root {
-  background-color: #470000;
+.m-game-player-list {
+  position: absolute;
+  top: 20px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 /*# sourceMappingURL=game.css.map */

@@ -7,7 +7,6 @@ import config from "../../../config.json";
 const mapDispatchToProps = (dispatch) => {
     return {
         connect: () => dispatch(WSActions.wsConnect(config.host)),
-        send: () => dispatch(WSActions.wsSend({message: 'XD'}))  //TODO: delete when done
     }
 }
 

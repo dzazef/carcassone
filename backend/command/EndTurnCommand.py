@@ -27,7 +27,7 @@ class EndTurnCommand(Command):
             currPlayer = self._game.getCurrPlayer()
             json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.tile_possible_places(
                 currPlayer.getId(),
-                self._game.getCurrTile().id,
+                self._game.getCurrTile().code7x7,
                 self._game.getCurrTile().orientation,
                 self._game.getPawnPositions()
             )))

@@ -29,4 +29,14 @@ class ReadyCommand(Command):
             json = {p.getWebsocket(): [dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady())),
                                        dumps(JSONConstructor.board_state(tilesLeft,playersList,boardList))]
                     for p in players}
+
+            currTile = self._game.getCurrTile()
+            places = self._game.getTilePositions(currTile)
+            currPlayer = self._game.getCurrPlayer()
+            json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.tile_possible_places(
+                currPlayer.getId(),
+                currTile.code7x7,
+                currTile.orientation,
+                places
+            )))
         return json

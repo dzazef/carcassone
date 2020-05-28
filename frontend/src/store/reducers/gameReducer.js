@@ -17,7 +17,11 @@ const handleGameStart = (state, data) => ({
     ...state,
     state: "S_GAME_ACTIVE",
     my_id: data?.me?.id,
-    my_color: data?.me?.color
+    my_color: data?.me?.color,
+    turn: {
+        state: "S_EMPTY"
+    },
+    board: []
 })
 
 const handleGameBoard = (state, data) => ({

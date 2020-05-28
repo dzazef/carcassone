@@ -18,11 +18,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         wsSend: data => dispatch(WsActions.wsSend(data))
-        // playerJoin: data => dispatch(PlayerActions.playerJoin(data)),
-        // playerReady: data => dispatch(PlayerActions.playerReady(data)),
-        // playerRotateTile: data => dispatch(PlayerActions.playerRotateTile(data)),
-        // playerPutTile: data => dispatch(PlayerActions.playerPutTile(data)),
-        // playerEndTurn: data => dispatch(PlayerActions.playerEndTurn(data)),
     }
 }
 

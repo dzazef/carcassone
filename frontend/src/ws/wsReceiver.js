@@ -33,8 +33,8 @@ export const wsReceiver = (store, data) => {
             store.dispatch(LobbyActions.lobbyPlayer(payload.data))
             break
         case("start"):
-            store.dispatch(MainActions.mainGame())
             store.dispatch(GameActions.gameStart(payload.data))
+            store.dispatch(MainActions.mainGame())
             break
         case("board"):
             store.dispatch(GameActions.gameUpdateBoard(payload.data))

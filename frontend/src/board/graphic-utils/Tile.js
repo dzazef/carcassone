@@ -51,6 +51,7 @@ export class Tile {
         let that = this;
         this.pawnPlaces = [];
         pawnPlacesJson.forEach(draw);
+
         function draw(item) {
             that.putPawnPlace(item.x, item.y);
         }
@@ -61,9 +62,11 @@ export class Tile {
      */
     removePawnPlaces() {
         this.pawnPlaces.forEach(remove);
+
         function remove(item) {
             item.pawn.destroy();
         }
+
         this.pawnPlaces = [];
     }
 
@@ -73,10 +76,10 @@ export class Tile {
     remove() {
         this.removePawnPlaces();
         this.rect.destroy();
-        if(this.pawn !== null) {
+        if (this.pawn !== null) {
             this.pawn.destroy();
         }
-        if(this.shield !== null) {
+        if (this.shield !== null) {
             this.shield.destroy();
         }
     }
@@ -101,6 +104,7 @@ export class Tile {
         graphic.hitArea = new PIXI.Circle(0, 0, pawnSize / 2);
         graphic.on('click', onClick);
         let that = this;
+
         function onClick() {
             console.log(that.tile_id);
             that.board.pawnCallback(that.tile_id, that.board.currentTileRotate, x, y);
@@ -127,6 +131,7 @@ export class Tile {
     redrawPawnPlaces() {
         let that = this;
         this.pawnPlaces.forEach(draw);
+
         function draw(item) {
             that.setPawnPlacePosition(item.row, item.column, item.pawn);
         }
@@ -139,6 +144,7 @@ export class Tile {
      */
     movePawnPlaces(dx, dy) {
         this.pawnPlaces.forEach(move);
+
         function move(item) {
             item.pawn.x += dx;
             item.pawn.y += dy;
@@ -219,6 +225,7 @@ export class Tile {
             // podłączenie filtra do kwadratu
             that.rect.filters = [filter];
         }
+
         this.uniforms = uniforms;
     }
 
@@ -230,7 +237,7 @@ export class Tile {
     setTilePosition(x, y) {
         this.row = x;
         this.column = y;
-        if(this.board.firstTile === null) {
+        if (this.board.firstTile === null) {
             this.setTileCoordinates(
                 0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
                 0.5 - x * (this.board.tileSize / this.board.app.renderer.screen.height));
@@ -252,17 +259,17 @@ export class Tile {
      * @param dy przyrost w pikselach na osi y
      */
     move(dx, dy) {
-         this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
-         this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
+        this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
+        this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
 
-         this.centerX += dx / this.board.app.renderer.screen.width;
-         this.centerY += dy / this.board.app.renderer.screen.height;
+        this.centerX += dx / this.board.app.renderer.screen.width;
+        this.centerY += dy / this.board.app.renderer.screen.height;
 
-        if(this.pawn !== null) {
+        if (this.pawn !== null) {
             this.pawn.x += dx;
             this.pawn.y += dy;
         }
-        if(this.shield !== null) {
+        if (this.shield !== null) {
             this.shield.x += dx;
             this.shield.y += dy;
         }
@@ -316,10 +323,10 @@ export class Tile {
         this.setTileCoordinates(
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
             0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));
-        if(this.pawn !== null) {
+        if (this.pawn !== null) {
             this.setPawnPosition(this.pawnRow, this.pawnColumn);
         }
-        if(this.shield !== null) {
+        if (this.shield !== null) {
             this.setShieldPosition(this.shieldRow, this.shieldColumn);
         }
         this.redrawPawnPlaces();

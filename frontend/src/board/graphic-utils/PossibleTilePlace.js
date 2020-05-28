@@ -25,6 +25,7 @@ export class PossibleTilePlace {
         this.rect.on('click', onClick);
         this.rect.hitArea = new PIXI.Rectangle(0.0, 0.0, size, size);
         let that = this;
+
         function onClick() {
             console.log("row: ", that.row);
             console.log("column", that.column);
@@ -40,7 +41,7 @@ export class PossibleTilePlace {
         //     0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
         this.row = x;
         this.column = y;
-        if(this.board.firstTile === null) {
+        if (this.board.firstTile === null) {
             this.setTileCoordinates(
                 0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
                 0.5 - x * (this.board.tileSize / this.board.app.renderer.screen.height));

@@ -11,7 +11,7 @@ class PlayerList extends Component {
             viewBox="0 0 24 24"
             height="24"
             width="24">
-        >
+            >
             <circle
                 r="10"
                 cy="12"

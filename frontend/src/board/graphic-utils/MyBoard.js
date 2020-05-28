@@ -17,7 +17,7 @@ export class MyBoard {
      * @returns {MyBoard}
      */
     constructor(canvas, tileSize, tileCallback, pawnCallback, rotateCallback) {
-        if(! MyBoard.instance){
+        if (!MyBoard.instance) {
             this.canvas = canvas;
             this.tileSize = tileSize;
             // this.players
@@ -38,10 +38,11 @@ export class MyBoard {
             document.addEventListener("keydown", handleKeyDown);
             let that = this;
             let speed = 5;
+
             function handleKeyDown(e) {
                 let code = e.which;
                 // eslint-disable-next-line default-case
-                switch(code) {
+                switch (code) {
                     case 40:  // down
                         that.moveTiles(0, -speed);
                         break;
@@ -62,19 +63,24 @@ export class MyBoard {
             let mouseX = 0;  // współrzędne kursora na canvasie
             let mouseY = 0;
             this.canvas.addEventListener("mousedown", handleMouseDown);
+
             function handleMouseDown(e) {
                 mousedown = true;
                 mouseX = e.clientX - canvas.getBoundingClientRect().left;
                 mouseY = e.clientY - canvas.getBoundingClientRect().top;
             }
+
             this.canvas.addEventListener("mouseup", handleMouseUp);
             this.canvas.addEventListener("mouseleave", handleMouseUp);
+
             function handleMouseUp(e) {
                 mousedown = false;
             }
+
             this.canvas.addEventListener("mousemove", handleMouseMove);
+
             function handleMouseMove(e) {
-                if(mousedown) {
+                if (mousedown) {
                     let currentMouseX = e.clientX - canvas.getBoundingClientRect().left;
                     let currentMouseY = e.clientY - canvas.getBoundingClientRect().top;
                     let dx = mouseX - currentMouseX;
@@ -93,7 +99,7 @@ export class MyBoard {
 
     setPlayers(playersJson) {
         // zamiana listy players na mapę id_gracza:kolor_gracza
-        this.players = playersJson.reduce(function(map, obj) {
+        this.players = playersJson?.reduce(function (map, obj) {
             map[obj.id] = obj.color;
             return map;
         }, {});
@@ -118,6 +124,7 @@ export class MyBoard {
             this.tileSize, this.tileSize);
         this.currentTile.rect.on('click', onClick);
         let that = this;
+
         function onClick() {
             // obrócenie płytki
             console.log("obrót");
@@ -126,6 +133,7 @@ export class MyBoard {
             console.log(that.currentTileRotate);
             that.rotateCallback(id, that.currentTileRotate);
         }
+
         this.currentTile.setTileCoordinates(
             1.0 - (this.tileSize / 2) / this.app.renderer.screen.width - 0.01,
             1.0 - (this.tileSize / 2) / this.app.renderer.screen.height - 0.01);
@@ -155,15 +163,16 @@ export class MyBoard {
         let that = this;
         this.tiles = [];
         board_json.forEach(draw);
+
         function draw(item) {
             let tile_id = [];
             let shieldTile = false;  // czy płytka jest oznaczona tarczą
             let shieldRow = 0;  // numer wiersza, w którym znajduje się tarcza
             let shieldColumn = 0;
-            for(let i = 0; i < item.id.length; i++) {
+            for (let i = 0; i < item.id.length; i++) {
                 for (let j = 0; j < item.id[i].length; j++) {
                     tile_id.push(item.id[i][j]);
-                    if(item.id[i][j] === that.CASTLE_SHIELD) {
+                    if (item.id[i][j] === that.CASTLE_SHIELD) {
                         shieldTile = true;
                         shieldRow = i;
                         shieldColumn = j;
@@ -172,15 +181,15 @@ export class MyBoard {
             }
             let tile = new Tile(tile_id, that, item.id);
             tile.setTilePosition(item.x, item.y);
-            if(item.pawn !== null) {
+            if (item.pawn !== null) {
                 tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
             }
-            if(shieldTile) {
+            if (shieldTile) {
                 tile.drawShield(shieldRow, shieldColumn);
             }
             that.tiles.push(tile);
             // jeśli to była środkowa płytka, to zapamiętujemy ją
-            if(item.x === 0 && item.y === 0) {
+            if (item.x === 0 && item.y === 0) {
                 that.firstTile = tile;
             }
         }
@@ -192,14 +201,15 @@ export class MyBoard {
      * @param possible_places_json
      */
     drawPossiblePlaces(possible_places_json) {
-       let that = this;
-       this.possiblePlaces = [];
-       possible_places_json.forEach(draw);
-       function draw(item) {
-           let place = new PossibleTilePlace(that);
-           place.setTilePosition(item.x, item.y);
-           that.possiblePlaces.push(place);
-       }
+        let that = this;
+        this.possiblePlaces = [];
+        possible_places_json.forEach(draw);
+
+        function draw(item) {
+            let place = new PossibleTilePlace(that);
+            place.setTilePosition(item.x, item.y);
+            that.possiblePlaces.push(place);
+        }
     }
 
     /**
@@ -208,22 +218,26 @@ export class MyBoard {
      */
     removePossiblePlaces() {
         this.possiblePlaces.forEach(remove);
+
         function remove(item) {
             item.remove();
         }
+
         this.possiblePlaces = [];
     }
 
     removeTiles() {
         this.tiles.forEach(remove);
+
         function remove(item) {
             item.remove();
         }
+
         this.tiles = [];
     }
 
     removeCurrentTile() {
-        if(this.currentTile != null) {
+        if (this.currentTile != null) {
             this.currentTile.remove();
             this.currentTile = null;
             this.currentTileRotate = 0;
@@ -236,7 +250,7 @@ export class MyBoard {
      * usuwa wszystkie miejsca na pionki z ostatniej płytki
      */
     removePawnPlaces() {
-        if(this.tiles.length > 0) {
+        if (this.tiles.length > 0) {
             this.tiles[this.tiles.length - 1].removePawnPlaces();
         }
     }
@@ -252,6 +266,7 @@ export class MyBoard {
     moveTiles(dx, dy) {
         this.tiles.forEach(move);
         this.possiblePlaces.forEach(move);
+
         function move(item) {
             item.move(dx, dy);
             item.move(dx, dy);
@@ -269,6 +284,7 @@ export class MyBoard {
         });
         let that = this;
         window.addEventListener('resize', resize);
+
         function resize() {
             let _w = window.innerWidth;
             let _h = window.innerHeight;
@@ -286,10 +302,12 @@ export class MyBoard {
 
     redrawTiles() {
         this.tiles.forEach(drawTile);
+
         function drawTile(item) {
             item.redraw();
         }
-        if(this.currentTile != null) {
+
+        if (this.currentTile != null) {
             let currentTileId = this.currentTile.id;
             let currentTileIdMatrix = this.currentTile.tile_id;
             this.removeCurrentTile();
@@ -299,6 +317,7 @@ export class MyBoard {
 
     redrawPossiblePlaces() {
         this.possiblePlaces.forEach(drawPlaces);
+
         function drawPlaces(item) {
             item.redraw();
         }
@@ -310,10 +329,10 @@ export class MyBoard {
      */
     getPlayerHexColor(player_id) {
         let color_string = this.players[player_id]
-        if(color_string === 'red') {
+        if (color_string === 'red') {
             return 0xe60000;
         }
-        if(color_string === 'yellow') {
+        if (color_string === 'yellow') {
             return 0xffff00;
         }
     }

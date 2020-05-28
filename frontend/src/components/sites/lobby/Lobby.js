@@ -25,7 +25,7 @@ class Lobby extends Component {
                             Lobby
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body className={"c-flex-ctr m-lobby-body"} >
+                    <Modal.Body className={"c-flex-ctr m-lobby-body"}>
                         {
                             this.props?.lobbyplayers?.length > 0
                                 ?
@@ -50,7 +50,7 @@ class Lobby extends Component {
                                     )
                                 )
                                 :
-                                <Spinner animation="grow" variant="secondary" />
+                                <Spinner animation="grow" variant="secondary"/>
                         }
                     </Modal.Body>
                     <Modal.Footer>

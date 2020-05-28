@@ -10,8 +10,7 @@ const mapStateToProps = (state) => {
 
 // noinspection JSUnusedLocalSymbols
 const mapDispatchToProps = (dispatch) => {
-    return {
-    }
+    return {}
 }
 
 const AppF = connect(mapStateToProps, mapDispatchToProps)(App)

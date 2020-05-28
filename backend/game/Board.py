@@ -41,13 +41,24 @@ class Board:
         result = []
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
-                if self.tile_matrix[i][j] is not None:
-                    if self.tile_matrix[i][j].upTile is None and self.tile_matrix[i][j].fit_up(tile):
-                        result.append((i - 1 - 75, j - 75))
-                    if self.tile_matrix[i][j].downTile is None and self.tile_matrix[i][j].fit_down(tile):
-                        result.append((i + 1 - 75, j - 75))
-                    if self.tile_matrix[i][j].leftTile is None and self.tile_matrix[i][j].fit_left(tile):
-                        result.append((i - 75, j - 1 - 75))
-                    if self.tile_matrix[i][j].rightTile is None and self.tile_matrix[i][j].fit_right(tile):
-                        result.append((i - 75, j + 1 - 75))
+                if self.tile_matrix[i][j] is None and self.__hasNeighbour(i, j):
+                    if self.tile_matrix[i + 1][j] is None or self.tile_matrix[i + 1][j].fit_down(tile):
+                        result.append((i + 1 + 75, j + 75))
+                    if self.tile_matrix[i - 1][j] is None or self.tile_matrix[i - 1][j].fit_up(tile):
+                        result.append((i - 1 + 75, j + 75))
+                    if self.tile_matrix[i][j - 1] is None or self.tile_matrix[i][j - 1].fit_left(tile):
+                        result.append((i + 75, j - 1 + 75))
+                    if self.tile_matrix[i][j + 1] is None or self.tile_matrix[i][j + 1].fit_left(tile):
+                        result.append((i + 75, j + 1 + 75))
         return result
+
+    def __hasNeighbour(self, i, j):
+        if i > 0 and self.tile_matrix[i - 1][j] is not None:
+            return True
+        if i < 149 and self.tile_matrix[i + 1][j] is not None:
+            return True
+        if j > 0 and self.tile_matrix[i][j - 1] is not None:
+            return True
+        if j < 149 and self.tile_matrix[i][j + 1] is not None:
+            return True
+        return False

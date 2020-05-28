@@ -1,6 +1,9 @@
+from backend.tile.Tile25Start import Tile25
+
 class Board:
     def __init__(self):
         self.tile_matrix = [[None for i in range(150)] for i in range(150)]
+        self.tile_matrix[75][75] = Tile25()
 
     def getTiles(self):
         # board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]

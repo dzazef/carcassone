@@ -3,6 +3,7 @@ import './App.css';
 import GameF from '../../sites/game/GameF'
 import CarcassoneF from "../carcassone/CarcassoneF";
 import LobbyF from "../lobby/LobbyF";
+import SurrenderF from "../../common/surrender/SurrenderF";
 
 class App extends Component {
 

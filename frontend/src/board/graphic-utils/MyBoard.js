@@ -328,7 +328,7 @@ export class MyBoard {
      * @param player_id
      */
     getPlayerHexColor(player_id) {
-        let color_string = this.players[player_id]
+        let color_string = 'red' //TODO: do not commit
         if (color_string === 'red') {
             return 0xe60000;
         }

@@ -1,5 +1,6 @@
 from backend.tile.Tile25Start import Tile25
 
+
 class Board:
     def __init__(self):
         self.tile_matrix = [[None for i in range(150)] for i in range(150)]
@@ -16,6 +17,8 @@ class Board:
         return board
 
     def putTile(self, tile, x, y):
+        x += 75
+        y += 75
         if y-1 >= 0 and self.tile_matrix[x][y-1] != None:
             tile.leftTile = self.tile_matrix[x][y-1]
             (self.tile_matrix[x][y-1]).rightTile = tile
@@ -40,11 +43,11 @@ class Board:
             for j in range(len(self.tile_matrix[0])):
                 if self.tile_matrix[i][j] is not None:
                     if self.tile_matrix[i][j].upTile is None and self.tile_matrix[i][j].fit_up(tile):
-                        result.append((i, j - 1))
+                        result.append((i - 75, j - 1 - 75))
                     if self.tile_matrix[i][j].downTile is None and self.tile_matrix[i][j].fit_down(tile):
-                        result.append((i, j + 1))
+                        result.append((i - 75, j + 1 - 75))
                     if self.tile_matrix[i][j].leftTile is None and self.tile_matrix[i][j].fit_left(tile):
-                        result.append((i - 1, j))
+                        result.append((i - 1 - 75, j - 75))
                     if self.tile_matrix[i][j].rightTile is None and self.tile_matrix[i][j].fit_right(tile):
-                        result.append((i + 1, j))
+                        result.append((i + 1 - 75, j - 75))
         return result

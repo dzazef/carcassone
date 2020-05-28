@@ -44,8 +44,6 @@ class BoardCanvas {
      * @param currentTile
      */
     render = (players, board, turnState, possiblePlaces, myTurn, currentTile) => {
-        this.board.setPlayers(players);
-
         this.board.removeTiles();
         this.board.removePossiblePlaces();
         this.board.removePawnPlaces();
@@ -56,6 +54,7 @@ class BoardCanvas {
         } else if(turnState === "S_SHOW_POSSIBLE_PAWNS") {
             // pokazuje miejsca na położenie pionków na płytce
             // ostatniej na liście
+            this.board.setPlayers(players);
             this.board.drawTiles(board);
             this.board.showPawnPlaces(possiblePlaces);
         } else if(turnState === "S_EMPTY") {

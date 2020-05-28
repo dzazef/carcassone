@@ -43,11 +43,11 @@ class Board:
             for j in range(len(self.tile_matrix[0])):
                 if self.tile_matrix[i][j] is not None:
                     if self.tile_matrix[i][j].upTile is None and self.tile_matrix[i][j].fit_up(tile):
-                        result.append((i - 75, j - 1 - 75))
-                    if self.tile_matrix[i][j].downTile is None and self.tile_matrix[i][j].fit_down(tile):
-                        result.append((i - 75, j + 1 - 75))
-                    if self.tile_matrix[i][j].leftTile is None and self.tile_matrix[i][j].fit_left(tile):
                         result.append((i - 1 - 75, j - 75))
-                    if self.tile_matrix[i][j].rightTile is None and self.tile_matrix[i][j].fit_right(tile):
+                    if self.tile_matrix[i][j].downTile is None and self.tile_matrix[i][j].fit_down(tile):
                         result.append((i + 1 - 75, j - 75))
+                    if self.tile_matrix[i][j].leftTile is None and self.tile_matrix[i][j].fit_left(tile):
+                        result.append((i - 75, j - 1 - 75))
+                    if self.tile_matrix[i][j].rightTile is None and self.tile_matrix[i][j].fit_right(tile):
+                        result.append((i - 75, j + 1 - 75))
         return result

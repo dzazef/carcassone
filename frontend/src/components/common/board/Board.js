@@ -18,6 +18,7 @@ class Board extends Component {
             this.props?.board,
             this.props?.turn?.state,
             this.props?.turn?.possible_places,
+            this.props?.myTurn,
             this.props?.turn?.tile
         )
     }
@@ -34,6 +35,7 @@ class Board extends Component {
             this.props?.board,
             this.props?.turn?.state,
             this.props?.turn?.possible_places,
+            this.props?.myTurn,
             this.props?.turn?.tile
         )
     }

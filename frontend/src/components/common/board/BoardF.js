@@ -9,6 +9,7 @@ const mapStateToProps = (state) => ({
     board: state?.game?.board,
     turn: state?.game?.turn,
     myid: state?.lobby?.my_id,
+    myTurn: state?.game?.my_turn
 })
 
 

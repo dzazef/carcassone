@@ -181,7 +181,7 @@ export class MyBoard {
             }
             let tile = new Tile(tile_id, that, item.id);
             tile.setTilePosition(item.x, item.y);
-            if (item.pawn !== null) {
+            if (item.pawn !== undefined) {
                 tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
             }
             if (shieldTile) {
@@ -328,7 +328,7 @@ export class MyBoard {
      * @param player_id
      */
     getPlayerHexColor(player_id) {
-        let color_string = this.players[player_id]
+        let color_string = 'red'
         if (color_string === 'red') {
             return 0xe60000;
         }

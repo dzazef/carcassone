@@ -22,7 +22,7 @@ export const buildRotate = (id, tile_id, rotate) => ({
 })
 
 export const buildPutTile = (id, tile_x, tile_y) => ({
-    type: "rotate_tile",
+    type: "put_tile",
     data: {
         id,
         x: tile_x,
@@ -47,7 +47,7 @@ export const buildEndTurn = (id, tile_id, rotate, pawn_placed, pawn_x, pawn_y) =
 })
 
 export const buildSurrender = (id) => ({
-    type: "surrender",
+    type: "disconnect",
     data: {
         id
     }

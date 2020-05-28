@@ -1,3 +1,6 @@
+from json import dumps
+
+from backend.command.JSONConstructor import JSONConstructor
 from backend.command.Command import Command
 
 
@@ -6,4 +9,12 @@ class RotateTileCommand(Command):
         super(RotateTileCommand, self).__init__(game, data)
 
     def execute(self):
-        pass
+        players = self._game.getPlayers()
+        rotation = self._data['data']['tile']['rotate']
+        currTile = self._game.getCurrTile()
+        while currTile.orientation != rotation:
+            currTile.turn_clockwise()
+        places = self._game.getTilePositions(currTile)
+        json = {p.getWebsocket(): [[dumps(JSONConstructor.tile_possible_places(p.getId(), currTile.id, currTile.orientation, places))]]
+                for p in players}
+        return json

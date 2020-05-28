@@ -16,6 +16,3 @@ class Server (Connection):
         for ws, messages in sendBackJsonTab.items():
             for message in messages:
                 await ws.send(message)
-
-
-myServer = Server()

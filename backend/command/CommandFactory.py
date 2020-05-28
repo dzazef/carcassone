@@ -3,6 +3,7 @@ from backend.command.JoinCommand import JoinCommand
 from backend.command.PutTileCommand import PutTileCommand
 from backend.command.ReadyCommand import ReadyCommand
 from backend.command.RotateTileCommand import RotateTileCommand
+from backend.command.DisconnectCommand import DisconnectCommand
 
 
 class CommandFactory:
@@ -23,4 +24,4 @@ class CommandFactory:
         elif data["type"] == "end_turn":
             return EndTurnCommand(game, data)
         elif data["type"] == "disconnect":
-            pass
+            return DisconnectCommand(game, data, websocket)

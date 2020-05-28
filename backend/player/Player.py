@@ -10,6 +10,7 @@ class Player(ABC):
         self._points = 0
         self._pawnsNumber = 8
         self._ready = False
+        self._active = True
 
     def getId(self):
         return self._id
@@ -27,7 +28,7 @@ class Player(ABC):
         return self._points
 
     def getPawnsNumber(self):
-        return self._pawns
+        return self._pawnsNumber
 
     def setPawnsNumber(self, number):
         self._pawnsNumber = number
@@ -37,3 +38,9 @@ class Player(ABC):
 
     def setReady(self, ready):
         self._ready = ready
+
+    def ifActive(self):
+        return self._active
+
+    def setActive(self, active):
+        self._active = active

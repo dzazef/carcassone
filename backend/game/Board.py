@@ -12,7 +12,7 @@ class Board:
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
                 if self.tile_matrix[i][j] is not None:
-                    board.append((i, j, self.tile_matrix[i][j].id, self.tile_matrix[i][j].orientation, self.tile_matrix[i][j].pawns_in_7x7()))
+                    board.append((i, j, self.tile_matrix[i][j].code7x7, self.tile_matrix[i][j].orientation, self.tile_matrix[i][j].pawns_in_7x7()))
         return board
 
     def putTile(self, tile, x, y):

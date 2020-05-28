@@ -3,7 +3,6 @@ import './App.css';
 import GameF from '../../sites/game/GameF'
 import CarcassoneF from "../carcassone/CarcassoneF";
 import LobbyF from "../lobby/LobbyF";
-import PlayerListF from "../../common/player-list/PlayerListF";
 
 class App extends Component {
 
@@ -12,9 +11,9 @@ class App extends Component {
             <>
                 {
                     this.props.inGame
-                    ?
+                        ?
                         <GameF/>
-                    :
+                        :
                         <>
                             <CarcassoneF/>
                             <LobbyF/>

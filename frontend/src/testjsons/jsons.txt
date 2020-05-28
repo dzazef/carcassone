@@ -6,5 +6,6 @@
 {"type": "start"}
 
 {"type":"board","data":{"tiles_left":"<number>","players":[{"id":"1","color":"red","points":"5","pawns_left":"10"},{"id":"2","color":"green","points":"5","pawns_left":"10"},{"id":"3","color":"blue","points":"5","pawns_left":"10"},{"id":"4","color":"yellow","points":"5","pawns_left":"10"}],"board":[{"x":"0","y":"0","id":"","rotate":"","pawn":{}}],"my_turn":"<true/false>","player_turn":"<number>","turn":{"state":"S_SHOW_POSSIBLE_TILES / S_SHOW_POSSIBLE_PAWNS / S_EMPTY","tile":{"id":"MMMTKMTKTMKTMKTMTKMTKMTKMTMTKMTKTMT","rotate":"<number>"},"possible_places":[{"x":"<number>","y":"<number>"}]}}}
+{"type":"board","data":{"tiles_left":"<number>","players":[{"id":"1","color":"red","points":"5","pawns_left":"10"},{"id":"2","color":"yellow","points":"15","pawns_left":"3"},{"id":"3","color":"green","points":"25","pawns_left":"5"}],"board":[{"x":"0","y":"0","id":[[0,1,1,1,1,1,0],[2,2,2,2,2,2,2],[2,2,2,2,2,2,2],[3,3,3,3,2,2,2],[2,2,2,3,2,2,2],[2,2,2,3,2,2,2],[0,2,2,3,2,2,0]],"rotate":"0","pawn":{}}],"my_turn":"true","player_turn":"1","turn":{"state":"S_EMPTY"}}}
 
 {"type":"turn_info","data":{"id":"<number>","tile":{"id":"MMMTKMTKTMKTMKTMTKMTKMTKMTMTKMTKTMT","rotate":"<number>"},"possible_places":[{"x":"<number>","y":"<number>"}]}}

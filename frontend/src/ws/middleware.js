@@ -75,8 +75,7 @@ const wsMiddleware = () => {
             } catch (error) {
                 handleError(store, "Error while creating message", {})
             }
-        }
-        else {
+        } else {
             handleError(store, "Error: You are not connected!", {})
         }
     }

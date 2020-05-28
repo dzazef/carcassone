@@ -29,7 +29,7 @@ class EndTurnCommand(Command):
                 currPlayer.getId(),
                 self._game.getCurrTile().code7x7,
                 self._game.getCurrTile().orientation,
-                self._game.getPawnPositions()
+                possible_tile_places
             )))
         else: # end the game | winners = [(place1, id1, points1), (place2, id2, points2)]
             winners = [(0,p.getId(),p.getPoints()) for p in players]

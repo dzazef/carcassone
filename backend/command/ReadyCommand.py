@@ -31,7 +31,7 @@ class ReadyCommand(Command):
                     for p in players}
 
             currTile = self._game.getCurrTile()
-            places = self._game.getTilePositions(currTile)
+            places = self._game.getBoard().getTilePositions(currTile)
             currPlayer = self._game.getCurrPlayer()
             json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.tile_possible_places(
                 currPlayer.getId(),

@@ -14,7 +14,7 @@ class RotateTileCommand(Command):
         currTile = self._game.getCurrTile()
         while currTile.orientation != rotation:
             currTile.turn_clockwise()
-        places = self._game.getTilePositions(currTile)
+        places = self._game.getBoard().getTilePositions(currTile)
         json = {p.getWebsocket(): [[dumps(JSONConstructor.tile_possible_places(p.getId(), currTile.code7x7, currTile.orientation, places))]]
                 for p in players}
         return json

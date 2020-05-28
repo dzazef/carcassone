@@ -49,6 +49,7 @@ class BoardCanvas {
         this.board.removePawnPlaces();
 
         if (turnState === "S_SHOW_POSSIBLE_TILES") {
+            this.board.setPlayers(players);
             this.board.drawTiles(board);
             this.board.drawPossiblePlaces(possiblePlaces);
         } else if (turnState === "S_SHOW_POSSIBLE_PAWNS") {

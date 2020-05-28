@@ -44,48 +44,6 @@ class BoardCanvas {
      * @param currentTile
      */
     render = (players, board, turnState, possiblePlaces, myTurn, currentTile) => {
-
-        // -------------do testów--------------------
-        turnState = "S_EMPTY";
-
-        players = [
-            {
-                id: 1,
-                color: 'red'
-            },
-            {
-                id: 2,
-                color: 'yellow'
-            }
-        ];
-
-        let id1 = [
-            [0, 1, 1, 1, 1, 1, 0],
-            [2, 2, 2, 2, 2, 2, 2],
-            [2, 2, 2, 2, 2, 2, 2],
-            [3, 3, 3, 3, 2, 2, 2],
-            [2, 2, 2, 3, 2, 2, 2],
-            [2, 2, 2, 3, 2, 2, 2],
-            [0, 2, 2, 3, 2, 2, 0]
-        ];
-
-        board = [
-            {
-                "x": 0,
-                "y": 0,
-                "id": id1,
-                "rotate": 0,
-                "pawn": null
-            }
-        ];
-
-        currentTile = {
-            "id": id1,
-            "rotate": 0
-        };
-        myTurn = true;
-        //-------------------------------------------
-
         this.board.setPlayers(players);
 
         this.board.removeTiles();

@@ -1,3 +1,5 @@
+import sys
+
 from backend.tile.Tile import Tile
 
 
@@ -26,11 +28,17 @@ def merge_dicts_after_game(*ds):
 
 def attach_left_right(left, right):  # may be useful in board object to link tiles more easily
     if isinstance(left, Tile) and isinstance(right, Tile):
-        left.rightTile = right
-        right.leftTile = left
+        if left.fit_right(right) and right.fit_left(left):
+            left.rightTile = right
+            right.leftTile = left
+        else:
+            sys.stderr.write("Tiles do not fit")
 
 
 def attach_up_down(up, down):
     if isinstance(up, Tile) and isinstance(down, Tile):
-        up.downTile = down
-        down.upTile = up
+        if up.fit_down(down) and down.fit_up(up):
+            up.downTile = down
+            down.upTile = up
+        else:
+            sys.stderr.write("Tiles do not fit")

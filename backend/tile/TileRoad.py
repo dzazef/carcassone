@@ -5,10 +5,6 @@ import operator
 
 class TileRoad(Tile):
 
-    def __init__(self):
-        super().__init__()
-        self.points = 1
-
     def check_for_points_after_move_road(self):
         score = {}
         x = 0
@@ -31,6 +27,8 @@ class TileRoad(Tile):
                         counter = players_list.count(l)
                         counter2.append((l, counter))
                 counter2.sort(key=operator.itemgetter(1), reverse=True)
+                if not counter2:
+                    return {}
                 score[counter2[0][0]] = [points, counter2[0][1]]
                 for c in range(1, len(counter2)):
                     if counter2[c][1] == counter2[0][1]:

@@ -1,6 +1,7 @@
 from collections import Counter
 from backend.tile.Enums import Terrains
 from backend.tile.Tile import Tile
+import itertools
 from itertools import groupby
 
 
@@ -53,12 +54,15 @@ class TileMeadow(Tile):
                     for j in castles:
                         j.sort(key=lambda x: (id(x[0]), x[1][2]))  # sorts by: (id of a tile, internal id of side)
 
-                    nodupcastles = [k for k, v in groupby(sorted(castles))]  # deletes duplicates
+                    nodupcastles = []
+                    for elem in castles:
+                        if elem not in nodupcastles:
+                            nodupcastles.append(elem)
 
                     for j in counter2:
                         if j[0] in result:
                             result[j[0]] += len(nodupcastles) * 3
-                        else:
+                        elif len(nodupcastles) != 0:  # no need to report 0 points
                             result[j[0]] = len(nodupcastles) * 3
 
                     for j in whole_meadow:  # clear pawns

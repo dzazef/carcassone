@@ -30,5 +30,6 @@ class TileMonastery(Tile):
                 j = self.rightTile
                 if j is not None:
                     points += 1
-        result[i[3]] = points
+                result[i[3]] = points
+                i[3] = None  # clear pawn
         return result

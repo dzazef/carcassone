@@ -1,6 +1,10 @@
+from backend.tile.Tile25Start import Tile25
+
+
 class Board:
     def __init__(self):
         self.tile_matrix = [[None for i in range(150)] for i in range(150)]
+        self.tile_matrix[75][75] = Tile25()
 
     def getTiles(self):
         # board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]
@@ -9,10 +13,12 @@ class Board:
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
                 if self.tile_matrix[i][j] is not None:
-                    board.append((i, j, self.tile_matrix[i][j].id, self.tile_matrix[i][j].orientation, self.tile_matrix[i][j].pawns_in_7x7()))
+                    board.append((i-75, j-75, self.tile_matrix[i][j].code7x7, self.tile_matrix[i][j].orientation, self.tile_matrix[i][j].pawns_in_7x7()))
         return board
 
     def putTile(self, tile, x, y):
+        x += 75
+        y += 75
         if y-1 >= 0 and self.tile_matrix[x][y-1] != None:
             tile.leftTile = self.tile_matrix[x][y-1]
             (self.tile_matrix[x][y-1]).rightTile = tile
@@ -35,13 +41,21 @@ class Board:
         result = []
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
-                if self.tile_matrix[i][j] is not None:
-                    if self.tile_matrix[i][j].upTile is None and self.tile_matrix[i][j].fit_up(tile):
-                        result.append((i, j - 1))
-                    if self.tile_matrix[i][j].downTile is None and self.tile_matrix[i][j].fit_down(tile):
-                        result.append((i, j + 1))
-                    if self.tile_matrix[i][j].leftTile is None and self.tile_matrix[i][j].fit_left(tile):
-                        result.append((i - 1, j))
-                    if self.tile_matrix[i][j].rightTile is None and self.tile_matrix[i][j].fit_right(tile):
-                        result.append((i + 1, j))
+                if self.tile_matrix[i][j] is None and self.__hasNeighbour(i, j):
+                    if (self.tile_matrix[i + 1][j] is None or self.tile_matrix[i + 1][j].fit_down(tile))\
+                            and (self.tile_matrix[i - 1][j] is None or self.tile_matrix[i - 1][j].fit_up(tile))\
+                            and (self.tile_matrix[i][j - 1] is None or self.tile_matrix[i][j - 1].fit_left(tile))\
+                            and (self.tile_matrix[i][j + 1] is None or self.tile_matrix[i][j + 1].fit_left(tile)):
+                        result.append((i + 75, j + 75))
         return result
+
+    def __hasNeighbour(self, i, j):
+        if i > 0 and self.tile_matrix[i - 1][j] is not None:
+            return True
+        if i < 149 and self.tile_matrix[i + 1][j] is not None:
+            return True
+        if j > 0 and self.tile_matrix[i][j - 1] is not None:
+            return True
+        if j < 149 and self.tile_matrix[i][j + 1] is not None:
+            return True
+        return False

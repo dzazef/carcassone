@@ -43,11 +43,7 @@ class DisconnectCommand(Command):
                     player.setActive(False)
 
             # check, if only one player is active
-            counter = 0
-            for player in players:
-                counter += player.ifActive()
-
-            if counter > 2:
+            if sum(player.ifActive() for player in players) > 1:
                 # more players are active
                 playersList = [[p.getId(), p.getColor(), p.getPoints(), p.getPawnsNumber()] for p in players]
                 boardList = self._game.getBoard().getTiles()
@@ -57,10 +53,10 @@ class DisconnectCommand(Command):
                         for p in players if p.ifActive()}
             else:
                 # only one player is active, end game
-                winners = [(0, p.getId(), p.getPoints()) for p in players]
+                winners = [[0, p.getId(), p.getPoints()] for p in players]
                 sorted(winners, key=itemgetter(2))
                 for i in range(len(players)):
                     winners[i][0] = i + 1
-                json = {p.getWebsocket(): [dumps(JSONConstructor.end_game(winners))] for p in players}
+                json = {p.getWebsocket(): [dumps(JSONConstructor.end_game(winners))] for p in players if p.ifActive()}
 
         return json

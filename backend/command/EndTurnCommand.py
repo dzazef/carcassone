@@ -32,7 +32,7 @@ class EndTurnCommand(Command):
                 possible_tile_places
             )))
         else: # end the game | winners = [(place1, id1, points1), (place2, id2, points2)]
-            winners = [(0,p.getId(),p.getPoints()) for p in players]
+            winners = [[0,p.getId(),p.getPoints()] for p in players]
             sorted(winners, key=itemgetter(2))
             for i in range(len(players)):
                 winners[i][0] = i+1

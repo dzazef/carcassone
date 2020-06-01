@@ -44,9 +44,9 @@ class Board:
                 if self.tile_matrix[i][j] is None and self.__hasNeighbour(i, j):
                     if (self.tile_matrix[i + 1][j] is None or self.tile_matrix[i + 1][j].fit_down(tile))\
                             and (self.tile_matrix[i - 1][j] is None or self.tile_matrix[i - 1][j].fit_up(tile))\
-                            and (self.tile_matrix[i][j - 1] is None or self.tile_matrix[i][j - 1].fit_left(tile))\
+                            and (self.tile_matrix[i][j - 1] is None or self.tile_matrix[i][j - 1].fit_right(tile))\
                             and (self.tile_matrix[i][j + 1] is None or self.tile_matrix[i][j + 1].fit_left(tile)):
-                        result.append((i + 75, j + 75))
+                        result.append((i - 75, j - 75))
         return result
 
     def __hasNeighbour(self, i, j):

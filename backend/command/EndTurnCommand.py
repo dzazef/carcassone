@@ -11,11 +11,15 @@ class EndTurnCommand(Command):
 
     def execute(self):
         currTile = self._game.getCurrTile()
-        if self._data['data']['pawn_placed'] == "True": # stawiamy piona
-            currTile.place_a_pawn(self._data['data']['pawn_info']['y'],
-                                  self._game.getCurrPlayer())  # TODO jak to co dostaje w jsonie ma sie do tego co mam tam zapisac? zakladam ze y to terrain z offer to place a pawn
+        pawnCount = self._game.getCurrPlayer().getPawnsNumber()
+        position = (self._data['data']['pawn_info']['x'],self._data['data']['pawn_info']['y'])
+        if self._data['data']['pawn_placed'] == "True" and pawnCount > 0: # stawiamy piona
+            self._game.getCurrPlayer().setPawnsNumber(pawnCount - 1)
+            currTile.place_a_pawn(position,
+                                  self._game.getCurrPlayer().getId())
         nextTurn = self._game.nextTurn()
         players = self._game.getPlayers()
+
         if nextTurn:
             json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(
                 self._game.getTilesLeftAmount(),

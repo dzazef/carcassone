@@ -205,7 +205,15 @@ class Tile:
 
     # places a pawn on the given position
     # position: number from 0 to 12 returned as first element in tuple returned from offer_to_place_a_pawn
+    # position may also be a tuple in 7x7 matrix and it gets translated
     def place_a_pawn(self, position, player):
+        if isinstance(position, int) and 0 <= position <= 12:  # if backend representation
+            pass
+        elif isinstance(position, tuple) and list(map(type, position)) == [int, int]:  # # if frontend representation
+            position = reverse_other_reciprocal(position)
+        else:
+            return
+
         if position == 0:
             self.center[3] = player
             return
@@ -214,6 +222,7 @@ class Tile:
             side[3] = player
         else:
             print("Couldn't place a pawn here due to an error!")
+
 
     def count_neighbours(self):
         neighbours = 0

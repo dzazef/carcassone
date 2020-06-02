@@ -108,15 +108,23 @@ export class MyBoard {
     showCurrentTile(id) {
         this.currentTileRotate = 0;
         let tile_id = [];
+        let shieldRow = 0;
+        let shieldColumn = 0;
+        let shieldTile = false;
         for (let i = 0; i < id.length; i++) {
             for (let j = 0; j < id[i].length; j++) {
                 tile_id.push(id[i][j]);
+                if (id[i][j] === this.CASTLE_SHIELD) {
+                    shieldTile = true;
+                    shieldRow = i;
+                    shieldColumn = j;
+                }
             }
         }
-        this.drawCurrentTile(id, tile_id);
+        this.drawCurrentTile(id, tile_id, shieldTile, shieldRow, shieldColumn);
     }
 
-    drawCurrentTile(id, tile_id) {
+    drawCurrentTile(id, tile_id, shieldTile, shieldRow, shieldColumn) {
         this.currentTile = new Tile(tile_id, this, id);
         this.currentTile.rect.buttonMode = true;
         this.currentTile.rect.interactive = true;
@@ -144,6 +152,9 @@ export class MyBoard {
         this.img.height = size;
         this.img.x = this.currentTile.centerX * this.app.renderer.screen.width - size / 2;
         this.img.y = this.currentTile.centerY * this.app.renderer.screen.height - size / 2;
+        if(shieldTile) {
+            this.currentTile.drawShield(shieldRow, shieldColumn);
+        }
         this.app.stage.addChild(this.img);
     }
 

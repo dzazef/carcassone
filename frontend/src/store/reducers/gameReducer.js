@@ -5,6 +5,7 @@ const defaultGameState = {
     board: undefined,
     my_turn: undefined,
     player_turn: undefined,
+    tile_placed: undefined,
     turn: {
         state: undefined,
         tile: undefined,
@@ -53,10 +54,16 @@ const handlePawnInfo = (state, data) => ({
     }
 })
 
+const handleTilePlaced = (state) => ({
+    ...state,
+    tile_placed: true
+})
+
 const handleEndTurn = (state) => ({
     ...state,
+    tile_placed: false,
     turn: {
-        state: "S_EMPTY"
+        state: "S_EMPTY",
     }
 })
 
@@ -79,7 +86,9 @@ export const gameReducer = (state = defaultGameState, action) => {
             return handleTurnInfo(state, action?.data)
         case 'GAME_PAWN_INFO': // pawn_info
             return handlePawnInfo(state, action?.data)
-        case 'GAME_END_TURN': // pawn_info
+        case 'GAME_TILE_PLACED': //inner <- show button
+            return handleTilePlaced(state)
+        case 'GAME_END_TURN': //inner <- end turn
             return handleEndTurn(state)
         case 'GAME_END': // end_game
             return handleEnd(state, action?.data)

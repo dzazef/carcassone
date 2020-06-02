@@ -47,11 +47,16 @@ class BoardCanvas {
         this.board.removeTiles();
         this.board.removePossiblePlaces();
         this.board.removePawnPlaces();
+        this.board.removeCurrentTile();
 
         if (turnState === "S_SHOW_POSSIBLE_TILES") {
             this.board.setPlayers(players);
             this.board.drawTiles(board);
             this.board.drawPossiblePlaces(possiblePlaces);
+            // rysowanie bieżącej płytki
+            if (myTurn) {
+                this.board.showCurrentTile(currentTile.id);
+            }
         } else if (turnState === "S_SHOW_POSSIBLE_PAWNS") {
             // pokazuje miejsca na położenie pionków na płytce
             // ostatniej na liście
@@ -60,13 +65,6 @@ class BoardCanvas {
             this.board.showPawnPlaces(possiblePlaces);
         } else if (turnState === "S_EMPTY") {
             this.board.drawTiles(board);
-        }
-
-        // rysowanie bieżącej płytki
-        if (myTurn) {
-            this.board.showCurrentTile(currentTile.id);
-        } else {
-            this.board.removeCurrentTile();
         }
     }
 

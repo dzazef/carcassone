@@ -8,14 +8,21 @@ class PutTileCommand(Command):
         super(PutTileCommand, self).__init__(game, data)
 
     def execute(self):
-        self._game.getBoard().putTile(self._game.getCurrTile(), self._data['data']['x'], self._data['data']['y'])
-
+        currTile = self._game.getCurrTile()
         players = self._game.getPlayers()
+
+        # currTile need to be at the end of list
+        tiles = self._game.getBoard().getTiles()
+        tiles.append((self._data['data']['x'], self._data['data']['y'],
+                     currTile.code7x7, currTile.orientation, currTile.pawns_in_7x7()))
+
+        # now put currTile on board
+        self._game.getBoard().putTile(self._game.getCurrTile(), self._data['data']['x'], self._data['data']['y'])
 
         json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(
             self._game.getTilesLeftAmount(),
             [[p.getId(), p.getColor(), p.getPoints(), p.getPawnsNumber()] for p in players],
-            self._game.getBoard().getTiles()
+            tiles
         ))] for p in players if p.ifActive()}
 
         currPlayer = self._game.getCurrPlayer()

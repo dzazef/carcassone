@@ -108,6 +108,7 @@ export class Tile {
         function onClick() {
             console.log(that.tile_id);
             that.board.pawnCallback(that.tile_id, that.board.currentTileRotate, x, y);
+            console.log(x, y);
         }
     }
 
@@ -262,8 +263,12 @@ export class Tile {
         this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
         this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
 
-        this.centerX += dx / this.board.app.renderer.screen.width;
-        this.centerY += dy / this.board.app.renderer.screen.height;
+        // this.centerX += dx / this.board.app.renderer.screen.width;
+        // this.centerY += dy / this.board.app.renderer.screen.height;
+        // this.rect.destroy();
+        // this.prepareRect(this.board.tileSize);
+        // this.setTileCoordinates(this.centerX, this.centerY);
+        // this.attachShaders();
 
         if (this.pawn !== null) {
             this.pawn.x += dx;

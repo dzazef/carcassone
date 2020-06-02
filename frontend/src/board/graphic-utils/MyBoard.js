@@ -101,8 +101,10 @@ export class MyBoard {
         // zamiana listy players na mapę id_gracza:kolor_gracza
         this.players = playersJson?.reduce(function (map, obj) {
             map[obj.id] = obj.color;
+            console.log(obj.color);
             return map;
         }, {});
+        console.log(this.players);
     }
 
     showCurrentTile(id) {
@@ -194,6 +196,7 @@ export class MyBoard {
             tile.setTilePosition(item.x, item.y);
             if (item.pawn !== undefined) {
                 tile.putPawn(item.pawn.x, item.pawn.y, item.pawn.id);
+                console.log(item.pawn.id);
             }
             if (shieldTile) {
                 tile.drawShield(shieldRow, shieldColumn);
@@ -339,12 +342,14 @@ export class MyBoard {
      * @param player_id
      */
     getPlayerHexColor(player_id) {
-        let color_string = 'red'
+        let color_string = this.players[player_id];
+        console.log(color_string);
         if (color_string === 'red') {
             return 0xe60000;
-        }
-        if (color_string === 'yellow') {
+        } else if (color_string === 'yellow') {
             return 0xffff00;
+        } else if (color_string === 'blue') {
+            return 0x004de6;
         }
     }
 }

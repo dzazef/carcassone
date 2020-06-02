@@ -20,6 +20,14 @@ def other_reciprocal(num):  # translates pawn position from backend representati
     return None
 
 
+def reverse_other_reciprocal(num):  # translates pawn position from 7x7 matrix tuple to backend representation
+    rec = [(3, 3), (0, 1), (0, 3), (0, 5), (1, 6), (3, 6), (5, 6), (6, 5), (6, 3), (6, 1), (5, 0), (3, 0), (1, 0)]
+    for i, j in enumerate(rec):
+        if j == num:
+            return i
+    return None
+
+
 class Tile:
 
     #    1 2 3

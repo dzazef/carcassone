@@ -13,7 +13,7 @@ class EndTurnCommand(Command):
         currTile = self._game.getCurrTile()
         pawnCount = self._game.getCurrPlayer().getPawnsNumber()
         position = (self._data['data']['pawn_info']['x'],self._data['data']['pawn_info']['y'])
-        if self._data['data']['pawn_placed'] == "True" and pawnCount > 0: # stawiamy piona
+        if self._data['data']['pawn_placed'] is True and pawnCount > 0: # stawiamy piona
             self._game.getCurrPlayer().setPawnsNumber(pawnCount - 1)
             currTile.place_a_pawn(position,
                                   self._game.getCurrPlayer().getId())

@@ -67,10 +67,11 @@ class JSONConstructor:
                       }
 
             if board_list[i][3]:
+                print(board_list[i])
                 board1["pawn"] = {
                     "id": board_list[i][3],
-                    "x": board_list[i][0][0],
-                    "y": board_list[i][0][1]
+                    "x": board_list[i][0],
+                    "y": board_list[i][1]
                 }
 
             board_json.append(board1)

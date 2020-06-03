@@ -21,6 +21,9 @@ class Player(ABC):
     def getColor(self):
         return self._color
 
+    def resetPoints(self):
+        self._points = 0
+
     def addPoints(self, points):
         self._points += points
 

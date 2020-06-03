@@ -20,6 +20,13 @@ class EndTurnCommand(Command):
         nextTurn = self._game.nextTurn()
         players = self._game.getPlayers()
 
+        #  self._game.getBoard().printself()  # for testing
+        awarded = currTile.after_move()
+        for p in players:
+            if p.ifActive() and p.getId() in awarded:
+                p.setPawnsNumber(p.getPawnsNumber() + awarded[p.getId()][1])
+                p.addPoints(awarded[p.getId()][0])
+
         if nextTurn:
             json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(
                 self._game.getTilesLeftAmount(),
@@ -36,6 +43,15 @@ class EndTurnCommand(Command):
                 possible_tile_places
             )))
         else: # end the game | winners = [(place1, id1, points1), (place2, id2, points2)]
+
+            allTiles = self._game.getBoard().getTiles()  # add final points
+            for t in allTiles:
+                awarded = t.after_game()
+                for p in players:
+                    if p.ifActive() and p.getId() in awarded:
+                        p.addPoints(awarded[p.getId()][0])
+
+
             winners = [[0,p.getId(),p.getPoints()] for p in players]
             sorted(winners, key=itemgetter(2))
             for i in range(len(players)):

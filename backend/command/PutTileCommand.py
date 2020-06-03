@@ -19,6 +19,8 @@ class PutTileCommand(Command):
         # now put currTile on board
         self._game.getBoard().putTile(self._game.getCurrTile(), self._data['data']['x'], self._data['data']['y'])
 
+        #  self._game.getBoard().printself()  # for testing
+
         json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(
             self._game.getTilesLeftAmount(),
             [[p.getId(), p.getColor(), p.getPoints(), p.getPawnsNumber()] for p in players],

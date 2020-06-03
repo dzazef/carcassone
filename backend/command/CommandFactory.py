@@ -12,7 +12,7 @@ class CommandFactory:
         pass
 
     async def createCommand(self, game, data, websocket):
-        print("Dostaliśmy",data)
+        #  print("Dostaliśmy",data)
         if data["type"] == "join":
             return JoinCommand(game, data, websocket)
         elif data["type"] == "ready":

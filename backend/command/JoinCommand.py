@@ -31,6 +31,6 @@ class JoinCommand(Command):
                 p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
         else:
             # game has already started, send information about being late
-            json = {'type': 'belated'}
+            json = {self.__websocket: {'type': 'belated'}}
 
         return json

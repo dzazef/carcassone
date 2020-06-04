@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 class Connection(ABC):
     def run(self):
-        start_server = websockets.serve(self.connect, "localhost", 6789)
+        start_server = websockets.serve(self.connect, "localhost", 3030)
         asyncio.get_event_loop().run_until_complete(start_server)
         asyncio.get_event_loop().run_forever()
 

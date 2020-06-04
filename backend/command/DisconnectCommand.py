@@ -53,6 +53,8 @@ class DisconnectCommand(Command):
                         for p in players if p.ifActive()}
             else:
                 # only one player is active, end game
+                self._game.getBoard().addFinalPoints(players)
+
                 winners = [[0, p.getId(), p.getPoints()] for p in players]
                 sorted(winners, key=itemgetter(2))
                 for i in range(len(players)):

@@ -67,6 +67,16 @@ class Board:
                         result.append((i - 75, j - 75))
         return result
 
+    # add points at the end of the game
+    def addFinalPoints(self, players):
+        for i in range(len(self.tile_matrix)):
+            for j in range(len(self.tile_matrix[0])):
+                if self.tile_matrix[i][j] is not None:
+                    awarded = self.tile_matrix[i][j].after_game()
+                    for p in players:
+                        if p.ifActive() and p.getId() in awarded:
+                            p.addPoints(awarded[p.getId()])
+
     def __hasNeighbour(self, i, j):
         if i > 0 and self.tile_matrix[i - 1][j] is not None:
             return True

@@ -23,14 +23,23 @@ class Game:
         self.__currPlayer = self.__players[0]
         self.__setNextTile()
 
-    # it sets currPlayer and currTile
+    # it sets currPlayer, currTile and add new points
     # return true, if next turn is possible, false otherwise
     def nextTurn(self):
+        # add points to players
+        awarded = self.__currTile.after_move()
+        for p in self.__players:
+            if p.ifActive() and p.getId() in awarded:
+                p.setPawnsNumber(p.getPawnsNumber() + awarded[p.getId()][1])
+                p.addPoints(awarded[p.getId()][0])
+
+        # set currPlayers
         index = (self.__players.index(self.__currPlayer) + 1) % len(self.__players)
         while not self.__players[index].ifActive():
             index = (index + 1) % len(self.__players)
         self.__currPlayer = self.__players[index]
 
+        # set currTile
         self.__tileStack.remove(self.__currTile)
         return self.__setNextTile()
 

@@ -9,7 +9,7 @@ class JoinCommand(Command):
     def __init__(self, game, data, websocket):
         super(JoinCommand, self).__init__(game, data)
         self.__websocket = websocket
-        self.__colors = ['blue', 'yellow', 'green', 'red', 'black']
+        self.__colors = ['blue', 'yellow', 'purple', 'red', 'black']
 
     def execute(self):
         if self._game.getCurrPlayer() is None:
@@ -31,6 +31,6 @@ class JoinCommand(Command):
                 p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
         else:
             # game has already started, send information about being late
-            json = {}  # to implement
+            json = {'type': 'belated'}
 
         return json

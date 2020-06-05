@@ -350,6 +350,10 @@ export class MyBoard {
             return 0xffff00;
         } else if (color_string === 'blue') {
             return 0x004de6;
+        } else if(color_string === 'black') {
+            return 0x000000;
+        } else if(color_string === 'purple') {
+            return 0x660066;
         }
     }
 }

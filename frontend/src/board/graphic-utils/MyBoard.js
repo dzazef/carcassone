@@ -14,6 +14,7 @@ export class MyBoard {
      * gdy gracz wybierze miejsce na płytkę
      * @param pawnCallback funkcja, którą należy wywołać,
      * gdy gracz wybierze miejsce na pionek
+     * @param rotateCallback
      * @returns {MyBoard}
      */
     constructor(canvas, tileSize, tileCallback, pawnCallback, rotateCallback) {
@@ -130,8 +131,6 @@ export class MyBoard {
         this.currentTile = new Tile(tile_id, this, id);
         this.currentTile.rect.buttonMode = true;
         this.currentTile.rect.interactive = true;
-        this.currentTile.rect.hitArea = new PIXI.Rectangle(0, 0,
-            this.tileSize, this.tileSize);
         this.currentTile.rect.on('click', onClick);
         let that = this;
 
@@ -144,9 +143,19 @@ export class MyBoard {
             that.rotateCallback(id, that.currentTileRotate);
         }
 
-        this.currentTile.setTileCoordinates(
-            1.0 - (this.tileSize / 2) / this.app.renderer.screen.width - 0.01,
-            1.0 - (this.tileSize / 2) / this.app.renderer.screen.height - 0.01);
+        // this.currentTile.setTileCoordinates(
+        //     1.0 - (this.tileSize / 2) / this.app.renderer.screen.width - 0.01,
+        //     1.0 - (this.tileSize / 2) / this.app.renderer.screen.height - 0.01);
+        this.currentTile.rect.x = this.app.renderer.screen.width - this.tileSize - 5;
+        this.currentTile.rect.y = this.app.renderer.screen.height - this.tileSize - 5;
+        this.currentTile.centerX = (this.currentTile.rect.x + this.tileSize / 2)
+            / this.app.renderer.screen.width;
+        this.currentTile.centerY = (this.currentTile.rect.y + this.tileSize / 2)
+            / this.app.renderer.screen.height;
+        this.currentTile.rect.hitArea = new PIXI.Rectangle(
+            0,
+            0,
+            this.tileSize, this.tileSize);
         let texture = PIXI.Texture.from(turn);
         this.img = new PIXI.Sprite(texture);
         let size = this.tileSize;

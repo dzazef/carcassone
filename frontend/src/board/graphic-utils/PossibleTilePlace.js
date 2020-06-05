@@ -63,7 +63,7 @@ export class PossibleTilePlace {
      * @param y współrzędna y środka płytki (współrzędne znormalizowane)
      */
     setTileCoordinates(x, y) {
-        this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2 - this.lineWidth / 2;
+        this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2;
         this.rect.y = y * this.board.app.renderer.screen.height - this.rect.height / 2;
     }
 
@@ -78,7 +78,6 @@ export class PossibleTilePlace {
     }
 
     redraw() {
-        // this.setTilePosition(this.row, this.column);
         this.setTileCoordinates(
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
             0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));

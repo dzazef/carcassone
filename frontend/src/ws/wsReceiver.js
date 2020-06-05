@@ -26,8 +26,6 @@ export const wsReceiver = (store, data) => {
     let payload = parseMessage(store, data)
     if (payload === null) return
 
-    console.log("ws_rcv: ", payload.type)
-
     switch (payload.type) {
         case("player_lobby"):
             store.dispatch(LobbyActions.lobbyPlayer(payload.data))

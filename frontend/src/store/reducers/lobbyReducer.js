@@ -12,7 +12,6 @@ const handleLobbyPlayer = (state, action) => {
 }
 
 export const lobbyReducer = (state = defaultLobbyState, action) => {
-    console.log('lr: ', action.data) //TODO
     switch (action.type) {
         case 'LOBBY_INITIAL':
             return defaultLobbyState

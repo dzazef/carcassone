@@ -15,7 +15,6 @@ const wsMiddleware = () => {
 
 
     const onOpen = store => (event) => {
-        console.log(`ws_open: ${event.target.url}`)
         store.dispatch(WSActions.wsConnected(event.target.url))
         if (store.getState().state === 'S_MAIN_INITIAL') {
             store.dispatch(MainActions.mainLobby())
@@ -24,17 +23,14 @@ const wsMiddleware = () => {
     }
 
     const onClose = store => () => {
-        console.log('ws_cls')
         store.dispatch(WSActions.wsDisconnected())
     }
 
     const onError = store => (event) => {
-        console.log(`ws_err:`, event)
         handleError(store, "Socket error, isn't the server down?", event)
     }
 
     const onMessage = store => (event) => {
-        console.log(`ws_msg_in:`, event.data)
         wsReceiver(store, event.data)
     }
 
@@ -70,7 +66,6 @@ const wsMiddleware = () => {
         }
         if (store.getState().ws.state === 'S_WS_CONNECTED') {
             try {
-                console.log(`sending message to host: `, action.data)
                 socket.send(JSON.stringify(action.data))
             } catch (error) {
                 handleError(store, "Error while creating message", {})

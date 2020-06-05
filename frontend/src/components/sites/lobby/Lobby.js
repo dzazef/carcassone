@@ -6,10 +6,6 @@ import Spinner from 'react-bootstrap/Spinner'
 
 class Lobby extends Component {
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.props.lobbyplayers)
-    }
-
     render() {
         return (
             <>

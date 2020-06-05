@@ -4,7 +4,6 @@ const defaultErrorState = {
 }
 
 export const errorReducer = (state = defaultErrorState, action) => {
-    console.log('er: ', action.data)
     switch (action.type) {
         case 'ERROR_HANDLE':
             return {

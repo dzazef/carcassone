@@ -1,3 +1,4 @@
 {
-    "host": "ws://localhost:3030"
+    "host": "ws://localhost:3030",
+    "hideErrorTimeout": 4000
 }

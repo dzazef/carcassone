@@ -5,7 +5,8 @@ import {mainReducer} from "./reducers/mainReducer";
 import {lobbyReducer} from "./reducers/lobbyReducer";
 import {errorReducer} from "./reducers/errorReducer"
 
-import wsMiddleware from './../ws/middleware';
+import wsMiddleware from '../ws/wsMiddleware';
+import errorMiddleware from "../error/errorMiddleware";
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 const rootReducer = combineReducers({
@@ -16,7 +17,7 @@ const rootReducer = combineReducers({
     error: errorReducer
 })
 
-const middleware = [wsMiddleware]
+const middleware = [wsMiddleware, errorMiddleware]
 
 // noinspection JSCheckFunctionSignatures
 const store = createStore(rootReducer,

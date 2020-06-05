@@ -74,7 +74,6 @@ const handleEnd = (state, data) => ({
 })
 
 export const gameReducer = (state = defaultGameState, action) => {
-    console.log('gr: ', action) //TODO
     switch (action.type) {
         case 'GAME_INITIAL': // reseting values
             return defaultGameState

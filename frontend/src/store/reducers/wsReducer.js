@@ -3,7 +3,6 @@ const defaultWSState = {
 }
 
 export const wsReducer = (state = defaultWSState, action) => {
-    console.log(`wsr: ${action.type}`)
     switch (action.type) {
         case 'WS_DEFAULT':
             return defaultWSState

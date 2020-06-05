@@ -30,7 +30,7 @@ const wsMiddleware = () => {
 
     const onError = store => (event) => {
         console.log(`ws_err:`, event)
-        handleError(store, "Socket error, isn't the server down?", {})
+        handleError(store, "Socket error, isn't the server down?", event)
     }
 
     const onMessage = store => (event) => {

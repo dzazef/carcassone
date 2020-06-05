@@ -13,7 +13,7 @@ export const buildReady = (id) => ({
 export const buildRotate = (id, tile_id, rotate) => ({
     type: "rotate_tile",
     data: {
-        id,
+        id: 1,
         tile: {
             id: tile_id,
             rotate: rotate

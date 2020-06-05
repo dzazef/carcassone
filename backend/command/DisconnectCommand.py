@@ -35,15 +35,11 @@ class DisconnectCommand(Command):
                                            dumps(JSONConstructor.board_state(tilesLeft, playersList, boardList))]
                         for p in players}
         else:
-            # game is running, set player.active to false and send info to other players or end game
-            if self._game.getCurrPlayer().getWebsocket() == self.__websocket:
-                self._game.nextTurn()
-
             for player in players:
                 if player.getWebsocket() == self.__websocket:
                     player.setActive(False)
 
-            # check, if only one player is active
+            # check, if more than one player is active
             if sum(player.ifActive() for player in players) > 1:
                 # more players are active
                 playersList = [[p.getId(), p.getColor(), p.getPoints(), p.getPawnsNumber()] for p in players]
@@ -53,7 +49,16 @@ class DisconnectCommand(Command):
                 json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(tilesLeft, playersList, boardList))]
                         for p in players if p.ifActive()}
 
-                self._game.nextPlayer()
+                tiles = self._game.getBoard().getTiles()
+                isPlaced = False
+                for tile in tiles :
+                    if tile[2] == self._game.getCurrTile().code7x7:
+                        isPlaced = True
+                if isPlaced:
+                    self._game.nextTurn()
+                else:
+                    self._game.nextPlayer()
+
                 possible_tile_places = self._game.getBoard().getTilePositions(self._game.getCurrTile())
                 currPlayer = self._game.getCurrPlayer()
                 json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.tile_possible_places(

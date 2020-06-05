@@ -15,6 +15,8 @@ class Connection(ABC):
             async for message in websocket:
                 incomingJson = json.loads(message)
                 await self.analyze(incomingJson,websocket)
+        except:
+            pass
         finally:
             disconnectJson = {'type': 'disconnect'}# tworzenie jsona że ktos sie zerwal i wyslanie go do analyze - command factory
             await self.analyze(disconnectJson, websocket)

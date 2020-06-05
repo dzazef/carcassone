@@ -13,6 +13,14 @@ class Game:
         self.__currPlayer = None
         self.__currTile = None
 
+    def restart(self):
+        self.__players = []
+        self.__board = Board()
+        self.__tileStack = []
+        self.__setTileStack()
+        self.__currPlayer = None
+        self.__currTile = None
+
     def getPlayers(self):
         return self.__players
 

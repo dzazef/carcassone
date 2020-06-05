@@ -1,6 +1,7 @@
 from json import dumps
 from operator import itemgetter
 
+from Game import Game
 from backend.command.JSONConstructor import JSONConstructor
 from backend.command.Command import Command
 
@@ -43,4 +44,5 @@ class EndTurnCommand(Command):
             for i in range(len(players)):
                 winners[i][0] = i+1
             json = {p.getWebsocket(): [dumps(JSONConstructor.end_game(winners))] for p in players if p.ifActive()}
+            self._game.restart()
         return json

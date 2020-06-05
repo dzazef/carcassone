@@ -4,8 +4,14 @@ import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Spinner from 'react-bootstrap/Spinner'
 
+/**
+ * Class responsible for showing lobby
+ */
 class Lobby extends Component {
 
+    /**
+     * Renders component.
+     */
     render() {
         return (
             <>

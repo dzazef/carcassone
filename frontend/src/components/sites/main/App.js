@@ -5,8 +5,14 @@ import CarcassoneF from "../carcassone/CarcassoneF";
 import LobbyF from "../lobby/LobbyF";
 import ErrorF from "../../common/error/ErrorF";
 
+/**
+ * Root Component of application.
+ */
 class App extends Component {
 
+    /**
+     * Renders component.
+     */
     render() {
         return (
             <>

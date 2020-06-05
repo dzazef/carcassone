@@ -3,6 +3,9 @@ import './error.css'
 
 class Error extends Component {
 
+    /**
+     * Called on component update. Prints info on console when error occurred.
+     */
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props?.message || this.props?.data) {
             console.warn('An error happened\n' +
@@ -11,6 +14,8 @@ class Error extends Component {
         }
     }
 
+    /**
+     * Renders component.     */
     render() {
         return (
             <div

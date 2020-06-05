@@ -3,6 +3,12 @@ import * as MainActions from '../store/actions/mainActions'
 import * as LobbyActions from '../store/actions/lobbyActions'
 import * as ErrorActions from '../store/actions/errorActions'
 
+/**
+ * Handles error. Dispatches error action.
+ * @param store
+ * @param message
+ * @param data
+ */
 const handleError = (store, message, data) => {
     store.dispatch(ErrorActions.errorHandle({
         message,
@@ -10,6 +16,12 @@ const handleError = (store, message, data) => {
     }))
 }
 
+/**
+ * Parses message
+ * @param store
+ * @param data
+ * @returns payload
+ * */
 const parseMessage = (store, data) => {
     let payload = null
     try {
@@ -20,7 +32,11 @@ const parseMessage = (store, data) => {
     return payload
 }
 
-
+/**
+ * Dispatches action based on type of received message
+ * @param store: redux store
+ * @param data: message data
+ */
 export const wsReceiver = (store, data) => {
 
     let payload = parseMessage(store, data)

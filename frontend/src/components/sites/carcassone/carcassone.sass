@@ -1,17 +1,9 @@
-$background_url: url("../../../assets/background/main1_2.jpg")
+$background_url: url("../../../assets/background/main3.jpg")
 
 .m-carcassone-background
   display: flex
   flex-direction: column
   align-items: center
+  justify-content: space-evenly
   background: $background_url center no-repeat
   background-size: cover
-
-.m-carcassone-logo-wrapper
-  margin: 20vh 0
-
-$hd_width: 1150px
-$hd_height: 700px
-@media (max-width: $hd_width) and (max-height: $hd_height)
-  .m-carcassone-background
-    background-image: linear-gradient(180deg, rgba(47, 143, 255, 1) 0%, rgba(113, 179, 255, 1) 100%)

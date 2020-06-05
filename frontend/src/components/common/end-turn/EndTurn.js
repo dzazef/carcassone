@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 import './end-turn.css'
 
+/**
+ * Class responsible for handling ending turn by user.
+ */
 class EndTurn extends Component {
+
+    /**
+     * Renders component.     */
     render() {
         return (
             <button
@@ -12,6 +18,7 @@ class EndTurn extends Component {
             </button>
         );
     }
+
 }
 
 export default EndTurn;

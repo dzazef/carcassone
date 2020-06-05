@@ -7,9 +7,15 @@ import TilesLeftF from "../../common/tiles-left/TilesLeftF";
 import EndTurnF from "../../common/end-turn/EndTurnF";
 import WinnerListF from "../../common/winner-list/WinnerListF";
 
+/**
+ * Class responsible for showing Game site. Contains tiles, pawns, buttons
+ * for user interaction and information about game state.
+ */
 class Game extends Component {
 
-
+    /**
+     * Renders component.
+     */
     render() {
         return (
             <>

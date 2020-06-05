@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import './tiles-left.css'
 import {ReactComponent as Tile} from '../../../assets/tile.svg'
 
+/**
+ * Class responsible for presenting info about tiles left in game
+ */
 class TilesLeft extends Component {
+    /**
+     * Renders component.     */
     render() {
         return (
             <>

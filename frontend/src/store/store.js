@@ -9,6 +9,9 @@ import wsMiddleware from '../ws/wsMiddleware';
 import errorMiddleware from "../error/errorMiddleware";
 import {composeWithDevTools} from 'redux-devtools-extension';
 
+/**
+ * Root reducer of store
+ */
 const rootReducer = combineReducers({
     state: mainReducer,
     ws: wsReducer,
@@ -17,9 +20,15 @@ const rootReducer = combineReducers({
     error: errorReducer
 })
 
+/**
+ * List with middlewares
+ */
 const middleware = [wsMiddleware, errorMiddleware]
 
 // noinspection JSCheckFunctionSignatures
+/**
+ * Redux store
+ */
 const store = createStore(rootReducer,
     composeWithDevTools(applyMiddleware(...middleware)));
 

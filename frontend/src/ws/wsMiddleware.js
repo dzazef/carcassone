@@ -24,10 +24,13 @@ const wsMiddleware = () => {
 
     const onClose = store => () => {
         store.dispatch(WSActions.wsDisconnected())
+        if (!store.getState().error?.message) {
+            handleError(store, "Connection broken", {})
+        }
     }
 
     const onError = store => (event) => {
-        handleError(store, "Socket error, isn't the server down?", event)
+        handleError(store, "Not connected", event)
     }
 
     const onMessage = store => (event) => {

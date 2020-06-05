@@ -52,6 +52,16 @@ class DisconnectCommand(Command):
 
                 json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(tilesLeft, playersList, boardList))]
                         for p in players if p.ifActive()}
+
+                self._game.nextPlayer()
+                possible_tile_places = self._game.getBoard().getTilePositions(self._game.getCurrTile())
+                currPlayer = self._game.getCurrPlayer()
+                json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.tile_possible_places(
+                    currPlayer.getId(),
+                    self._game.getCurrTile().code7x7,
+                    self._game.getCurrTile().orientation,
+                    possible_tile_places
+                )))
             else:
                 # only one player is active, end game
                 self._game.getBoard().addFinalPoints(players)

@@ -31,6 +31,12 @@ class Game:
         self.__currPlayer = self.__players[0]
         self.__setNextTile()
 
+    def nextPlayer(self):
+        index = (self.__players.index(self.__currPlayer) + 1) % len(self.__players)
+        while not self.__players[index].ifActive():
+            index = (index + 1) % len(self.__players)
+        self.__currPlayer = self.__players[index]
+
     # it sets currPlayer, currTile and add new points
     # return true, if next turn is possible, false otherwise
     def nextTurn(self):
@@ -42,10 +48,7 @@ class Game:
                 p.addPoints(awarded[p.getId()][0])
 
         # set currPlayers
-        index = (self.__players.index(self.__currPlayer) + 1) % len(self.__players)
-        while not self.__players[index].ifActive():
-            index = (index + 1) % len(self.__players)
-        self.__currPlayer = self.__players[index]
+        self.nextPlayer()
 
         # set currTile
         self.__tileStack.remove(self.__currTile)

@@ -260,7 +260,7 @@ export class Tile {
      */
     move(dx, dy) {
         // jeśli cała płytka jest widoczna, to jest tylko przesuwana
-        if(this.isVisible()) {
+        if (this.isVisible()) {
             this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
             this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
             if (this.pawn !== null) {
@@ -280,7 +280,7 @@ export class Tile {
             this.prepareRect(this.board.tileSize);
             this.setTileCoordinates(this.centerX, this.centerY);
             this.attachShaders();
-            if(this.pawn != null) {
+            if (this.pawn != null) {
                 let x = this.pawn.x + dx;
                 let y = this.pawn.y + dy;
                 let color = this.pawnColor;
@@ -296,7 +296,7 @@ export class Tile {
                 this.pawn.x = x;
                 this.pawn.y = y;
             }
-            if(this.shield != null) {
+            if (this.shield != null) {
                 let x = this.shield.x + dx;
                 let y = this.shield + dy;
                 this.shield.destroy();
@@ -327,22 +327,22 @@ export class Tile {
     // false - w przeciwnym przypadku
     isVisible() {
         // dolna krawędź
-        if(this.centerY + this.board.tileSize / 2 /
+        if (this.centerY + this.board.tileSize / 2 /
             this.board.app.renderer.screen.width > 1.0) {
             return false;
         }
         // prawa krawędź
-        if(this.centerX + this.board.tileSize / 2 /
+        if (this.centerX + this.board.tileSize / 2 /
             this.board.app.renderer.screen.width > 1.0) {
             return false;
         }
         // lewa krawędź
-        if(this.centerX - this.board.tileSize / 2 /
+        if (this.centerX - this.board.tileSize / 2 /
             this.board.app.renderer.screen.width < 0.0) {
             return false;
         }
         // górna krawędź
-        if(this.centerY - this.board.tileSize / 2 /
+        if (this.centerY - this.board.tileSize / 2 /
             this.board.app.renderer.screen.width < 0.0) {
             return false;
         }

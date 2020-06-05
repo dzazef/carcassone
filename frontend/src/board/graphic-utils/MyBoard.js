@@ -154,7 +154,7 @@ export class MyBoard {
         this.img.height = size;
         this.img.x = this.currentTile.centerX * this.app.renderer.screen.width - size / 2;
         this.img.y = this.currentTile.centerY * this.app.renderer.screen.height - size / 2;
-        if(shieldTile) {
+        if (shieldTile) {
             this.currentTile.drawShield(shieldRow, shieldColumn);
         }
         this.app.stage.addChild(this.img);
@@ -350,9 +350,9 @@ export class MyBoard {
             return 0xffff00;
         } else if (color_string === 'blue') {
             return 0x004de6;
-        } else if(color_string === 'black') {
+        } else if (color_string === 'black') {
             return 0x000000;
-        } else if(color_string === 'purple') {
+        } else if (color_string === 'purple') {
             return 0x660066;
         }
     }

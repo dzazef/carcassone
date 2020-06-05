@@ -48,7 +48,7 @@ class BoardCanvas {
         this.board.removePossiblePlaces();
         this.board.removePawnPlaces();
         this.board.removeCurrentTile();
-        if(players !== undefined) {
+        if (players !== undefined) {
             this.board.setPlayers(players);
         }
 

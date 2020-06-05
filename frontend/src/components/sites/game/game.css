@@ -1,26 +1,26 @@
 .m-game-playerList {
-  position: fixed;
-  top: 10px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+    position: fixed;
+    top: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .m-game-surrender {
-  position: fixed;
-  top: 10px;
-  right: 10px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
 }
 
 .m-game-endTurn {
-  position: fixed;
-  bottom: 20px;
-  right: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
 }
 
 .m-game-tilesLeft {
-  position: fixed;
-  bottom: 20px;
-  left: 10px;
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
 }
 
 /*# sourceMappingURL=game.css.map */

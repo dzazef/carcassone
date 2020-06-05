@@ -5,6 +5,7 @@ import PlayerListF from "../../common/player-list/PlayerListF";
 import SurrenderF from "../../common/surrender/SurrenderF";
 import TilesLeftF from "../../common/tiles-left/TilesLeftF";
 import EndTurnF from "../../common/end-turn/EndTurnF";
+import WinnerListF from "../../common/winner-list/WinnerListF";
 
 class Game extends Component {
 
@@ -12,17 +13,20 @@ class Game extends Component {
     render() {
         return (
             <>
-                <div className={"m-game-player-list"}>
+                <div className={"m-game-playerList"}>
                     <PlayerListF/>
                 </div>
                 <div className={"m-game-surrender"}>
                     <SurrenderF/>
                 </div>
-                <div className={"m-game-tilesleft"}>
+                <div className={"m-game-tilesLeft"}>
                     <TilesLeftF/>
                 </div>
-                <div className={"m-game-endturn"}>
+                <div className={"m-game-endTurn"}>
                     <EndTurnF/>
+                </div>
+                <div className={"m-game-winnerList"}>
+                    <WinnerListF/>
                 </div>
                 <BoardF/>
             </>

@@ -38,7 +38,11 @@ export class Tile {
         this.pawnRow = 0;  // rząd, w którym znajduje się pionek
         this.pawnColumn = 0;  // kolumna, w której znajduje się pionek
         this.prepareRect(this.board.tileSize);
-        this.setTileCoordinates(0.5, 0.5);
+        //this.setTileCoordinates(0.5, 0.5);
+        this.rect.x = 0.5 * this.board.app.renderer.screen.width - this.rect.width / 2;
+        this.rect.y = 0.5 * this.board.app.renderer.screen.height - this.rect.height / 2;
+        this.centerX = 0.5;
+        this.centerY = 0.5;
         this.attachShaders();
     }
 
@@ -192,7 +196,7 @@ export class Tile {
         this.rect = new PIXI.Graphics();
 
         this.rect.beginFill(0x008000);
-        this.rect.lineStyle(1, 0x000000);
+        this.rect.lineStyle(0, 0x000000);
         this.rect.drawRect(0.0, 0.0, size, size);
         this.rect.endFill();
 
@@ -260,7 +264,10 @@ export class Tile {
      */
     move(dx, dy) {
         // jeśli cała płytka jest widoczna, to jest tylko przesuwana
-        if (this.isVisible()) {
+        if(this.isVisible()) {
+            console.log("visible");
+            this.centerX += dx / this.board.app.renderer.screen.width;
+            this.centerY += dy / this.board.app.renderer.screen.height;
             this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
             this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
             if (this.pawn !== null) {
@@ -274,13 +281,16 @@ export class Tile {
             this.movePawnPlaces(dx, dy);
         } else {
             // jeśli część płytki jest poza canvasem, to jest przerysowywana
-            this.centerX += dx / this.board.app.renderer.screen.width;
-            this.centerY += dy / this.board.app.renderer.screen.height;
+            console.log("invisible");
             this.rect.destroy();
             this.prepareRect(this.board.tileSize);
             this.setTileCoordinates(this.centerX, this.centerY);
             this.attachShaders();
-            if (this.pawn != null) {
+            this.centerX += dx / this.board.app.renderer.screen.width;
+            this.centerY += dy / this.board.app.renderer.screen.height;
+            this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
+            this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
+            if(this.pawn !== null) {
                 let x = this.pawn.x + dx;
                 let y = this.pawn.y + dy;
                 let color = this.pawnColor;
@@ -296,18 +306,19 @@ export class Tile {
                 this.pawn.x = x;
                 this.pawn.y = y;
             }
-            if (this.shield != null) {
+            if(this.shield != null) {
                 let x = this.shield.x + dx;
                 let y = this.shield + dy;
                 this.shield.destroy();
-                let img = new PIXI.Sprite(this.shieldTexture);
+                let texture = PIXI.Texture.from(shield);
+                let img = new PIXI.Sprite(texture);
                 let shieldSize = this.rect.width / 5;  // średnica
                 img.width = shieldSize;
                 img.height = shieldSize;
-                this.board.app.stage.addChild(img);
                 this.shield = img;
                 this.shield.x = x;
                 this.shield.y = y;
+                this.board.app.stage.addChild(img);
             }
             let that = this;
             let listOfPawnPlaces = this.pawnPlaces.slice();
@@ -326,26 +337,26 @@ export class Tile {
     // zwraca true, jeśli cała płytka jest widoczna na canvasie,
     // false - w przeciwnym przypadku
     isVisible() {
-        // dolna krawędź
-        if (this.centerY + this.board.tileSize / 2 /
-            this.board.app.renderer.screen.width > 1.0) {
-            return false;
-        }
-        // prawa krawędź
-        if (this.centerX + this.board.tileSize / 2 /
-            this.board.app.renderer.screen.width > 1.0) {
-            return false;
-        }
-        // lewa krawędź
-        if (this.centerX - this.board.tileSize / 2 /
-            this.board.app.renderer.screen.width < 0.0) {
-            return false;
-        }
-        // górna krawędź
-        if (this.centerY - this.board.tileSize / 2 /
-            this.board.app.renderer.screen.width < 0.0) {
-            return false;
-        }
+        // // dolna krawędź
+        // if(this.centerY + (this.board.tileSize / 2)
+        //     / this.board.app.renderer.screen.height > 1.0) {
+        //     return false;
+        // }
+        // // prawa krawędź
+        // if(this.centerX + (this.board.tileSize / 2)
+        //     / this.board.app.renderer.screen.width > 1.0) {
+        //     return false;
+        // }
+        // // lewa krawędź
+        // if(this.centerX - (this.board.tileSize / 2)
+        //     / this.board.app.renderer.screen.width < 0.0) {
+        //     return false;
+        // }
+        // // górna krawędź
+        // if(this.centerY - (this.board.tileSize / 2)
+        //     / this.board.app.renderer.screen.height < 0.0) {
+        //     return false;
+        // }
         return true;
     }
 
@@ -355,8 +366,12 @@ export class Tile {
      * @param y współrzędna y środka płytki (współrzędne znormalizowane)
      */
     setTileCoordinates(x, y) {
-        this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2;
-        this.rect.y = y * this.board.app.renderer.screen.height - this.rect.height / 2;
+        // this.rect.x = x * this.board.app.renderer.screen.width - this.rect.width / 2;
+        // this.rect.y = y * this.board.app.renderer.screen.height - this.rect.height / 2;
+        // this.centerX = x;
+        // this.centerY = y;
+        this.uniforms.uMove[0] += (x - this.centerX) *2;
+        this.uniforms.uMove[1] -= (y - this.centerY) *2;
         this.centerX = x;
         this.centerY = y;
     }
@@ -394,6 +409,10 @@ export class Tile {
     redraw() {
         this.uniforms.uMove[0] = 0.0;
         this.uniforms.uMove[1] = 0.0;
+        this.rect.x = 0.5 * this.board.app.renderer.screen.width - this.rect.width / 2;
+        this.rect.y = 0.5 * this.board.app.renderer.screen.height - this.rect.height / 2;
+        this.centerX = 0.5;
+        this.centerY = 0.5;
         this.setTileCoordinates(
             0.5 + this.column * (this.board.tileSize / this.board.app.renderer.screen.width),
             0.5 - this.row * (this.board.tileSize / this.board.app.renderer.screen.height));

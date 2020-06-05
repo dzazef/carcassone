@@ -26,7 +26,7 @@ class BoardCanvas {
         this.pawnCallback = pawnCallback
         this.rotateCallback = rotateCallback
         //--------------------------------------------
-        this.board = new MyBoard(this.canvas, 100,
+        this.board = new MyBoard(this.canvas, 105,
             this.tileCallback, this.pawnCallback, this.rotateCallback);
     }
 

@@ -25,7 +25,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onHide: () => resetAll(dispatch),
         ready: (myid) => {
-            console.log(myid) //TODO
             dispatch(
                 WsActions.wsSend(CommandBuilder.buildReady(myid))
             )

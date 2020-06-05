@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import './button1.css'
 
+/**
+ * Simple button. Used in main site.
+ */
 class Button1 extends Component {
     render() {
         return (

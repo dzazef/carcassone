@@ -4,6 +4,10 @@ import * as WSActions from '../../../store/actions/wsActions'
 import * as GameActions from '../../../store/actions/gameActions'
 import * as CommandBuilder from '../../../ws/commandBuilder'
 
+/**
+ * Maps Redux state to React Component properties.
+ * @param state: state of Redux store
+ */
 const mapStateToProps = (state) => ({
     players: state?.game?.players,
     board: state?.game?.board,
@@ -12,7 +16,10 @@ const mapStateToProps = (state) => ({
     myTurn: state?.game?.my_turn
 })
 
-
+/**
+ * Maps Redux dispatches to React Component properties.
+ * @param dispatch: object allowing to dispatch Redux actions
+ */
 const mapDispatchToProps = (dispatch) => ({
     rotateCallback: (id, tile_id, rotate) =>
         dispatch(WSActions.wsSend(CommandBuilder.buildRotate(id, tile_id, rotate))),
@@ -29,5 +36,8 @@ const mapDispatchToProps = (dispatch) => ({
     }
 })
 
+/**
+ * Connecting to store.
+ */
 const BoardF = connect(mapStateToProps, mapDispatchToProps)(Board)
 export default BoardF

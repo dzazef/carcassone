@@ -1,6 +1,11 @@
 import config from "../config.json";
 import * as ErrorActions from '../store/actions/errorActions'
 
+/**
+ * Redux middleware for handling errors. After an error occurred it is displayed in
+ * a popup and hidden after delay set in config.json
+ * @returns {function(*=): function(*): function(...[*]=)}
+ */
 const errorMiddleware = () => {
 
     let timer;
@@ -10,7 +15,9 @@ const errorMiddleware = () => {
             case 'ERROR_HANDLE':
                 clearTimeout(timer)
                 timer = setTimeout(
-                    () => {store.dispatch(ErrorActions.errorReset())},
+                    () => {
+                        store.dispatch(ErrorActions.errorReset())
+                    },
                     config.hideErrorTimeout
                 )
                 return next(action)

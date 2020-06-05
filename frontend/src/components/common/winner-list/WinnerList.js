@@ -3,7 +3,12 @@ import {Modal} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import './winner-list.css'
 
+/**
+ * Class responsible for showing final score of the game
+ */
 class WinnerList extends Component {
+    /**
+     * Renders component.     */
     render() {
         return (
             <Modal

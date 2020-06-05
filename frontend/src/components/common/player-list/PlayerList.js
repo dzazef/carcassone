@@ -3,8 +3,17 @@ import './player.css'
 import {ReactComponent as Award} from "../../../assets/award.svg";
 import {ReactComponent as Pawn} from "../../../assets/pawn.svg";
 
+/**
+ * Class responsible for showing player list in game with their pawns
+ * and points left.
+ */
 class PlayerList extends Component {
 
+    /**
+     * Function returning circle in given color
+     * @param color: Requested color
+     * @returns {*}: Circle in color
+     */
     getColorCircle = (color) => (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,6 +35,8 @@ class PlayerList extends Component {
         </svg>
     )
 
+    /**
+     * Renders component.     */
     render() {
         return (
             <>

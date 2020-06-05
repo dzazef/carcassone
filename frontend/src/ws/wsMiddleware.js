@@ -8,12 +8,21 @@ const wsMiddleware = () => {
 
     let socket = null
 
-
+    /**
+     * Called when error occurred. Dispatches error action.
+     * @param store
+     * @param message
+     * @param data
+     */
     const handleError = (store, message, data) => {
         store.dispatch(ErrorActions.errorHandle({message, data}))
     }
 
-
+    /**
+     * Called on websocket open. Dispatches action for showing lobby
+     * @param store
+     * @returns {function(...[*]=)}
+     */
     const onOpen = store => (event) => {
         store.dispatch(WSActions.wsConnected(event.target.url))
         if (store.getState().state === 'S_MAIN_INITIAL') {
@@ -22,6 +31,12 @@ const wsMiddleware = () => {
         }
     }
 
+    /**
+     * Called on websocket close. If no error is displayed shows info
+     * about broken connection.
+     * @param store
+     * @returns {function(...[*]=)}
+     */
     const onClose = store => () => {
         store.dispatch(WSActions.wsDisconnected())
         if (!store.getState().error?.message) {
@@ -29,14 +44,29 @@ const wsMiddleware = () => {
         }
     }
 
+    /**
+     * Called on websocket error. Happens usually when server is down.
+     * @param store
+     * @returns {function(...[*]=)}
+     */
     const onError = store => (event) => {
         handleError(store, "Not connected", event)
     }
 
+    /**
+     * Called on message received. Calls object responsible for handling messages
+     * @param store
+     * @returns {function(...[*]=)}
+     */
     const onMessage = store => (event) => {
         wsReceiver(store, event.data)
     }
 
+    /**
+     * Connects to websocket
+     * @param store
+     * @param action
+     */
     const connect = (store, action) => {
         if (socket !== null) {
             store.dispatch(WSActions.wsDisconnecting())
@@ -50,6 +80,10 @@ const wsMiddleware = () => {
         socket.onerror = onError(store)
     }
 
+    /**
+     * Disconnects from websocket
+     * @param store
+     */
     const disconnect = (store) => {
         if (socket !== null) {
             try {
@@ -62,6 +96,11 @@ const wsMiddleware = () => {
         socket = null
     }
 
+    /**
+     * Sends message via websocket
+     * @param store
+     * @param action
+     */
     const send = (store, action) => {
         if (socket === null) {
             store.dispatch(handleError(store, 'Socket does not exists', {}))

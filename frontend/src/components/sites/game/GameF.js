@@ -1,8 +1,11 @@
 import Game from './Game'
 import {connect} from "react-redux";
-// import * as PlayerActions from '../../../store/actions/playerActions'
 import * as WsActions from '../../../store/actions/wsActions'
 
+/**
+ * Maps Redux state to React Component properties.
+ * @param state: state of Redux store
+ */
 const mapStateToProps = (state) => {
     return {
         state: state?.game?.state, //TODO: remove not necessary
@@ -15,12 +18,18 @@ const mapStateToProps = (state) => {
     }
 }
 
+/**
+ * Maps Redux dispatches to React Component properties.
+ * @param dispatch: object allowing to dispatch Redux actions
+ */
 const mapDispatchToProps = (dispatch) => {
     return {
         wsSend: data => dispatch(WsActions.wsSend(data))
     }
 }
 
-
+/**
+ * Connecting to store.
+ */
 const GameF = connect(mapStateToProps, mapDispatchToProps)(Game)
 export default GameF

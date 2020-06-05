@@ -5,14 +5,6 @@ import {MyBoard} from "./graphic-utils/MyBoard";
  */
 class BoardCanvas {
 
-    /*
-    Notatka:
-    Canvas powienien jedynie rysować to co dostanie za pomocą
-    metody render. Nie powinien zawierać żadnej logiki obsługującej
-    input od użytkownika, jedynie wołanie odpowiedniego
-    callbacku z tych które ustawione są w konstruktorze.
-    */
-
     /**
      * Constructor setting canvas and callbacks.
      * @param canvas: canvas on which board should be drawn

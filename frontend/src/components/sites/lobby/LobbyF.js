@@ -6,6 +6,10 @@ import * as GameActions from "../../../store/actions/gameActions";
 import * as LobbyActions from "../../../store/actions/lobbyActions";
 import * as MainActions from "../../../store/actions/mainActions";
 
+/**
+ * Resets state of Game
+ * @param dispatch: object allowing to dispatch Redux actions
+ */
 const resetAll = (dispatch) => {
     dispatch(WsActions.wsDisconnect())
     dispatch(GameActions.gameInitial())
@@ -13,6 +17,10 @@ const resetAll = (dispatch) => {
     dispatch(MainActions.mainInitial())
 }
 
+/**
+ * Maps Redux state to React Component properties.
+ * @param state: state of Redux store
+ */
 const mapStateToProps = (state) => {
     return {
         show: state.state === 'S_MAIN_LOBBY',
@@ -21,6 +29,10 @@ const mapStateToProps = (state) => {
     }
 }
 
+/**
+ * Maps Redux dispatches to React Component properties.
+ * @param dispatch: object allowing to dispatch Redux actions
+ */
 const mapDispatchToProps = (dispatch) => {
     return {
         onHide: () => resetAll(dispatch),
@@ -32,6 +44,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-
+/**
+ * Connecting to store.
+ */
 const LobbyF = connect(mapStateToProps, mapDispatchToProps)(Lobby)
 export default LobbyF

@@ -36,4 +36,5 @@ class Tile2(TileMeadow, TileMonastery, TileRoad):
     def after_game(self):  # returns dictionary {player: points]}
         monastery = self.check_for_points_after_game_monastery()
         meadow = self.check_for_points_after_game_meadow()
-        return merge_dicts_after_game(monastery, meadow)
+        road = self.check_for_points_after_game_road()
+        return merge_dicts_after_game(monastery, meadow, road)

@@ -39,7 +39,7 @@ class EndTurnCommand(Command):
             self._game.getBoard().addFinalPoints(players)
 
             winners = [[0,p.getId(),p.getPoints()] for p in players]
-            sorted(winners, key=itemgetter(2))
+            winners = sorted(winners, key=itemgetter(2))
             for i in range(len(players)):
                 winners[i][0] = i+1
             json = {p.getWebsocket(): [dumps(JSONConstructor.end_game(winners))] for p in players if p.ifActive()}

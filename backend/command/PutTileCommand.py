@@ -28,11 +28,13 @@ class PutTileCommand(Command):
         ))] for p in players if p.ifActive()}
 
         currPlayer = self._game.getCurrPlayer()
+        pawnPositions = self._game.getPawnPositions() if currPlayer.getPawnsNumber() > 0 else []
+
         json[currPlayer.getWebsocket()].append(dumps(JSONConstructor.put_pawn(
             currPlayer.getId(),
             self._game.getCurrTile().code7x7,
             self._game.getCurrTile().orientation,
-            self._game.getPawnPositions()
+            pawnPositions
             )))
 
         return json

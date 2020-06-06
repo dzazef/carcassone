@@ -11,7 +11,7 @@ class Surrender extends Component {
      * Renders component.     */
     render() {
         return (
-            <button className={"m-surrender-button"} onClick={() => this.props.surrender(this.props.myId)}>
+            <button className={"m-surrender-button"} onClick={() => window.location.reload()}>
                 <CloseIcon className={"m-surrender-icon"}/>
             </button>
         );

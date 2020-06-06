@@ -13,7 +13,7 @@ class WinnerList extends Component {
         return (
             <Modal
                 show={this.props.gameEnded}
-                onHide={this.props.resetAll}
+                onHide={() => window.location.reload()}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -53,7 +53,7 @@ class WinnerList extends Component {
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.props.resetAll}>Close</Button>
+                    <Button onClick={() => window.location.reload()}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );

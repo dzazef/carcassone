@@ -17,7 +17,7 @@ class Lobby extends Component {
             <>
                 <Modal
                     show={this.props.show}
-                    onHide={this.props.onHide}
+                    onHide={() => window.location.reload()}
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -57,7 +57,7 @@ class Lobby extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={() => this.props.ready(this.props.myid)}>Ready</Button>
-                        <Button onClick={this.props.onHide}>Close</Button>
+                        <Button onClick={() => window.location.reload()}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             </>

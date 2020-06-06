@@ -51,8 +51,12 @@ class Board:
             (self.tile_matrix[x + 1][y]).downTile = tile
         self.tile_matrix[x][y] = tile
 
-    def putPawn(self, tile, color, x, y):
-        pass
+    def isTileOnBoard(self, tile):
+        for i in range(len(self.tile_matrix)):
+            for j in range(len(self.tile_matrix[0])):
+                if self.tile_matrix[i][j] == tile:
+                    return True
+        return False
 
     # returns [(x, y)], where x and y are coordinates on board
     def getTilePositions(self, tile):

@@ -49,11 +49,8 @@ class DisconnectCommand(Command):
                 json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(tilesLeft, playersList, boardList))]
                         for p in players if p.ifActive()}
 
-                tiles = self._game.getBoard().getTiles()
-                isPlaced = False
-                for tile in tiles :
-                    if tile[2] == self._game.getCurrTile().code7x7:
-                        isPlaced = True
+
+                isPlaced = self._game.getBoard().isTileOnBoard(self._game.getCurrTile())
                 if isPlaced:
                     self._game.nextTurn()
                 else:

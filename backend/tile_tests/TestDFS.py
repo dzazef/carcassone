@@ -1,17 +1,16 @@
 import unittest
-from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 
+from backend.tile.AuxFunctions import attach_left_right, attach_up_down
+from backend.tile.Tile10MeadowRoadCastle import Tile10
 from backend.tile.Tile16MeadowCastle import Tile16
 from backend.tile.Tile6MeadowRoadCastle import Tile6
 from backend.tile.Tile8MeadowCastle import Tile8
 from backend.tile.Tile9MeadowCastleShield import Tile9
-from backend.tile.Tile10MeadowRoadCastle import Tile10
 
 
 class TestDFS(unittest.TestCase):
 
     def test_fourconnectedtest(self):
-
         # t3 t2
         # t4 t1
 
@@ -40,7 +39,7 @@ class TestDFS(unittest.TestCase):
         t2 = Tile16()
         t2.turn_clockwise()
         t3 = Tile16()
-        t3. turn_counterclockwise()
+        t3.turn_counterclockwise()
 
         attach_left_right(t2, t1)
         attach_left_right(t1, t3)

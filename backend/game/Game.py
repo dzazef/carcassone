@@ -1,7 +1,8 @@
 from random import shuffle
+
+import backend.tile as tiles
 from backend.game.Board import Board
 from backend.tile.Tile import other_reciprocal
-import backend.tile as tiles
 
 
 class Game:

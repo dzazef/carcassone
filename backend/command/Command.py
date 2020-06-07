@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
+
 from backend.game.Game import Game
 
 
 class Command:
     """Abstract class created when we receive message from client"""
+
     def __init__(self, game, data):
         """Initialize attributes"""
         self._game = game

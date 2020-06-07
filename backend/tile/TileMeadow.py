@@ -1,4 +1,5 @@
 from collections import Counter
+
 from backend.tile.Enums import Terrains
 from backend.tile.Tile import Tile
 

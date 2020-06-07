@@ -1,9 +1,9 @@
 import unittest
-from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 
+from backend.tile.AuxFunctions import attach_left_right, attach_up_down
+from backend.tile.Tile10MeadowRoadCastle import Tile10
 from backend.tile.Tile8MeadowCastle import Tile8
 from backend.tile.Tile9MeadowCastleShield import Tile9
-from backend.tile.Tile10MeadowRoadCastle import Tile10
 
 
 class TestCastle(unittest.TestCase):

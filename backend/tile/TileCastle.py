@@ -1,6 +1,7 @@
-from backend.tile.Tile import Tile
-from backend.tile.Enums import Terrains
 from collections import Counter
+
+from backend.tile.Enums import Terrains
+from backend.tile.Tile import Tile
 
 
 class TileCastle(Tile):  # entire logic of castles, how points are awarded
@@ -81,4 +82,3 @@ class TileCastle(Tile):  # entire logic of castles, how points are awarded
                 for j in whole_castle:  # clear pawns
                     j[1][3] = None
         return result
-

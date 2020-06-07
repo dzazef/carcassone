@@ -4,8 +4,10 @@ import logging
 import websockets
 from abc import ABC, abstractmethod
 
+
 class Connection(ABC):
     """Abstract class that manages connection with websockets"""
+
     def run(self):
         """Start server connection"""
         self.incomingJson = None
@@ -20,15 +22,15 @@ class Connection(ABC):
         try:
             async for message in websocket:
                 self.incomingJson = json.loads(message)
-                await self.analyze(self.incomingJson,websocket)
+                await self.analyze(self.incomingJson, websocket)
         except:
             pass
         finally:
             disconnectJson = {'type': 'disconnect'}
-            if(self.incomingJson["type"] != "disconnect"):
+            if (self.incomingJson["type"] != "disconnect"):
                 await self.analyze(disconnectJson, websocket)
             self.incomingJson = {'type': 'disconnected'}
 
-    async def analyze(self,data,websocket):
+    async def analyze(self, data, websocket):
         """Implemented in Server.py"""
         pass

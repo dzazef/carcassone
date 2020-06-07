@@ -1,4 +1,5 @@
 from json import dumps
+
 from backend.command.Command import Command
 from backend.command.JSONConstructor import JSONConstructor
 
@@ -33,7 +34,7 @@ class ReadyCommand(Command):
             tilesLeft = self._game.getTilesLeftAmount()
             self._game.start()
             json = {p.getWebsocket(): [dumps(JSONConstructor.start_game(p.getId(), p.getColor(), p.getReady())),
-                                       dumps(JSONConstructor.board_state(tilesLeft,playersList,boardList))]
+                                       dumps(JSONConstructor.board_state(tilesLeft, playersList, boardList))]
                     for p in players}
 
             currTile = self._game.getCurrTile()

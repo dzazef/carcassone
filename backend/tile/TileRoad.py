@@ -1,6 +1,7 @@
-from backend.tile.Tile import Tile
-from backend.tile.Enums import Terrains
 import operator
+
+from backend.tile.Enums import Terrains
+from backend.tile.Tile import Tile
 
 
 class TileRoad(Tile):

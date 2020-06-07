@@ -1,5 +1,6 @@
 class JSONConstructor:
     """Handles creation of jsons that we send after command executes"""
+
     @staticmethod
     def players_info_json(your_id, your_color, ready, players_list):
         """Return player_lobby json"""
@@ -56,7 +57,8 @@ class JSONConstructor:
 
         player_json = []
         for i in range(0, len(players_list)):
-            player = {"id": players_list[i][0], "color": players_list[i][1], "points": players_list[i][2], "pawns_left": players_list[i][3]}
+            player = {"id": players_list[i][0], "color": players_list[i][1], "points": players_list[i][2],
+                      "pawns_left": players_list[i][3]}
             player_json.append(player)
 
         json3["data"]["players"] = player_json

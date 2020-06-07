@@ -1,17 +1,16 @@
 import unittest
-from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 
-from backend.tile.Tile21MeadowRoad import Tile21
+from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 from backend.tile.Tile17MeadowRoadCastle import Tile17
 from backend.tile.Tile18MeadowRoadCastle import Tile18
 from backend.tile.Tile20MeadowRoadCastle import Tile20
+from backend.tile.Tile21MeadowRoad import Tile21
 from backend.tile.Tile22MeadowRoad import Tile22
 
 
 class TestRoads(unittest.TestCase):
 
     def test_road(self):
-
         # t3 t2
         # t4 t1
         # t5 t6

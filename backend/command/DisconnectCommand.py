@@ -7,6 +7,7 @@ from backend.command.JSONConstructor import JSONConstructor
 
 class DisconnectCommand(Command):
     """Handle disconnection"""
+
     def __init__(self, game, data, websocket):
         """Initialize attributes"""
         super(DisconnectCommand, self).__init__(game, data)
@@ -53,7 +54,6 @@ class DisconnectCommand(Command):
 
                 json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(tilesLeft, playersList, boardList))]
                         for p in players if p.ifActive()}
-
 
                 isPlaced = self._game.getBoard().isTileOnBoard(self._game.getCurrTile())
                 if isPlaced:

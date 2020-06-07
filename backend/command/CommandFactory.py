@@ -1,13 +1,14 @@
+from backend.command.DisconnectCommand import DisconnectCommand
 from backend.command.EndTurnCommand import EndTurnCommand
 from backend.command.JoinCommand import JoinCommand
 from backend.command.PutTileCommand import PutTileCommand
 from backend.command.ReadyCommand import ReadyCommand
 from backend.command.RotateTileCommand import RotateTileCommand
-from backend.command.DisconnectCommand import DisconnectCommand
 
 
 class CommandFactory:
     """Crates command type appropiate for received message"""
+
     def __init__(self):
         pass
 

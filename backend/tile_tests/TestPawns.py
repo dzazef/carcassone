@@ -1,22 +1,22 @@
 import unittest
-from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 
+from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 from backend.tile.Enums import Terrains
-from backend.tile.Tile8MeadowCastle import Tile8
-from backend.tile.Tile18MeadowRoadCastle import Tile18
 from backend.tile.Tile13MeadowCastleShield import Tile13
-from backend.tile.Tile19MeadowRoadCastle import Tile19
 from backend.tile.Tile14MeadowCastle import Tile14
-from backend.tile.Tile17MeadowRoadCastle import Tile17
-from backend.tile.Tile20MeadowRoadCastle import Tile20
 from backend.tile.Tile15MeadowCastle import Tile15
-from backend.tile.Tile2MonasteryMeadowRoad import Tile2
-from backend.tile.Tile23MeadowRoad import Tile23
-from backend.tile.Tile22MeadowRoad import Tile22
-from backend.tile.Tile25Start import Tile25
-from backend.tile.Tile9MeadowCastleShield import Tile9
-from backend.tile.Tile4MeadowCastle import Tile4
 from backend.tile.Tile16MeadowCastle import Tile16
+from backend.tile.Tile17MeadowRoadCastle import Tile17
+from backend.tile.Tile18MeadowRoadCastle import Tile18
+from backend.tile.Tile19MeadowRoadCastle import Tile19
+from backend.tile.Tile20MeadowRoadCastle import Tile20
+from backend.tile.Tile22MeadowRoad import Tile22
+from backend.tile.Tile23MeadowRoad import Tile23
+from backend.tile.Tile25Start import Tile25
+from backend.tile.Tile2MonasteryMeadowRoad import Tile2
+from backend.tile.Tile4MeadowCastle import Tile4
+from backend.tile.Tile8MeadowCastle import Tile8
+from backend.tile.Tile9MeadowCastleShield import Tile9
 
 
 class TestCountingPoints(unittest.TestCase):

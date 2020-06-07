@@ -1,10 +1,9 @@
+from backend.tile.AuxFunctions import merge_dicts_during_game, merge_dicts_after_game
 from backend.tile.Enums import Terrains, TileIDs
 from backend.tile.TileCastleShield import TileCastleShield
-from backend.tile.AuxFunctions import merge_dicts_during_game, merge_dicts_after_game
 
 
 class Tile3(TileCastleShield):
-
     id = TileIDs.TILE3
     amount = 1
 

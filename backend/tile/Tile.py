@@ -29,7 +29,6 @@ def reverse_other_reciprocal(num):  # translates pawn position from 7x7 matrix t
 
 
 class Tile:
-
     """
        1 2 3
     12       4
@@ -196,6 +195,7 @@ class Tile:
      Returns a list of tuples (position, kind of terrain), where pawns can be placed on this tile
      Pawn cannot be placed if the selected terrain already has a pawn or more on it
     """
+
     def offer_to_place_a_pawn(self):
         available = [(i[0][0], i[1]) for i in self.sides
                      if i[1] != Terrains.DEFAULT  # all sides where terrain is not DEFAULT (0)
@@ -209,6 +209,7 @@ class Tile:
      position: number from 0 to 12 returned as first element in tuple returned from offer_to_place_a_pawn
      position may also be a tuple in 7x7 matrix and it gets translated
     """
+
     def place_a_pawn(self, position, player):
         if isinstance(position, int) and 0 <= position <= 12:  # if backend representation
             pass
@@ -286,5 +287,3 @@ class Tile:
                 result[i.center[3]] = [9, 1]
                 i.center[3] = None  # clear pawn
         return result
-
-

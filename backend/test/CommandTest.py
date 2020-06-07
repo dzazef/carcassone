@@ -1,4 +1,5 @@
 import unittest
+
 from backend.command.JoinCommand import JoinCommand
 from backend.command.ReadyCommand import ReadyCommand
 from backend.game.Game import Game

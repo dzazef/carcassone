@@ -1,21 +1,20 @@
 import unittest
+
 from backend.tile.AuxFunctions import attach_left_right, attach_up_down
 from backend.tile.Enums import Terrains
-
-from backend.tile.Tile25Start import Tile25
-from backend.tile.Tile20MeadowRoadCastle import Tile20
-from backend.tile.Tile2MonasteryMeadowRoad import Tile2
 from backend.tile.Tile11MeadowRoadCastleShield import Tile11
-from backend.tile.Tile9MeadowCastleShield import Tile9
-from backend.tile.Tile8MeadowCastle import Tile8
-from backend.tile.Tile16MeadowCastle import Tile16
 from backend.tile.Tile14MeadowCastle import Tile14
+from backend.tile.Tile16MeadowCastle import Tile16
+from backend.tile.Tile20MeadowRoadCastle import Tile20
+from backend.tile.Tile25Start import Tile25
+from backend.tile.Tile2MonasteryMeadowRoad import Tile2
+from backend.tile.Tile8MeadowCastle import Tile8
+from backend.tile.Tile9MeadowCastleShield import Tile9
 
 
 class TestMeadow(unittest.TestCase):
 
     def test_1(self):
-
         # IDs
         #    t1 t2 t3
         # t4 t5 t6 t7
@@ -82,7 +81,6 @@ class TestMeadow(unittest.TestCase):
         self.assertEqual(t7.after_game(), {})
 
     def test_2(self):
-
         t1 = Tile25()  # first tile
 
         t2 = Tile9()

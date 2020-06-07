@@ -1,12 +1,14 @@
 from itertools import count, filterfalse
 from json import dumps
+
 from backend.command.Command import Command
-from backend.player.Human import Human
 from backend.command.JSONConstructor import JSONConstructor
+from backend.player.Human import Human
 
 
 class JoinCommand(Command):
     """Handle joining to game lobby"""
+
     def __init__(self, game, data, websocket):
         """Initialize attributes"""
         super(JoinCommand, self).__init__(game, data)

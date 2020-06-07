@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(WSActions.wsSend(CommandBuilder.buildPutTile(id, tile_x, tile_y)))
         dispatch(GameActions.gameTilePlaced())
     },
-    pawnPlacedCallback: (id, tile_id, rotate, pawn_x, pawn_y) => {//TODO: remove tile_id
+    pawnPlacedCallback: (id, tile_id, rotate, pawn_x, pawn_y) => {
         dispatch(GameActions.gameEndTurn())
         dispatch(WSActions.wsSend(
             CommandBuilder.buildEndTurn(id, tile_id, rotate, true, pawn_x, pawn_y)

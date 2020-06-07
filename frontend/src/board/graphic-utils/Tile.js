@@ -263,19 +263,19 @@ export class Tile {
      * @param dy przyrost w pikselach na osi y
      */
     move(dx, dy) {
-            this.centerX += dx / this.board.app.renderer.screen.width;
-            this.centerY += dy / this.board.app.renderer.screen.height;
-            this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
-            this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
-            if (this.pawn !== null) {
-                this.pawn.x += dx;
-                this.pawn.y += dy;
-            }
-            if (this.shield !== null) {
-                this.shield.x += dx;
-                this.shield.y += dy;
-            }
-            this.movePawnPlaces(dx, dy);
+        this.centerX += dx / this.board.app.renderer.screen.width;
+        this.centerY += dy / this.board.app.renderer.screen.height;
+        this.uniforms.uMove[0] += dx / this.board.app.renderer.screen.width * 2;
+        this.uniforms.uMove[1] -= dy / this.board.app.renderer.screen.height * 2;
+        if (this.pawn !== null) {
+            this.pawn.x += dx;
+            this.pawn.y += dy;
+        }
+        if (this.shield !== null) {
+            this.shield.x += dx;
+            this.shield.y += dy;
+        }
+        this.movePawnPlaces(dx, dy);
     }
 
     /**
@@ -284,8 +284,8 @@ export class Tile {
      * @param y współrzędna y środka płytki (współrzędne znormalizowane)
      */
     setTileCoordinates(x, y) {
-        this.uniforms.uMove[0] += (x - this.centerX) *2;
-        this.uniforms.uMove[1] -= (y - this.centerY) *2;
+        this.uniforms.uMove[0] += (x - this.centerX) * 2;
+        this.uniforms.uMove[1] -= (y - this.centerY) * 2;
         this.centerX = x;
         this.centerY = y;
     }

@@ -8,7 +8,7 @@ import * as WsActions from '../../../store/actions/wsActions'
  */
 const mapStateToProps = (state) => {
     return {
-        state: state?.game?.state, //TODO: remove not necessary
+        state: state?.game?.state,
         my_id: state?.game?.my_id,
         error: state?.game?.error,
         tiles_left: state?.game?.tiles_left,

@@ -141,6 +141,7 @@ export class MyBoard {
             console.log(that.currentTileRotate);
             that.rotateCallback(id, that.currentTileRotate);
         }
+
         this.currentTile.rect.x = this.app.renderer.screen.width - this.tileSize - 5;
         this.currentTile.rect.y = this.app.renderer.screen.height - this.tileSize - 5;
         this.currentTile.centerX = (this.currentTile.rect.x + this.tileSize / 2)

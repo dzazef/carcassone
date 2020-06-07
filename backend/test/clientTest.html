@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket demo</title>
+    <style type="text/css">
+        body {
+            font-family: "Courier New", sans-serif;
+            text-align: center;
+        }
+
+        .buttons {
+            font-size: 4em;
+            display: flex;
+            justify-content: center;
+        }
+
+        .ready {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .state {
+            font-size: 2em;
+        }
+
+        .join {
+            cursor: pointer;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+<div class="state">
+    <span class="players">?</span>
+</div>
+<div class="state">
+    <span class="id">?</span>
+</div>
+<div class="buttons">
+    <div class="ready">Ready</div>
+</div>
+<div class="buttons">
+    <div class="join">Join</div>
+</div>
+<script>
+    var id = document.querySelector('.id'),
+        players = document.querySelector('.players'),
+        ready = document.querySelector('.ready'),
+        join = document.querySelector('.join'),
+        websocket = new WebSocket("ws://127.0.0.1:6789/");
+    ready.onclick = function (event) {
+        websocket.send(JSON.stringify({type: 'ready', data: {id: parseInt(id.textContent)}}));
+    }
+    join.onclick = function (event) {
+        websocket.send(JSON.stringify({type: 'join', data: {}}));
+    }
+    websocket.onmessage = function (event) {
+        data = JSON.parse(event.data);
+        switch (data.type) {
+            case 'player_lobby':
+                players.textContent = JSON.stringify(data.data.lobby);
+                id.textContent = data.data.me.id;
+                break;
+            default:
+                console.error("unsupported event", data);
+        }
+    };
+</script>
+</body>
+</html>

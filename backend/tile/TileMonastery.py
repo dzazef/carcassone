@@ -4,6 +4,13 @@ from backend.tile.Tile import Tile
 
 class TileMonastery(Tile):
 
+    """
+     def check_for_points_after_move_monastery(self):
+        return {}
+
+     this function is defined in Tile.py, as every tile needs to have access to it
+    """
+
     def check_for_points_after_game_monastery(self):
         result = {}  # dictionary- player: points
         i = self.center

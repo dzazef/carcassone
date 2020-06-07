@@ -3,7 +3,7 @@ import sys
 from backend.tile.Tile import Tile
 
 
-def merge(a, b, f):
+def merge(a, b, f) -> dict:
     # Start with symmetric difference; keys either in A or B, but not both
     merged = {k: a.get(k, b.get(k)) for k in a.keys() ^ b.keys()}
     # Update with 'f()' applied to the intersection
@@ -11,18 +11,18 @@ def merge(a, b, f):
     return merged
 
 
-def merge_dicts(f, *ds):
+def merge_dicts(f, *ds) -> dict:
     dic = {}
     for d in ds:
         dic = merge(dic, d, f)
     return dic
 
 
-def merge_dicts_during_game(*ds):
+def merge_dicts_during_game(*ds) -> dict:
     return merge_dicts(lambda x, y: [x[0] + y[0], x[1] + y[1]], *ds)
 
 
-def merge_dicts_after_game(*ds):
+def merge_dicts_after_game(*ds) -> dict:
     return merge_dicts(lambda x, y: x + y, *ds)
 
 

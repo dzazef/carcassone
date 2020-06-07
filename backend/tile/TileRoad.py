@@ -7,7 +7,6 @@ class TileRoad(Tile):
 
     def check_for_points_after_move_road(self):
         score = {}
-        x = 0
         for i in self.sides:
             if i[1] == Terrains.ROAD:
                 dfs = self.dfs_start(i)

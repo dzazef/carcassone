@@ -1,7 +1,7 @@
 from backend.tile.TileCastle import TileCastle
 
 
-class TileCastleShield(TileCastle):
+class TileCastleShield(TileCastle):  # inherits its entire logic from TileCastle, it only changes amount of points
 
     def __init__(self):
         super().__init__()

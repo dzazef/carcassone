@@ -1,8 +1,6 @@
 from collections import Counter
 from backend.tile.Enums import Terrains
 from backend.tile.Tile import Tile
-import itertools
-from itertools import groupby
 
 
 def neigbouring(side):
@@ -15,8 +13,8 @@ def neigbouring(side):
 
 class TileMeadow(Tile):
 
-    #  def check_for_points_after_move(self):
-    #  pass  # doesn't do anything
+    def check_for_points_after_move_meadow(self):  # not used but left on purpose, if ever used mistakenly
+        return {}
 
     def check_for_points_after_game_meadow(self):  # awards points and then removes pawns
         # neighours of castles work on simple rules: terrain 3 neighbours 2 and 4 etc.

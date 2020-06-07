@@ -30,24 +30,28 @@ def reverse_other_reciprocal(num):  # translates pawn position from 7x7 matrix t
 
 class Tile:
 
-    #    1 2 3
-    # 12       4
-    # 11   0   5
-    # 10       6
-    #    9 8 7
+    """
+       1 2 3
+    12       4
+    11   0   5
+    10       6
+       9 8 7
+    """
     amount = 0  # how many of this kind of tile is in the deck
 
     def __init__(self):
-        # each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
-        # sides is a list of all connected sections of terrain on the tile, each member of this list is a list of length
-        # of 4, which has the following contents:
-        # sides[_][0] - a list of all positions a given side spans e.g. [1, 2, 3] means it covers the entire top of
-        # a tile
-        # sides[_][1] - kind of terrain defined in Enums.Terrains e.g. Terrains.MEADOW or Terrains.CASTLE
-        # sides[_][2] - internal ID, all sides (and center) must have other internal ID to differentiate between
-        # seperate sections of same terrain e.g. two sides of Terrain.MEADOW that are not connected, so they must be
-        # distinguished in some other way
-        # sides[_][3] - player ID, or None if no player has a pawn on this side
+        """
+         each member of the tuple containing connected edges type of terrain, id (internal), and player's pawn
+         sides is a list of all connected sections of terrain on the tile, each member of this list is a list of length
+         of 4, which has the following contents:
+         sides[_][0] - a list of all positions a given side spans e.g. [1, 2, 3] means it covers the entire top of
+         a tile
+         sides[_][1] - kind of terrain defined in Enums.Terrains e.g. Terrains.MEADOW or Terrains.CASTLE
+         sides[_][2] - internal ID, all sides (and center) must have other internal ID to differentiate between
+         seperate sections of same terrain e.g. two sides of Terrain.MEADOW that are not connected, so they must be
+         distinguished in some other way
+         sides[_][3] - player ID, or None if no player has a pawn on this side
+        """
         self.sides = [[[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], Terrains.DEFAULT, 1, None]]
         # center is the same as sides, but has only one member and it can only be a Terrain.Monastery or nothing
         # (Terrain.DEFAILT)
@@ -83,7 +87,7 @@ class Tile:
         return players
 
     def turn_clockwise(self):
-        self.code7x7 = list(zip(*self.code7x7[::-1]))
+        self.code7x7 = list(zip(*self.code7x7[::-1]))  # turns a matrix clockwise
 
         for i in self.sides:
             for j in range(len(i[0])):
@@ -110,13 +114,6 @@ class Tile:
         for i in self.sides:
             if position in i[0]:
                 return i
-        return None
-
-    # ( Not used, can be deleted )
-    def find_side_internal(self, terrain):
-        for i in self.sides:
-            if terrain in i[0]:
-                return i[2]
         return None
 
     def fit_up(self, other):  # can I place the other tile on top of this one?
@@ -195,17 +192,23 @@ class Tile:
                 else:
                     neighbours.append((None, None))
 
+    """
+     Returns a list of tuples (position, kind of terrain), where pawns can be placed on this tile
+     Pawn cannot be placed if the selected terrain already has a pawn or more on it
+    """
     def offer_to_place_a_pawn(self):
         available = [(i[0][0], i[1]) for i in self.sides
                      if i[1] != Terrains.DEFAULT  # all sides where terrain is not DEFAULT (0)
-                     and not ["Pawn detected" for j in self.dfs_start(i) if j[1] is not None and j[1][3] is not None]]  # and have no pawns
+                     and not ["Pawn detected" for j in self.dfs_start(i) if j[1] is not None and j[1][3] is not None]]
         if self.center[1] != Terrains.DEFAULT and self.center[3] is None:
             available.append((self.center[0][0], self.center[1]))
         return available  # returns list of tuples (position, terrain)
 
-    # places a pawn on the given position
-    # position: number from 0 to 12 returned as first element in tuple returned from offer_to_place_a_pawn
-    # position may also be a tuple in 7x7 matrix and it gets translated
+    """
+     places a pawn on the given position
+     position: number from 0 to 12 returned as first element in tuple returned from offer_to_place_a_pawn
+     position may also be a tuple in 7x7 matrix and it gets translated
+    """
     def place_a_pawn(self, position, player):
         if isinstance(position, int) and 0 <= position <= 12:  # if backend representation
             pass
@@ -222,7 +225,6 @@ class Tile:
             side[3] = player
         else:
             print("Couldn't place a pawn here due to an error!")
-
 
     def count_neighbours(self):
         neighbours = 0
@@ -280,7 +282,7 @@ class Tile:
         n = self.neighbours()
         n.append(self)  # can also be already finished
         for i in n:
-            if isinstance(i, TileMonastery) and i.center[3] is not None and i.count_neighbours() == 8:  # and is instance of TileMonastery ?
+            if isinstance(i, TileMonastery) and i.center[3] is not None and i.count_neighbours() == 8:
                 result[i.center[3]] = [9, 1]
                 i.center[3] = None  # clear pawn
         return result

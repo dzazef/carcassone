@@ -31,8 +31,6 @@ class Tile25(TileCastle, TileMeadow, TileRoad):
     def after_move(self):
         monastery = self.check_for_points_after_move_monastery()
         road = self.check_for_points_after_move_road()
-        if road == "not completed road":
-            road = {}
         castle = self.check_for_points_after_move_castle()
         return merge_dicts_during_game(monastery, road, castle)
 

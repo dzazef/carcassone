@@ -3,7 +3,7 @@ from backend.tile.Enums import Terrains
 from collections import Counter
 
 
-class TileCastle(Tile):  # tutaj cała logika zamków, czyli jak naliczają punkty
+class TileCastle(Tile):  # entire logic of castles, how points are awarded
 
     def __init__(self):
         super().__init__()
@@ -12,6 +12,7 @@ class TileCastle(Tile):  # tutaj cała logika zamków, czyli jak naliczają punk
 
     def check_for_points_after_move_castle(self):
         result = {}  # dictionary- player: [points, freed pawns]
+
         for i in self.sides:  # check all areas
             if i[1] == Terrains.CASTLE:  # if it's the area we want
                 whole_castle = self.dfs_start(i)  # search adjecent tiles to get the whole structure

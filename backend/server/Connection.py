@@ -5,13 +5,17 @@ import websockets
 from abc import ABC, abstractmethod
 
 class Connection(ABC):
+    """Abstract class that manages connection with websockets"""
     def run(self):
+        """Start server connection"""
         self.incomingJson = None
         start_server = websockets.serve(self.connect, "localhost", 3030)
         asyncio.get_event_loop().run_until_complete(start_server)
         asyncio.get_event_loop().run_forever()
 
     async def connect(self, websocket, path):
+        """Take messages from websocket and analyze them
+        if connection closes create disconnect json"""
         self.incomingJson = None
         try:
             async for message in websocket:
@@ -20,10 +24,11 @@ class Connection(ABC):
         except:
             pass
         finally:
-            disconnectJson = {'type': 'disconnect'}# tworzenie jsona że ktos sie zerwal i wyslanie go do analyze - command factory
-            if(self.incomingJson["type"] != "disconnect"): # zabezpieczenie przed podwójnym wykonaniem disconnecta
+            disconnectJson = {'type': 'disconnect'}
+            if(self.incomingJson["type"] != "disconnect"):
                 await self.analyze(disconnectJson, websocket)
-            self.incomingJson = {'type': 'disconnected'}#jezeli ktos wyjdzie noramalnie to incoming json bedzie disconnect, a potem ktos sie zerwie to nic sie nie stanie
+            self.incomingJson = {'type': 'disconnected'}
 
     async def analyze(self,data,websocket):
-        pass #abstract
+        """Implemented in Server.py"""
+        pass

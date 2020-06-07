@@ -6,13 +6,18 @@ from backend.command.JSONConstructor import JSONConstructor
 
 
 class JoinCommand(Command):
+    """Handle joining to game lobby"""
     def __init__(self, game, data, websocket):
+        """Initialize attributes"""
         super(JoinCommand, self).__init__(game, data)
         self.__websocket = websocket
         self.__colors = ['blue', 'yellow', 'purple', 'red', 'black']
 
     def execute(self):
-        if self._game.getCurrPlayer() is None:
+        """If game is not ongoing and we have less than 5 players,
+         add new player and return updated player lobby,
+         else return information that client can't join"""
+        if self._game.getCurrPlayer() is None and len(self._game.getPlayers()) < 5:
             # game hasn't started yet, add player
             players = self._game.getPlayers()
 
@@ -31,6 +36,6 @@ class JoinCommand(Command):
                 p.getId(), p.getColor(), p.getReady(), playersList))] for p in players}
         else:
             # game has already started, send information about being late
-            json = {self.__websocket: {'type': 'belated'}} #TODO co wtedy?
+            json = {self.__websocket: {'type': 'belated'}}
 
         return json

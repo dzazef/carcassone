@@ -1,7 +1,8 @@
 class JSONConstructor:
-
+    """Handles creation of jsons that we send after command executes"""
     @staticmethod
     def players_info_json(your_id, your_color, ready, players_list):
+        """Return player_lobby json"""
         # players_list = [(id1, color1, ready1), (id2, color2, ready2), ...]
         json1 = {
             "type": "player_lobby",
@@ -25,6 +26,7 @@ class JSONConstructor:
 
     @staticmethod
     def start_game(your_id, your_color, ready):
+        """Return start json"""
         json2 = {
             "type": "start",
             "data": {
@@ -39,6 +41,7 @@ class JSONConstructor:
 
     @staticmethod
     def board_state(tiles_left, players_list, board_list):
+        """Return board_state json"""
         # players_list = [(id1, color1, points1, pawns_left1), (id2, color2, points2, pawns_left2), ...]
         # board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]
         # pawn = (id, x, y)
@@ -79,6 +82,7 @@ class JSONConstructor:
 
     @staticmethod
     def tile_possible_places(iD, tile_id, rotate, places):
+        """Return json with possible places for tile"""
         # places = [(x1, y1), (x2, y2), ...]
         json4 = {
             "type": "turn_info",
@@ -102,6 +106,7 @@ class JSONConstructor:
 
     @staticmethod
     def put_pawn(iD, tile_id, rotate, places):
+        """Return pawn_info json"""
         # places = [(x1, y1), (x2, y2), ...]
         json5 = {
             "type": "pawn_info",
@@ -125,6 +130,7 @@ class JSONConstructor:
 
     @staticmethod
     def end_game(winners):
+        """Return end_game json"""
         # winners = [(place1, id1, points1), (place2, id2, points2)]
         json6 = {
             "type": "end_game",

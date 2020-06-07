@@ -7,12 +7,12 @@ from backend.command.DisconnectCommand import DisconnectCommand
 
 
 class CommandFactory:
-
+    """Crates command type appropiate for received message"""
     def __init__(self):
         pass
 
     async def createCommand(self, game, data, websocket):
-        #  print("Dostaliśmy",data)
+        """Return command type appropiate for received message"""
         if data["type"] == "join":
             return JoinCommand(game, data, websocket)
         elif data["type"] == "ready":

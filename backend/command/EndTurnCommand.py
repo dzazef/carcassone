@@ -6,10 +6,14 @@ from backend.command.Command import Command
 
 
 class EndTurnCommand(Command):
+    """Handle end turn or end game"""
     def __init__(self, game, data):
+        """Initialize attributes"""
         super(EndTurnCommand, self).__init__(game, data)
 
     def execute(self):
+        """Check if game can continue, if yes return information about next turn
+        if not, return information about end game screen"""
         currTile = self._game.getCurrTile()
         pawnCount = self._game.getCurrPlayer().getPawnsNumber()
         if self._data['data']['pawn_placed'] is True and pawnCount > 0: # stawiamy piona

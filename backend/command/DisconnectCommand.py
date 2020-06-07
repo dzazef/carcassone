@@ -6,11 +6,16 @@ from backend.command.JSONConstructor import JSONConstructor
 
 
 class DisconnectCommand(Command):
+    """Handle disconnection"""
     def __init__(self, game, data, websocket):
+        """Initialize attributes"""
         super(DisconnectCommand, self).__init__(game, data)
         self.__websocket = websocket
 
     def execute(self):
+        """If game hasn't started, remove player and
+        check if game can start, return json for start game or updated player lobby
+        else remove player and check if game can continue, return end game json or next tur json """
         players = self._game.getPlayers()
 
         if self._game.getCurrPlayer() is None:

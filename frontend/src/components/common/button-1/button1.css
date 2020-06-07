@@ -1,0 +1,26 @@
+.m-button1-button {
+    border: 0;
+    padding: 1.5vh 6vw;
+    font-size: 5vw;
+    border-radius: 10px;
+    color: #2f190f;
+    background-color: #908a8a;
+    transition: background-color 0.15s;
+}
+
+.m-button1-button:hover {
+    background-color: #7f7979;
+}
+
+.m-button1-button:focus {
+    outline: 0;
+}
+
+@media (max-width: 600px) {
+    .m-button1-button {
+        padding: 3vh 12vw;
+        font-size: 10vw;
+    }
+}
+
+/*# sourceMappingURL=button1.css.map */

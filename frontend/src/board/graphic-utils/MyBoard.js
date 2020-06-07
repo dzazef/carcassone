@@ -21,7 +21,6 @@ export class MyBoard {
         if (!MyBoard.instance) {
             this.canvas = canvas;
             this.tileSize = tileSize;
-            // this.players
             // lista wszystkich płytek narysowanych na planszy
             this.tiles = [];
             this.possiblePlaces = [];
@@ -142,10 +141,6 @@ export class MyBoard {
             console.log(that.currentTileRotate);
             that.rotateCallback(id, that.currentTileRotate);
         }
-
-        // this.currentTile.setTileCoordinates(
-        //     1.0 - (this.tileSize / 2) / this.app.renderer.screen.width - 0.01,
-        //     1.0 - (this.tileSize / 2) / this.app.renderer.screen.height - 0.01);
         this.currentTile.rect.x = this.app.renderer.screen.width - this.tileSize - 5;
         this.currentTile.rect.y = this.app.renderer.screen.height - this.tileSize - 5;
         this.currentTile.centerX = (this.currentTile.rect.x + this.tileSize / 2)

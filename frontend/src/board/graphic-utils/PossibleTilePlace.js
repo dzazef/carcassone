@@ -36,9 +36,6 @@ export class PossibleTilePlace {
     }
 
     setTilePosition(x, y) {
-        // this.setTileCoordinates(
-        //     0.5 + y * (this.board.tileSize / this.board.app.renderer.screen.width),
-        //     0.5 + x * (this.board.tileSize / this.board.app.renderer.screen.height));
         this.row = x;
         this.column = y;
         if (this.board.firstTile === null) {

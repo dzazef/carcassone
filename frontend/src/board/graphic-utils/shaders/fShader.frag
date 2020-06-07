@@ -27,7 +27,6 @@ vec4 meadowColor() {
 }
 
 vec4 defaultColor() {
-    //return meadowColor();
     return vec4(0.66, 0.66, 0.66, 1.0);
 }
 

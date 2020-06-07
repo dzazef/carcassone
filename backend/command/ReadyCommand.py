@@ -4,10 +4,16 @@ from backend.command.JSONConstructor import JSONConstructor
 
 
 class ReadyCommand(Command):
+    """Class which is responsible for setting attribute 'ready' in players"""
+
     def __init__(self, game, data):
+        """"Initialize attributes"""
         super(ReadyCommand, self).__init__(game, data)
 
     def execute(self):
+        """Set attribute 'ready' in player.
+        Start game if all players are ready.
+        Return dictionary {websocket: [json_in_string]}"""
         playerId = self._data['data']['id']
         players = self._game.getPlayers()
 

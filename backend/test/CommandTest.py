@@ -35,16 +35,16 @@ class CommandTest(unittest.TestCase):
         command6 = ReadyCommand(game, {'type': 'ready', 'data': {'id': 3}})
         json = command6.execute()
 
-        self.assertEqual(json['websocket1'],
-                         ['{"type": "start", "data": {"me": {"id": 1, "color": "blue", "ready": true}}}'],
+        self.assertEqual(json['websocket1'][0],
+                         '{"type": "start", "data": {"me": {"id": 1, "color": "blue", "ready": true}}}',
                          "wrong start json")
 
-        self.assertEqual(json['websocket2'],
-                         ['{"type": "start", "data": {"me": {"id": 2, "color": "yellow", "ready": true}}}'],
+        self.assertEqual(json['websocket2'][0],
+                         '{"type": "start", "data": {"me": {"id": 2, "color": "yellow", "ready": true}}}',
                          "wrong start json")
 
-        self.assertEqual(json['websocket3'],
-                         ['{"type": "start", "data": {"me": {"id": 3, "color": "green", "ready": true}}}'],
+        self.assertEqual(json['websocket3'][0],
+                         '{"type": "start", "data": {"me": {"id": 3, "color": "purple", "ready": true}}}',
                          "wrong start json")
 
 

@@ -4,10 +4,15 @@ from backend.command.JSONConstructor import JSONConstructor
 
 
 class PutTileCommand(Command):
+    """Class which is responsible for setting attribute 'ready' in players"""
+
     def __init__(self, game, data):
+        """"Initialize attributes"""
         super(PutTileCommand, self).__init__(game, data)
 
     def execute(self):
+        """Put current tile on board.
+        Return dictionary {websocket: [json_in_string]}"""
         currTile = self._game.getCurrTile()
         players = self._game.getPlayers()
 
@@ -18,8 +23,6 @@ class PutTileCommand(Command):
 
         # now put currTile on board
         self._game.getBoard().putTile(self._game.getCurrTile(), self._data['data']['x'], self._data['data']['y'])
-
-        #  self._game.getBoard().printself()  # for testing
 
         json = {p.getWebsocket(): [dumps(JSONConstructor.board_state(
             self._game.getTilesLeftAmount(),

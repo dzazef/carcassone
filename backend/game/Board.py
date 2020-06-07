@@ -2,30 +2,17 @@ from backend.tile.Tile25Start import Tile25
 
 
 class Board:
+    """Main class which is responsible for board and tiles in game"""
+
     def __init__(self):
+        """Initialize attributes"""
         self.tile_matrix = [[None for i in range(150)] for i in range(150)]
         self.tile_matrix[75][75] = Tile25()
 
-    def printself(self):
-        print('------')
-        for i in range(len(self.tile_matrix)):
-            for j in range(len(self.tile_matrix[0])):
-                if self.tile_matrix[i][j] is not None:
-                    print('x: {0}, y: {1}, type: {2}, sides: {3}, orientation: {4}, udlr: {5} {6} {7} {8}'
-                          .format(i - 75,
-                                  j - 75,
-                                  type(self.tile_matrix[i][j]).__name__,
-                                  self.tile_matrix[i][j].sides,
-                                  self.tile_matrix[i][j].orientation,
-                                  self.tile_matrix[i][j].upTile,
-                                  self.tile_matrix[i][j].downTile,
-                                  self.tile_matrix[i][j].leftTile,
-                                  self.tile_matrix[i][j].rightTile))
-        print('------')
-
     def getTiles(self):
-        # board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]
-        # pawn = (id, x, y)
+        """Return board in as array of tuples
+        board = [(x1, y1, id1, rotate1, pawn1), (x2, y2, id2, rotate2, pawn2), ...]
+        pawn = (id, x, y)"""
         board = []
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
@@ -35,6 +22,7 @@ class Board:
         return board
 
     def putTile(self, tile, x, y):
+        """Put tile on coordinates x, y"""
         x += 75
         y += 75
         if y - 1 >= 0 and self.tile_matrix[x][y - 1] != None:
@@ -52,14 +40,15 @@ class Board:
         self.tile_matrix[x][y] = tile
 
     def isTileOnBoard(self, tile):
+        """Return true if tile is already on board, false otherwise"""
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
                 if self.tile_matrix[i][j] == tile:
                     return True
         return False
 
-    # returns [(x, y)], where x and y are coordinates on board
     def getTilePositions(self, tile):
+        """Return [(x, y)], where x and y are coordinates on board"""
         result = []
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
@@ -71,8 +60,8 @@ class Board:
                         result.append((i - 75, j - 75))
         return result
 
-    # add points at the end of the game
     def addFinalPoints(self, players):
+        """Add points at the end of the game"""
         for i in range(len(self.tile_matrix)):
             for j in range(len(self.tile_matrix[0])):
                 if self.tile_matrix[i][j] is not None:
@@ -82,6 +71,7 @@ class Board:
                             p.addPoints(awarded[p.getId()])
 
     def __hasNeighbour(self, i, j):
+        """Return true, if coordinates ixj has neighbour, false otherwise"""
         if i > 0 and self.tile_matrix[i - 1][j] is not None:
             return True
         if i < 149 and self.tile_matrix[i + 1][j] is not None:
